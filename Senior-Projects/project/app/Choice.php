@@ -14,7 +14,7 @@ class Choice extends Model
     protected $dates = ["deleted_at"];
 
 	public function class_groups() {
-		return $this->hasMany('\App\ClassGroup');
+		return $this->belongsToMany('\App\ClassGroup');
     }
 
 	public function electives() {

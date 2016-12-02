@@ -14,7 +14,11 @@ class Elective extends Model
     protected $dates = ["deleted_at"];
 
 	public function choices() {
-		return $this->belongsTo('\App\Choice');
+		return $this->hasMany('\App\Choice');
+    }
+
+	public function results() {
+		return $this->hasManyThrough('\App\Result', '\App\Choice');
     }
 
 	public function class_groups() {
