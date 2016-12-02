@@ -11,10 +11,26 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Services\DivideStudent;
+
+Route::get( '/', function () {
+	return view( 'welcome' );
+} );
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get( '/home', 'HomeController@index' );
+
+Route::get( '/debug/pick', function () {
+	$elective       = \App\Elective::first();
+	$divideProvider = new DivideStudent( $elective );
+
+	$divideProvider->debug_random_pick();
+} );
+
+Route::get( '/debug/divide', function () {
+	$elective       = \App\Elective::first();
+	$divideProvider = new DivideStudent( $elective );
+
+	$divideProvider->divide_elective();
+});
