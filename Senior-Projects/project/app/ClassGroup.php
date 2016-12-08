@@ -13,11 +13,15 @@ class ClassGroup extends Model
 
 	protected $dates = [ "deleted_at" ];
 
+	public function classes() {
+		return $this->belongsTo('\App\Klas');
+	}
+
 	public function users() {
 		return $this->hasMany('\App\User');
 	}
 
-	public function electives() {
-		return $this->belongsToMany('\App\Elective', 'choices');
+	public function choices() {
+		return $this->belongsToMany('\App\Choice');
 	}
 }

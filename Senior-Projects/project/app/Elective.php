@@ -20,8 +20,4 @@ class Elective extends Model
 	public function results() {
 		return $this->hasManyThrough('\App\Result', '\App\Choice');
     }
-
-	public function class_groups() {
-		return $this->belongsToMany('\App\ClassGroup', 'choices');
-    }
 }

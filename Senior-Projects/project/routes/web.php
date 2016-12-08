@@ -28,6 +28,13 @@ Route::get( '/debug/pick', function () {
 	$divideProvider->debug_random_pick();
 } );
 
+Route::get( '/debug/re-pick', function () {
+	$elective       = \App\Elective::first();
+	$divideProvider = new DivideStudent( $elective );
+
+	$divideProvider->debug_random_re_pick();
+} );
+
 Route::get( '/debug/divide', function () {
 	$elective       = \App\Elective::first();
 	$divideProvider = new DivideStudent( $elective );

@@ -22,7 +22,7 @@ class Choice extends Model
     }
 
 	public function results() {
-		return $this->belongsTo('\App\Result');
+		return $this->hasMany('\App\Result');
     }
 
 	public function users() {

@@ -18,6 +18,6 @@ class Result extends Model
 	}
 
 	public function choices() {
-		return $this->hasMany('\App\Choice');
+		return $this->belongsTo('\App\Choice', 'choice_id');
 	}
 }
