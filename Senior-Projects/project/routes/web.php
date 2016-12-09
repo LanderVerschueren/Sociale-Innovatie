@@ -20,6 +20,8 @@ Route::get( '/', function () {
 Auth::routes();
 
 Route::get( '/home', 'HomeController@index' );
+Route::get('/{elective}/choices', 'HomeController@choices');
+Route::post('/home', 'HomeController@store_choice');
 
 Route::get( '/admin', 'AdminController@login');
 Route::get( '/dashboard', 'AdminController@dashboard');
