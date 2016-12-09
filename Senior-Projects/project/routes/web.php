@@ -28,18 +28,29 @@ Route::get( '/dashboard', 'AdminController@dashboard');
 Route::get( '/keuzevak/{name}', 'AdminController@showChoicesFromElective');
 Route::get( '/keuze/{id}', 'AdminController@showResultsFromChoice');
 Route::get( '/klasgroep/{classgroup}', 'AdminController@showStudentsFromClassGroup');
-Route::get( '/debug/pick', function () {
+Route::get( '/debug/pick/{random?}', function ($random = false) {
 	$elective       = \App\Elective::first();
 	$divideProvider = new DivideStudent( $elective );
 
-	$divideProvider->debug_random_pick();
+	$divideProvider->debug_random_pick($random);
 } );
 
-Route::get( '/debug/re-pick', function () {
+Route::get( '/debug/re-pick/{random?}', function ($random = false) {
 	$elective       = \App\Elective::first();
 	$divideProvider = new DivideStudent( $elective );
 
-	$divideProvider->debug_random_re_pick();
+	$divideProvider->debug_random_re_pick($random);
+} );
+
+Route::get( '/debug/results', function () {
+	$results           = \App\Result::get()->sortBy( 'id' );
+	$choicesByLikeness = $results->groupBy( 'likeness' );
+	$picksCounter      = count( $choicesByLikeness );
+	$choicesByUsers    = $results->groupBy( 'user_id' );
+
+	//dd($choicesByUsers);
+
+	return view( 'debug.results', [ "results" => $choicesByUsers, "pickCounter" => $picksCounter ] );
 } );
 
 Route::get( '/debug/divide', function () {
@@ -47,4 +58,4 @@ Route::get( '/debug/divide', function () {
 	$divideProvider = new DivideStudent( $elective );
 
 	$divideProvider->divide_elective();
-});
+} );
