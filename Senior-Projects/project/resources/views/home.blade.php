@@ -10,6 +10,13 @@
                 <div class="panel-body">
                     You are logged in!
                 </div>
+
+                @foreach($electives as $elective)
+
+                    <p><a href="/{{$elective->id}}/choices">{{$elective->name}}</a></p>
+
+                    @endforeach
+
             </div>
         </div>
     </div>
