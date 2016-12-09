@@ -1,9 +1,91 @@
+/* Webfont: KdG-Regular */@font-face {
+    font-family: 'KdG';
+    src: url('KdG-Regular.eot'); /* IE9 Compat Modes */
+    src: url('KdG-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('KdG-Regular.woff') format('woff'), /* Modern Browsers */
+         url('KdG-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('KdG-Regular.svg#KdG-Regular') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
 
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+$main-color: #1d1d1b;
+$btn-color: #ac5a96;
+
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	width: 100%;
+	height: 100%;
+}
+
+h2 {
+	font-family: 'KdG';
+	font-size: 36px;
+	font-weight: 400;
+}
+
+button {
+	height: 50px;
+	width: 268px;
+	background: $btn-color;
+}
+
+nav {
+	height: 15%;
+	width: 100%;
+	background: $main-color;
+	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
+
+	display: flex;
+	justify-content: center;
+
+	.inner_nav {
+		width: 80%;
+
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.nav_text {
+			color: white;
+		}
+
+		img {
+			width: 306px;
+			height: 70px;
+		}
+	}	
+}
+
+.wrapper_login {
+	width: 100%;
+	height: 85%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.login {
+		border-radius: 5px;
+		background-color: rgb(29, 29, 27);
+	  	box-shadow: 0px 27px 24px 0px rgba(0, 0, 0, 0.2),0px 40px 70px 0px rgba(0, 0, 0, 0.22);
+	  	width: 600px;
+	  	height: 600px;
+
+	  	display: flex;
+	  	justify-content: center;
+	  	align-items: center;
+	}
+}
 
 // Variables
 @import "variables";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "materialize.scss";

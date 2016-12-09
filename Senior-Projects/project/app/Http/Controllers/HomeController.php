@@ -18,7 +18,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -36,7 +36,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $class_group_id = Auth::user()->class_group_id;
+        /*$class_group_id = Auth::user()->class_group_id;
         $choice_class_group = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
 
         $counter = 0;
@@ -58,6 +58,7 @@ class HomeController extends Controller
             array_push($electives, $elective);
         }
 
-        return view('home', compact('electives'));
+        return view('index', compact('electives'));*/
+        return view('index');
     }
 }

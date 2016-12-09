@@ -1,6 +1,5 @@
 const elixir = require('laravel-elixir');
 
-
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -14,5 +13,8 @@ const elixir = require('laravel-elixir');
 
 elixir(function(mix) {
 	mix.sass('app.scss')
-		.webpack('app.js');
+		.webpack('app.js')
+		.browserSync({
+			proxy: "sociale-innovatie.int"
+		});
 });

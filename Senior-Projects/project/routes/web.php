@@ -13,13 +13,11 @@
 
 use App\Services\DivideStudent;
 
-Route::get( '/', function () {
-	return view( 'welcome' );
-} );
-
 Auth::routes();
 
-Route::get( '/home', 'HomeController@index' );
+Route::get( '/', 'HomeController@index' );
+
+Route::get( '/index', 'HomeController@index' );
 
 Route::get( '/debug/pick', function () {
 	$elective       = \App\Elective::first();
