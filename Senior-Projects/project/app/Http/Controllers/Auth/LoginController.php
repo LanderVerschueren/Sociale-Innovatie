@@ -28,7 +28,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -78,6 +77,14 @@ class LoginController extends Controller
             return $this->attemptLoginStudent($request);
         }
 
+    }
+
+    protected function authenticated($request, $user)
+    {
+        if($user->is_admin) {
+            return redirect()->intended('/dashboard');
+        }
+        return redirect()->intended('/home');
     }
 
     protected function attemptLoginStudent (Request $request)

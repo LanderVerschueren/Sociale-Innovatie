@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Klas;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,7 +15,7 @@ class ClassGroup extends Model
 	protected $dates = [ "deleted_at" ];
 
 	public function classes() {
-		return $this->belongsTo('\App\Klas');
+		return $this->belongsTo('\App\Klas', 'class_id');
 	}
 
 	public function users() {
