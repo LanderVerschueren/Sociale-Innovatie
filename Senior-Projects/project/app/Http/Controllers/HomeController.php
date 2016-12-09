@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Elective;
 use App\ClassGroup;
 use App\Choice;
+use App\Result;
 
 class HomeController extends Controller
 {
@@ -32,6 +33,40 @@ class HomeController extends Controller
         $choices = Choice::where('elective_id', $elective->id)->get();
 
         return view("choices", compact('choices'));
+
+    }
+
+    public function store_choice(Request $request)
+    {
+
+        $choiceIds = [];
+        $choices = [];
+        $choice_counter = 5;
+        foreach ($request->request as $choice => $id)
+        {
+                if($choice != "_token")
+                {
+                    if($choice_counter)
+                    {
+                        array_push($choiceIds, $id);
+                        $choice_counter--;
+                    }
+                    else
+                    {
+                        return "te veel!";
+                    }
+
+                }
+        }
+
+        foreach ($choiceIds as $choice)
+        {
+            $choiceObject = Choice::where('id', $choice)->first();
+            array_push($choices, $choiceObject);
+        }
+
+
+        return view("choiceOrder", compact('choices'));
     }
 
     public function index()
