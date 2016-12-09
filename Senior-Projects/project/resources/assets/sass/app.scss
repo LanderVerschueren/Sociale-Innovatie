@@ -1,3 +1,5 @@
+@import "materialize.scss";
+
 /* Webfont: KdG-Regular */@font-face {
     font-family: 'KdG';
     src: url('KdG-Regular.eot'); /* IE9 Compat Modes */
@@ -9,9 +11,11 @@
     font-weight: normal;
     text-rendering: optimizeLegibility;
 }
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 $main-color: #1d1d1b;
 $btn-color: #ac5a96;
+$roboto : 'Roboto', serif;
 
 html, body {
 	width: 100%;
@@ -32,10 +36,26 @@ h2 {
 }
 
 button {
+	font-family: "KdG";
+	font-size: 30px;
+	color: white;
 	height: 50px;
 	width: 268px;
 	background: $btn-color;
+	border-radius: 5px;
+	border: none;
 }
+.Button_bevestig {
+  border-radius: 5px;
+  background-color: rgb(172, 90, 150);
+  position: absolute;
+  left: 1440px;
+  top: 999px;
+  width: 268px;
+  height: 50px;
+  z-index: 14;
+}
+
 
 nav {
 	height: 15%;
@@ -82,10 +102,27 @@ nav {
 	  	display: flex;
 	  	justify-content: center;
 	  	align-items: center;
+
+	  	form {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+	  		.input-field {
+	  			label, input {
+	  				font-family: "KdG";
+	  				font-weight: 100;
+	  			}
+
+	  			input {
+	  				width: 300px;
+	  				color: white;
+	  				font-family: $roboto;
+	  			}
+	  		}
+	  	}
 	}
 }
 
 // Variables
-@import "variables";
-
-@import "materialize.scss";
+//@import "variables";

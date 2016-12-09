@@ -22,7 +22,7 @@
 </head>
 <body>
     <div class="container">
-        <nav class="">
+        <nav>
             <div class="inner_nav">
                 <img src="/images/KdG_logo.png" alt="KdG-logo wit" class="logo">
                 <h2 class="nav_text">Office Management - Keuzetool</h2>
