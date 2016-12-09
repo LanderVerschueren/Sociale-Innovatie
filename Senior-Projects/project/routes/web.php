@@ -13,12 +13,9 @@
 
 use App\Services\DivideStudent;
 
-Route::get( '/', function () {
-	return view( 'welcome' );
-} );
-
 Auth::routes();
 
+Route::get( '/', 'HomeController@index' );
 Route::get( '/home', 'HomeController@index' );
 Route::get('/{elective}/choices', 'HomeController@choices');
 Route::post('/home', 'HomeController@store_choice');
