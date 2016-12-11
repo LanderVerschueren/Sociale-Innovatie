@@ -54,7 +54,6 @@ textarea.materialize-textarea {
   // Focused input style
   &:focus:not([readonly]) {
     border-bottom: 2px solid $input-focus-color;
-    box-shadow: 0 1px 0 0 $input-focus-color;
   }
 
   // Focused label style

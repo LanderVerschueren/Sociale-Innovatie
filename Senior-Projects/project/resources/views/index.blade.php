@@ -12,7 +12,7 @@
                 <input id="studentennummer" type="text" class="">
                 <label for="studentennummer">Studentennummer</label>
             </div>
-            <button type="submit">Inloggen</button>
+            <button type="submit" class="button_bevestig">Inloggen</button>
         </form>
     </div>
 </div>

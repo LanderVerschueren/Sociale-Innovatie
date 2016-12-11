@@ -2214,7 +2214,6 @@ input[type=number]:focus:not([readonly]),
 input[type=search]:focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
   border-bottom: 2px solid white;
-  box-shadow: 0 1px 0 0 white;
 }
 
 input:not([type]):focus:not([readonly]) + label,
@@ -2596,15 +2595,8 @@ button {
   border: none;
 }
 
-.Button_bevestig {
-  border-radius: 5px;
-  background-color: #ac5a96;
-  position: absolute;
-  left: 1440px;
-  top: 999px;
-  width: 268px;
-  height: 50px;
-  z-index: 14;
+.button_bevestig {
+  margin-top: 20px;
 }
 
 nav {
