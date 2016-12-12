@@ -5,11 +5,13 @@
     <div class="container">
         <div class="row">
 
-            <h1> Order Choices </h1>
+
+
+            <h1> gemaakte keuzes (tijdelijke pagina) </h1>
 
             @foreach($choices as $choice)
 
-                <p>keuze1</p>
+
                 <p>{{$choice->choice}}</p>
                 @endforeach
 

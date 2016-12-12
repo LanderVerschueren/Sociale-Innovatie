@@ -15,11 +15,11 @@ use App\Services\DivideStudent;
 
 Auth::routes();
 
-Route::get('/category', 'CategoryController@index');
 Route::get( '/', 'HomeController@index' );
-Route::get( '/home', 'HomeController@index' );
-Route::get('/{elective}/choices', 'HomeController@choices');
-Route::post('/home', 'HomeController@store_choice');
+Route::get('/category', 'StudentController@category');
+Route::get( '/home', 'StudentController@index' );
+Route::get('/{elective}/choices', 'StudentController@choices');
+Route::post('/category', 'StudentController@store_choice');
 
 Route::get( '/admin', 'AdminController@login');
 Route::get( '/dashboard', 'AdminController@dashboard');
