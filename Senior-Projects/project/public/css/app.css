@@ -2557,9 +2557,9 @@ textarea.materialize-textarea {
 /* Webfont: KdG-Regular */
 @font-face {
   font-family: 'KdG';
-  src: url("KdG-Regular.eot");
+  src: url("../fonts/KdG-Regular.eot");
   /* IE9 Compat Modes */
-  src: url("KdG-Regular.eot?#iefix") format("embedded-opentype"), url("KdG-Regular.woff") format("woff"), url("KdG-Regular.ttf") format("truetype"), url("KdG-Regular.svg#KdG-Regular") format("svg");
+  src: url("../fonts/KdG-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/KdG-Regular.woff") format("woff"), url("../fonts/KdG-Regular.ttf") format("truetype"), url("../fonts/KdG-Regular.svg#KdG-Regular") format("svg");
   /* Legacy iOS */
   font-style: normal;
   font-weight: normal;
@@ -2595,7 +2595,7 @@ button {
   border: none;
 }
 
-.button_bevestig {
+.button_login {
   margin-top: 20px;
 }
 

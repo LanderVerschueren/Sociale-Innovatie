@@ -2,11 +2,11 @@
 
 /* Webfont: KdG-Regular */@font-face {
     font-family: 'KdG';
-    src: url('KdG-Regular.eot'); /* IE9 Compat Modes */
-    src: url('KdG-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-         url('KdG-Regular.woff') format('woff'), /* Modern Browsers */
-         url('KdG-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
-         url('KdG-Regular.svg#KdG-Regular') format('svg'); /* Legacy iOS */
+    src: url('../fonts/KdG-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/KdG-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/KdG-Regular.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/KdG-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/KdG-Regular.svg#KdG-Regular') format('svg'); /* Legacy iOS */
     font-style: normal;
     font-weight: normal;
     text-rendering: optimizeLegibility;
@@ -46,7 +46,7 @@ button {
 	border: none;
 }
 
-.button_bevestig {
+.button_login {
 	margin-top: 20px;
 }
 

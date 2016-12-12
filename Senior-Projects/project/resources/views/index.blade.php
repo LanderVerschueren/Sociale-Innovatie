@@ -3,7 +3,7 @@
 @section('content')
 <div class="wrapper_login">
     <div class="login">
-        <form action="" href="#">
+        <form action="/category" method="GET">
             <div class="input-field">
                 <input id="emailadres" type="text" class="">
                 <label for="emailadres">E-mailadres</label>

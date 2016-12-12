@@ -1,5 +1,14 @@
 const elixir = require('laravel-elixir');
 
+var gulp = require('gulp'),
+    php = require('gulp-connect-php');
+
+gulp.task('serve', function() {
+    php.server({
+        base: './public'
+    });
+});
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -14,7 +23,10 @@ const elixir = require('laravel-elixir');
 elixir(function(mix) {
 	mix.sass('app.scss')
 		.webpack('app.js')
+		.copy('resources/assets/fonts', 'public/fonts')
+		.task('serve')
 		.browserSync({
-			proxy: "sociale-innovatie.int"
+			proxy: "localhost:8000"
+			//proxy: "sociale-innovatie.int"
 		});
 });

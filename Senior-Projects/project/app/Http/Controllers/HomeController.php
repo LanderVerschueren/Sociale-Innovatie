@@ -28,6 +28,11 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function index()
+    {
+        return view('index');
+    }
+
     public function choices(Elective $elective)
     {
         $choices = Choice::where('elective_id', $elective->id)->get();
@@ -38,25 +43,23 @@ class HomeController extends Controller
 
     public function store_choice(Request $request)
     {
-
         $choiceIds = [];
         $choices = [];
         $choice_counter = 5;
         foreach ($request->request as $choice => $id)
         {
-                if($choice != "_token")
+            if($choice != "_token")
+            {
+                if($choice_counter)
                 {
-                    if($choice_counter)
-                    {
-                        array_push($choiceIds, $id);
-                        $choice_counter--;
-                    }
-                    else
-                    {
-                        return "te veel!";
-                    }
-
+                    array_push($choiceIds, $id);
+                    $choice_counter--;
                 }
+                else
+                {
+                    return "te veel!";
+                }
+            }
         }
 
         foreach ($choiceIds as $choice)
@@ -64,14 +67,12 @@ class HomeController extends Controller
             $choiceObject = Choice::where('id', $choice)->first();
             array_push($choices, $choiceObject);
         }
-
-
+        
         return view("choiceOrder", compact('choices'));
     }
 
-    public function index()
-    {
-        /*$class_group_id = Auth::user()->class_group_id;
+    public function category() {
+        $class_group_id = Auth::user()->class_group_id;
         $choice_class_group = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
 
         $counter = 0;
@@ -93,7 +94,6 @@ class HomeController extends Controller
             array_push($electives, $elective);
         }
 
-        return view('index', compact('electives'));*/
-        return view('index');
+        return view('pages.category', compact('electives'));
     }
 }
