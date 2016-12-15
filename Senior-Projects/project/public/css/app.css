@@ -2574,14 +2574,29 @@ html, body {
 }
 
 .container {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 }
 
-h2 {
+h1 {
   font-family: 'KdG';
   font-size: 36px;
   font-weight: 400;
+}
+
+h2 {
+  font-family: 'KdG';
+  font-size: 60px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
 }
 
 button {
@@ -2595,8 +2610,54 @@ button {
   border: none;
 }
 
-.button_login {
-  margin-top: 20px;
+.card_category {
+  background-color: #1d1d1b;
+  border-radius: 5px;
+  box-shadow: 0px 27px 24px 0px rgba(0, 0, 0, 0.2), 0px 40px 70px 0px rgba(0, 0, 0, 0.22);
+  width: 472px;
+  height: 315px;
+}
+
+.card_category a {
+  width: 100%;
+  height: 100%;
+  font-family: "KdG";
+  font-size: 36px;
+  color: white;
+  text-decoration: none;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.card_category a:hover {
+  text-decoration: underline;
+}
+
+.card_choice {
+  background-color: #1d1d1b;
+  border-radius: 5px;
+  box-shadow: 0px 27px 24px 0px rgba(0, 0, 0, 0.2), 0px 40px 70px 0px rgba(0, 0, 0, 0.22);
+  width: 267px;
+  height: 272px;
+  margin-bottom: 5%;
+  font-family: "KdG";
+  font-size: 30x;
+  color: white;
+  text-decoration: none;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.card_choice input {
+  display: none;
 }
 
 nav {
@@ -2604,6 +2665,7 @@ nav {
   width: 100%;
   background: #1d1d1b;
   box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
+  margin-bottom: 5%;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -2673,6 +2735,71 @@ nav .inner_nav img {
   width: 300px;
   color: white;
   font-family: "Roboto", serif;
+}
+
+.wrapper_login .login form .button_bevestig {
+  margin-top: 20px;
+}
+
+content {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 80%;
+  height: 80%;
+}
+
+content .info {
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+content .info ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+content .info ul li {
+  font-family: "Roboto", serif;
+}
+
+content .info ul li .label {
+  display: inline-block;
+  font-size: 18px;
+  color: #1d1d1b;
+  width: 20%;
+}
+
+content .info ul li .info {
+  font-size: 24px;
+}
+
+content .category {
+  width: 100%;
+  margin-top: 5%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-flow: row wrap;
+}
+
+content .choice {
+  width: 100%;
+  margin-top: 5%;
+}
+
+content .choice form {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  flex-flow: row wrap;
 }
 
 /*# sourceMappingURL=app.css.map */
