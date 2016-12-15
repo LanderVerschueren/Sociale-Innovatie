@@ -8,7 +8,7 @@
             <h1>Choices</h1>
 
 
-            <form action="/category" method="post">
+            <form action="/rightOrder" method="post">
                 {{ csrf_field() }}
                     @foreach($choices as $choice)
 

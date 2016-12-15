@@ -19,7 +19,8 @@ Route::get( '/', 'HomeController@index' );
 Route::get('/category', 'StudentController@category');
 Route::get( '/home', 'StudentController@index' );
 Route::get('/{elective}/choices', 'StudentController@choices');
-Route::post('/category', 'StudentController@store_choice');
+Route::post('/rightOrder', 'StudentController@store_choice');
+Route::post('/storeOrder', 'StudentController@store_order');
 
 Route::get( '/admin', 'AdminController@login');
 Route::get( '/dashboard', 'AdminController@dashboard');

@@ -18,43 +18,8 @@ class StudentController extends Controller
     }
 
 
-    public function choices(Elective $elective)
-    {
-        $choices = Choice::where('elective_id', $elective->id)->get();
 
-        return view("choices", compact('choices'));
 
-    }
-
-    public function store_choice(Request $request)
-    {
-        $choiceIds = [];
-        $choices = [];
-        $choice_counter = 5;
-        foreach ($request->request as $choice => $id)
-        {
-            if($choice != "_token")
-            {
-                if($choice_counter)
-                {
-                    array_push($choiceIds, $id);
-                    $choice_counter--;
-                }
-                else
-                {
-                    return "te veel!";
-                }
-            }
-        }
-
-        foreach ($choiceIds as $choice)
-        {
-            $choiceObject = Choice::where('id', $choice)->first();
-            array_push($choices, $choiceObject);
-        }
-
-        return view("choiceOrder", compact('choices'));
-    }
 
     public function category() {
 
@@ -82,4 +47,103 @@ class StudentController extends Controller
 
         return view('pages.category', compact('electives'));
     }
+
+
+    public function choices(Elective $elective)
+    {
+        $choices = Choice::where('elective_id', $elective->id)->get();
+
+        return view("choices", compact('choices'));
+
+    }
+
+
+    public function store_choice(Request $request)
+    {
+        $choiceIds = [];
+        $choices = [];
+        $choice_counter = 6;
+        foreach ($request->request as $choice => $id)
+        {
+            if($choice != "_token")
+            {
+                if($choice_counter)
+                {
+                    array_push($choiceIds, $id);
+                    $choice_counter--;
+                }
+                else
+                {
+                    return back()->withInput();
+                }
+            }
+        }
+
+        if($choice_counter)
+        {
+            return back()->withInput();
+        }
+
+        foreach ($choiceIds as $choice)
+        {
+            $choiceObject = Choice::where('id', $choice)->first();
+            array_push($choices, $choiceObject);
+        }
+
+        return view("choiceOrder", compact('choices'));
+    }
+
+
+
+    public function store_order(Request $request)
+    {
+
+        $useAbleValues = ["1","2","3","4","5","6"];
+
+        foreach ($request->request as $choice => $likeness) {
+            if($choice != "_token") {
+                if (in_array($likeness, $useAbleValues)) {
+                    $key = array_search($likeness, $useAbleValues);
+                    unset($useAbleValues[$key]);
+                } else {
+                    debug($likeness);
+                    debug($useAbleValues);
+                    return "foute waarden";
+
+                }
+            }
+        }
+
+        if($useAbleValues)
+        {
+            return "foute waarden";
+        }
+        $counter = 5;
+
+        foreach ($request->request as $choice => $likeness)
+        {
+            if($choice != "_token")
+            {
+                if($likeness != "6")
+                {
+                    if($counter)
+                    {
+                            $result = new Result;
+                            $result->choice_id = $choice;
+                            $result->likeness = $likeness;
+                            Auth::user()->results()->save($result);
+                            $counter--;
+                    }
+                    else{
+                        return redirect("/category");
+                    }
+                }
+
+            }
+        }
+        return redirect("/category");
+    }
+
+
+
 }
