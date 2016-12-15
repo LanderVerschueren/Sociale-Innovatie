@@ -11,11 +11,14 @@
     font-weight: normal;
     text-rendering: optimizeLegibility;
 }
+
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 $main-color: #1d1d1b;
 $btn-color: #ac5a96;
-$roboto : 'Roboto', serif;
+$roboto: 'Roboto', serif;
+$shadow-nav: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
+$shadow-elements: 0px 27px 24px 0px rgba(0, 0, 0, 0.2),0px 40px 70px 0px rgba(0, 0, 0, 0.22);
 
 html, body {
 	width: 100%;
@@ -25,14 +28,27 @@ html, body {
 }
 
 .container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
 	width: 100%;
 	height: 100%;
 }
 
-h2 {
+h1 {
 	font-family: 'KdG';
 	font-size: 36px;
 	font-weight: 400;
+}
+
+h2 {
+  font-family: 'KdG';
+	font-size: 60px;
+	font-weight: 400;
+
+	margin: 0;
+	padding: 0;
 }
 
 button {
@@ -46,15 +62,62 @@ button {
 	border: none;
 }
 
-.button_login {
-	margin-top: 20px;
+.card_category {
+	background-color: $main-color;
+	border-radius: 5px;
+	box-shadow: $shadow-elements;
+
+	width: 472px;
+	height: 315px;
+
+	a {
+		width: 100%;
+		height: 100%;
+
+		font-family: "KdG";
+		font-size: 36px;
+		color: white;
+		text-decoration: none;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.card_choice {
+	background-color: $main-color;
+	border-radius: 5px;
+	box-shadow: $shadow-elements;
+
+	width: 267px;
+	height: 272px;
+
+	margin-bottom: 5%;
+	font-family: "KdG";
+	font-size: 30x;
+	color: white;
+	text-decoration: none;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	input {
+		display: none;
+	}
 }
 
 nav {
 	height: 15%;
 	width: 100%;
 	background: $main-color;
-	box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
+	box-shadow: $shadow-nav;
+	margin-bottom: 5%;
 
 	display: flex;
 	justify-content: center;
@@ -74,7 +137,7 @@ nav {
 			width: 306px;
 			height: 70px;
 		}
-	}	
+	}
 }
 
 .wrapper_login {
@@ -88,7 +151,7 @@ nav {
 	.login {
 		border-radius: 5px;
 		background-color: rgb(29, 29, 27);
-	  	box-shadow: 0px 27px 24px 0px rgba(0, 0, 0, 0.2),0px 40px 70px 0px rgba(0, 0, 0, 0.22);
+	  	box-shadow: $shadow-elements;
 	  	width: 600px;
 	  	height: 600px;
 
@@ -113,9 +176,69 @@ nav {
 	  				font-family: $roboto;
 	  			}
 	  		}
+
+			.button_bevestig {
+				margin-top: 20px;
+			}
 	  	}
 	}
 }
 
-// Variables
-//@import "variables";
+
+
+content {
+	display: flex;
+	flex-direction: column;
+
+	margin-left: 20px;
+	margin-right: 20px;
+
+	width: 80%;
+	height: 80%;
+
+	.info {
+		width: 100%;
+		margin-bottom: 5%;
+
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+
+			li {
+				font-family: $roboto;
+
+				.label {
+					display: inline-block;
+					font-size: 18px;
+					color: $main-color;
+					width: 20%;
+				}
+
+				.info {
+					font-size: 24px;
+				}
+			}
+		}
+	}
+
+	.category {
+		width: 100%;
+		margin-top: 5%;
+
+		display: flex;
+		justify-content: center;
+		flex-flow: row wrap;
+	}
+
+	.choice {
+		width: 100%;
+		margin-top: 5%;
+
+		form {
+			display: flex;
+			justify-content: space-between;
+			flex-flow: row wrap;
+		}
+	}
+}

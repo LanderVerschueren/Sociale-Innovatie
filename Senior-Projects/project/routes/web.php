@@ -16,8 +16,7 @@ use App\Services\DivideStudent;
 Auth::routes();
 
 Route::get( '/', 'HomeController@index' );
-Route::get('/category', 'StudentController@category');
-Route::get( '/home', 'StudentController@index' );
+Route::get('/category', 'StudentController@index');
 Route::get('/{elective}/choices', 'StudentController@choices');
 Route::post('/category', 'StudentController@store_choice');
 

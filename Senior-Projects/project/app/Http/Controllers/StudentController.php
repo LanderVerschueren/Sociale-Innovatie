@@ -17,12 +17,37 @@ class StudentController extends Controller
         $this->middleware('auth');
     }
 
+    public function index() {
+        $class_group_id = Auth::user()->class_group_id;
+        $choice_class_group = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
+
+        $counter = 0;
+        $electiveIds = [];
+
+        foreach($choice_class_group as $choice_class_group)
+        {
+            $choice = Choice::where('id', $choice_class_group->choice_id)->first();
+            array_push($electiveIds, $choice->elective_id);
+        }
+
+        $uniqueElectivesId = array_unique ( $electiveIds );
+
+        $electives = [];
+
+        foreach ($uniqueElectivesId as $id)
+        {
+            $elective = Elective::where('id', $id)->first();
+            array_push($electives, $elective);
+        }
+
+        return view('pages.category', compact('electives'));
+    }
 
     public function choices(Elective $elective)
     {
         $choices = Choice::where('elective_id', $elective->id)->get();
 
-        return view("choices", compact('choices'));
+        return view("pages.choice", compact('choices'));
 
     }
 
@@ -54,32 +79,5 @@ class StudentController extends Controller
         }
 
         return view("choiceOrder", compact('choices'));
-    }
-
-    public function category() {
-
-        $class_group_id = Auth::user()->class_group_id;
-        $choice_class_group = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
-
-        $counter = 0;
-        $electiveIds = [];
-
-        foreach($choice_class_group as $choice_class_group)
-        {
-            $choice = Choice::where('id', $choice_class_group->choice_id)->first();
-            array_push($electiveIds, $choice->elective_id);
-        }
-
-        $uniqueElectivesId = array_unique ( $electiveIds );
-
-        $electives = [];
-
-        foreach ($uniqueElectivesId as $id)
-        {
-            $elective = Elective::where('id', $id)->first();
-            array_push($electives, $elective);
-        }
-
-        return view('pages.category', compact('electives'));
     }
 }
