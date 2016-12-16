@@ -2566,10 +2566,6 @@ textarea.materialize-textarea {
   text-rendering: optimizeLegibility;
 }
 
-.phpdebugbar-widgets-value.phpdebugbar-widgets-success {
-  color: #00C853;
-}
-
 html, body {
   width: 100%;
   height: 100%;
