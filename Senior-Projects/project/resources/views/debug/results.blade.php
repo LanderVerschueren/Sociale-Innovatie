@@ -51,6 +51,7 @@
 	<table class="table table-hover table-bordered table-striped results">
 		<thead>
 		<tr>
+			<th>#</th>
 			<th>User</th>
 			@for($i = 1; $i <= $pickCounter; $i++)
 				<th>Pick {{ $i }}</th>
@@ -63,6 +64,7 @@
 		<tbody>
 		@foreach($results as $userId => $big)
 			<tr>
+				<td>{{ $loop->index }}</td>
 				<td>{{ $userId }}</td>
 				@foreach($big as/*s*/ $dick)
 					<td>{{$dick->choices->choice}} ({{$dick->choices->id}})</td>
