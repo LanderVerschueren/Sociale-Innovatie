@@ -20,8 +20,6 @@ class StudentController extends Controller
     public function index() {
         $class_group_id = Auth::user()->class_group_id;
         $choice_class_group = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
-
-        $counter = 0;
         $electiveIds = [];
 
         foreach($choice_class_group as $choice_class_group)
@@ -37,13 +35,18 @@ class StudentController extends Controller
         foreach ($uniqueElectivesId as $id)
         {
             $elective = Elective::where('id', $id)->first();
-            //$thisDate = date("Y/m/d");
-            $thisDate = new \DateTime('2016/12/08');
+            $thisDate = date("Y-m-d G:i:s");
+            //$thisDate = '2016-12-08 12:12:12';
+            debug($thisDate);
             $beginDate = $elective->start_date;
             $endDate = $elective->end_date;
+            debug($thisDate . "  " . $endDate);
             if(($thisDate<=$endDate) && ($thisDate>=$beginDate))
             {
-                array_push($electives, $elective);
+                if(Auth::user()->hasNoResult($elective))
+                {
+                    array_push($electives, $elective);
+                }
             }
         }
 

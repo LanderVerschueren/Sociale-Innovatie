@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Elective;
+use App\Choice;
 
 class User extends Authenticatable {
 	use Notifiable;
@@ -35,4 +37,20 @@ class User extends Authenticatable {
 	public function results() {
 		return $this->hasMany('\App\Result');
 	}
+
+	public function hasNoResult(Elective $elective)
+    {
+        $results = $this->results()->get();
+        $electiveId = $elective->id;
+
+        foreach ($results as $result)
+        {
+            $choice = Choice::where('id', $result->choice_id)->first();
+            if($choice->elective_id == $elective->id)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
