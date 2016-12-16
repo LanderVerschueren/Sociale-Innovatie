@@ -37,7 +37,14 @@ class StudentController extends Controller
         foreach ($uniqueElectivesId as $id)
         {
             $elective = Elective::where('id', $id)->first();
-            array_push($electives, $elective);
+            //$thisDate = date("Y/m/d");
+            $thisDate = new \DateTime('2016/12/08');
+            $beginDate = $elective->start_date;
+            $endDate = $elective->end_date;
+            if(($thisDate<=$endDate) && ($thisDate>=$beginDate))
+            {
+                array_push($electives, $elective);
+            }
         }
 
         return view('pages.category', compact('electives'));
@@ -78,7 +85,7 @@ class StudentController extends Controller
     {
         $choices = Choice::where('elective_id', $elective->id)->get();
 
-        return view("pages.choice", compact('choices'));
+        return view("choices", compact('choices'));
 
     }
 
