@@ -84,7 +84,7 @@ class LoginController extends Controller
         if($user->is_admin) {
             return redirect()->intended('/dashboard');
         }
-        return redirect()->intended('/home');
+        return redirect()->intended('/category');
     }
 
     protected function attemptLoginStudent (Request $request)
@@ -110,6 +110,12 @@ class LoginController extends Controller
         $this->validate($request, [
             $this->username() => 'required', 'student_id' => 'required',
         ]);
+    }
+
+
+    public function redirectPath()
+    {
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/category';
     }
 
 
