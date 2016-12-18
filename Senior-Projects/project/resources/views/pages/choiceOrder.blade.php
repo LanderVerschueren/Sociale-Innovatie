@@ -21,20 +21,26 @@
         </ul>
     </div>
     <div class="choice">
-        <form action="/rightOrder" method="post">
+        <form action="/storeOrder" method="post">
             {{ csrf_field() }}
-            <div>
-                @foreach($choices as $choice)                
-                    <div class="card_choice" id="{{ $choice->choice }}">
-                        <a class="card_choice_link" href="{{ $choice->choice }}">{{$choice->choice}}</a>
-                        <input type="checkbox" name="{{$choice->choice}}" value="{{$choice->id}}">
-                    </div>
-                @endforeach
-            </div>
-            <div class="container_button">
+            <div id="sortable">
+	            @foreach($choices as $choice)
+					<div class="card_choice_order" id="{{ $choice->choice }}">
+	                    <a class="card_choice_order_link" href="">{{$choice->choice}}</a>
+	                    
+	                </div>
+				@endforeach
+			</div>
+			<div class="container_button">
                 <button type="submit">Bevestig</button>
             </div>
         </form>
     </div>
 </content>
+
+				<!--
+				<p>{{$choice->choice}}</p>
+				<input type="number" name="{{$choice->id}}">
+				<input type="number" name="{{$choice->id}}" id="{{ $choice->choice }}">
+				-->
 @endsection

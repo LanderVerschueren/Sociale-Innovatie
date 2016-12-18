@@ -88,7 +88,7 @@ class StudentController extends Controller
     {
         $choices = Choice::where('elective_id', $elective->id)->get();
 
-        return view("choices", compact('choices'));
+        return view('pages.choice', compact('choices'));
 
     }
 
@@ -125,7 +125,7 @@ class StudentController extends Controller
             array_push($choices, $choiceObject);
         }
 
-        return view("choiceOrder", compact('choices'));
+        return view("pages.choiceOrder", compact('choices'));
     }
 
 
@@ -133,6 +133,7 @@ class StudentController extends Controller
 
     public function store_order(Request $request)
     {
+       print_r($request);
 
         $useAbleValues = ["1","2","3","4","5","6"];
 
@@ -145,7 +146,6 @@ class StudentController extends Controller
                     debug($likeness);
                     debug($useAbleValues);
                     return "foute waarden";
-
                 }
             }
         }
@@ -179,9 +179,4 @@ class StudentController extends Controller
         }
         return redirect("/category");
     }
-
-
-
-
-
 }
