@@ -133,9 +133,9 @@ class StudentController extends Controller
 
     public function store_order(Request $request)
     {
-       print_r($request);
+       dd($request);
 
-        $useAbleValues = ["1","2","3","4","5","6"];
+        /*$useAbleValues = ["1","2","3","4","5","6"];
 
         foreach ($request->request as $choice => $likeness) {
             if($choice != "_token") {
@@ -176,7 +176,7 @@ class StudentController extends Controller
                 }
 
             }
-        }
+        }*/
         return redirect("/category");
     }
 }

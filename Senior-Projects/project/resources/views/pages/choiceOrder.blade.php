@@ -27,7 +27,7 @@
 	            @foreach($choices as $choice)
 					<div class="card_choice_order" id="{{ $choice->choice }}">
 	                    <a class="card_choice_order_link" href="">{{$choice->choice}}</a>
-	                    
+	                   <input type="hidden" name="choice[]" value="{{ $choice->choice }}">                    
 	                </div>
 				@endforeach
 			</div>

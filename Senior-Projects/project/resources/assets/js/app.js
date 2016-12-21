@@ -16,7 +16,18 @@ $( "#sortable" ).sortable({
     placeholder: "card_choice_order_drag",
     tolerance: "pointer",
     update: function( event, ui ) {
-    	
+    	var order = []; 
+                //loop trought each li...
+                $('#sortable div').each( function(e) {
+
+               //add each li position to the array...     
+               // the +1 is for make it start from 1 instead of 0
+               order.push( $(this).attr('id') );
+           });
+              // join the array as single variable...
+              //var positions = order.join(';')
+               //use the variable as you need!
+               console.log(order);
    	}
 });
 $( "#sortable" ).disableSelection();
