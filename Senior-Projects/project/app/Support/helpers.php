@@ -13,7 +13,21 @@
  *
  * @return string
  */
-function boolh( bool $bool)
-{
+function boolh( bool $bool ) {
 	return $bool ? "Yes" : "No";
+}
+
+function multidimensionalArraySearch($needle, $haystack, $key){
+	return array_search($needle, array_column($haystack, $key));
+}
+
+/**
+ * Echo the text with rule endings
+ *
+ * @param $text
+ */
+function echoln( $text ) {
+	echo '<br>';
+	echo $text;
+	echo '<br>';
 }

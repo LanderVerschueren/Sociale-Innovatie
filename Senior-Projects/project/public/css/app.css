@@ -2608,6 +2608,14 @@ button {
   background: #ac5a96;
   border-radius: 5px;
   border: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+button:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
 }
 
 .card_category {
@@ -2637,17 +2645,13 @@ button {
   text-decoration: underline;
 }
 
-.card_choice {
+.card_choice, .card_choice_order {
   background-color: #1d1d1b;
   border-radius: 5px;
   box-shadow: 0px 27px 24px 0px rgba(0, 0, 0, 0.2), 0px 40px 70px 0px rgba(0, 0, 0, 0.22);
   width: 267px;
   height: 272px;
   margin-bottom: 5%;
-  font-family: "KdG";
-  font-size: 30x;
-  color: white;
-  text-decoration: none;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -2656,8 +2660,60 @@ button {
   align-items: center;
 }
 
-.card_choice input {
+.card_choice a, .card_choice_order a {
+  width: 90%;
+  height: 90%;
+  padding: 5%;
+  font-family: "KdG";
+  font-size: 30px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+.card_choice input, .card_choice_order input {
   display: none;
+}
+
+.card_choice:hover {
+  border: 2px #1d1d1b solid;
+  border-radius: 5px;
+  background-color: white;
+  width: 263px;
+  height: 268px;
+}
+
+.card_choice:hover a {
+  color: #1d1d1b;
+}
+
+.card_choice_order_drag {
+  border: 2px #1d1d1b solid;
+  border-radius: 5px;
+  background-color: white;
+  width: 263px;
+  height: 268px;
+}
+
+.card_choice_order_drag a {
+  color: #1d1d1b;
+}
+
+.card_choice_selected {
+  border: 2px #1d1d1b solid;
+  background-color: white;
+  width: 263px;
+  height: 268px;
+}
+
+.card_choice_selected a {
+  color: #1d1d1b;
 }
 
 nav {
@@ -2665,7 +2721,6 @@ nav {
   width: 100%;
   background: #1d1d1b;
   box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
-  margin-bottom: 5%;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -2747,6 +2802,7 @@ content {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   flex-direction: column;
+  margin-top: 5%;
   margin-left: 20px;
   margin-right: 20px;
   width: 80%;
@@ -2794,12 +2850,22 @@ content .choice {
   margin-top: 5%;
 }
 
-content .choice form {
+content .choice form div {
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
   flex-flow: row wrap;
+}
+
+content .choice form .container_button {
+  width: 267px;
+  height: 272px;
+  margin-bottom: 5%;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
 }
 
 /*# sourceMappingURL=app.css.map */

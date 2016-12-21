@@ -23,24 +23,29 @@ class DivideStudent {
 	private $dividedUsersInChoices;
 	private $likenessCounter;
 
+	private $debugBar;
+
 	function __construct( Elective $elective ) {
+		$this->debugBar = app( 'debugbar' );
+
 		$this->elective = $elective;
 		$this->choices  = $this->elective->choices;
 
 		foreach ( $this->choices as $choice ) {
 			$this->dividedUsersInChoices[ $choice->id ] = [
-				"min"                 => $choice->minimum,
-				"max"                 => $choice->maximum,
-				"lowest_rank"         => 0,
-				"lowest_rank_user_id" => 0,
-				"is_accepting"        => true,
-				"users"               => []
+				"min"                  => $choice->minimum,
+				"max"                  => $choice->maximum,
+				"lowest_rank"          => - 1,
+				"lowest_rank_user_id"  => 0,
+				"lowest_rank_user_key" => - 1,
+				"is_accepting"         => true,
+				"users"                => []
 			];
 		}
 	}
 
 	/**
-	 * Function to (re-)pick the results for aal the users
+	 * Function to (re-)pick the results for all the users
 	 *
 	 * @param $random
 	 */
@@ -53,6 +58,7 @@ class DivideStudent {
 		foreach ( $students as $student ) {
 			$choicesRand = $choices;
 			if ( $random ) {
+				dump( "Going full random" );
 				$choicesRand = $choices->shuffle();
 			}
 			$picks    = $choicesRand->random( 6 );
@@ -93,12 +99,20 @@ class DivideStudent {
 
 		debug( '=========================Start proposing=========================' );
 		foreach ( $this->freeStudents as $freeStudent ) {
-			debug( '***************Propose Starter***************' );
-			debug( 'Student ID: ' . $freeStudent );
+			$this->debugBar->info( '****************************Propose Starter****************************' );
+			$this->debugBar->info( 'Student ID: ' . $freeStudent );
 			$this->propose_starter( $freeStudent );
 		}
+		$style = "<style>
+		.phpdebugbar-widgets-value.phpdebugbar-widgets-success
+		{
+			color: #00C853;
+		}
+		</style>";
 
-		return "ok";
+		dump( $this->dividedUsersInChoices );
+
+		return $style . "ok";
 		//return $this->freeStudents;
 	}
 
@@ -108,14 +122,43 @@ class DivideStudent {
 	 * @param $studentId
 	 */
 	private function propose_starter( $studentId ) {
-		$results = $this->choicesByUsers[ $studentId ];
+		$results            = $this->choicesByUsers[ $studentId ];
+		$resultsWithoutLast = $results;
+		$resultsWithoutLast->pop();
 		debug( '##########Results of ' . $studentId . '##########' );
-		debug( $results );
+		debug( $resultsWithoutLast );
 
+		$hasAcceptedProposal = $this->proposer_handler( $resultsWithoutLast, $studentId );
+
+		if ( ! $hasAcceptedProposal ) {
+			$this->debugType( 'error', "Student " . $studentId . " doesn't have a accepted proposal." );
+			$this->put_student_first_in_free_students( $studentId );
+			$reverseResults = $resultsWithoutLast->reverse();
+
+			$hasAcceptedProposal = $this->proposer_handler( $reverseResults, $studentId );
+		}
+	}
+
+	private function proposer_handler( $results, $studentId ) {
 		foreach ( $results as $result ) {
 			debug( '-----Proposing to ' . $result->choice_id . '-----' );
-			$this->propose_to_choice( $studentId, $result->choice_id );
+			$likeness = $result->likeness;
+			if ( $this->propose_to_choice( $studentId, $result->choice_id, $likeness ) ) {
+				$this->debugType( 'success', "Proposal accepted, Stop proposing" );
+
+				return true;
+				break;
+			}
 		}
+
+		return false;
+	}
+
+	private function put_student_first_in_free_students( $studentId ) {
+		debug( 'Put student ' . $studentId . " first in the enter rank" );
+
+		$this->studentEnterRank->forget( $this->studentEnterRank->search( $studentId ) );
+		$this->studentEnterRank->prepend( $studentId );
 	}
 
 	/**
@@ -123,21 +166,56 @@ class DivideStudent {
 	 *
 	 * @param $studentId
 	 * @param $choiceId
+	 * @param $likeness
+	 *
+	 * @return bool
 	 */
-	private function propose_to_choice( $studentId, $choiceId ) {
-		$currentChoice = $this->dividedUsersInChoices[ $choiceId ];
+	private function propose_to_choice( $studentId, $choiceId, $likeness ) {
 
 		if ( $this->is_choice_accepting( $choiceId ) ) {
-			$this->accept_proposal( $studentId, $choiceId );
+			$this->accept_proposal( $studentId, $choiceId, $likeness );
+		} else if ( $this->is_lowest_ranking_in_choice( $studentId, $choiceId ) ) {
+			$this->debugBar->warning( 'Proposal rejected' );
+
+			return false;
 		} else {
-			if($this->is_lowest_ranking_in_choice( $studentId, $choiceId ))
-			{
-				// Propose fail
-			}
-			else{
-				// Accept proposal and reject lowest
-			}
+			debug( 'Kicking user out off choice' );
+			$this->accept_proposal_by_rejecting_lowest( $studentId, $choiceId );
+
+			return false;
 		}
+
+		$this->debugType( 'success', "Proposal accepted" );
+		$this->remove_user_from_free_students( $studentId );
+
+		return true;
+	}
+
+	private function accept_proposal_by_rejecting_lowest( $studentId, $choiceId ) {
+
+	}
+
+	/**
+	 * Remove a student from the free students collection of the class
+	 *
+	 * @param $studentId
+	 *
+	 * @return bool
+	 */
+	private function remove_user_from_free_students( $studentId ) {
+		debug( "++++Remove Student++++" );
+		$studentKey = $this->freeStudents->search( $studentId );
+		if ( $studentKey === false ) {
+			$this->debugType( 'error', "The student is no longer in the array" );
+
+			return false;
+		}
+
+		$this->freeStudents->forget( $studentKey );
+
+		debug( 'Remaining free students: ' . count( $this->freeStudents ) );
+
+		return true;
 	}
 
 	/**
@@ -160,37 +238,65 @@ class DivideStudent {
 	 *
 	 * @param $studentId
 	 * @param $choiceId
+	 * @param $likeness
 	 */
-	private function accept_proposal( $studentId, $choiceId ) {
-		$currentChoice            = $this->dividedUsersInChoices[ $choiceId ];
-		$currentChoice["users"][] = $studentId;
+	private function accept_proposal( $studentId, $choiceId, $likeness ) {
+		debug( "Accepting proposal" );
+		$currentChoice                                       = $this->dividedUsersInChoices[ $choiceId ];
+		$this->dividedUsersInChoices[ $choiceId ]["users"][] = [
+			"id"       => $studentId,
+			"likeness" => $likeness,
+		];
 		// Set lowest ranking
 		$currentRankOfUser = $this->get_rank_of_user( $studentId );
+		debug( "Rank of current user: " . $currentRankOfUser );
 
-		if ( $currentChoice["lowest_rank"] == 0 || $currentChoice["lowest_rank"] > $currentRankOfUser ) {
-			$this->dividedUsersInChoices[ $choiceId ]["lowest_rank"]         = $currentRankOfUser;
-			$this->dividedUsersInChoices[ $choiceId ]["lowest_rank_user_id"] = $studentId;
+		if ( $currentChoice["lowest_rank"] == 0 || $this->is_lowest_ranking_in_choice( $studentId, $choiceId ) ) {
+			$this->set_lowest_rank_of_choice( $studentId, $choiceId, $currentRankOfUser );
 		}
+
+		$this->set_accepting_state_of_choice( $choiceId, ! $this->is_choice_full( $choiceId ) );
+	}
+
+	private function set_lowest_rank_of_choice( $studentId, $choiceId, $currentRankOfUser ) {
+		$studentKey = multidimensionalArraySearch( $studentId, $this->dividedUsersInChoices[ $choiceId ]["users"], 'id' );
+		debug( "New lowest user for choice: " . $studentId );
+		debug( "New lowest user key for choice: " . $studentKey );
+		debug( "New lowest rank for choice: " . $currentRankOfUser );
+
+		$this->dividedUsersInChoices[ $choiceId ]["lowest_rank"]          = $currentRankOfUser;
+		$this->dividedUsersInChoices[ $choiceId ]["lowest_rank_user_id"]  = $studentId;
+		$this->dividedUsersInChoices[ $choiceId ]["lowest_rank_user_key"] = $studentKey;
 	}
 
 	/**
 	 * Get the rank of the given user
 	 *
-	 * @param $student_id
+	 * @param $studentId
 	 *
 	 * @return mixed
 	 */
-	private function get_rank_of_user( $student_id ) {
-		return $this->studentEnterRank->search( $student_id );
+	private function get_rank_of_user( $studentId ) {
+		return $this->studentEnterRank->search( $studentId );
 	}
 
 	/**
 	 * Check if the given choice is full (reached maximum), if it is full, set the accepting to false
 	 *
-	 * @param $choice_id
+	 * @param $choiceId
+	 *
+	 * @return bool
 	 */
-	private function is_choice_full($choice_id) {
+	private function is_choice_full( $choiceId ) {
+		debug( '+++Check if choice ' . $choiceId . ' is full+++' );
+		debug( 'Max nr. of users: ' . $this->dividedUsersInChoices[ $choiceId ]["max"] );
+		debug( 'Nr. of users in choice: ' . count( $this->dividedUsersInChoices[ $choiceId ]["users"] ) );
 
+		return count( $this->dividedUsersInChoices[ $choiceId ]["users"] ) == $this->dividedUsersInChoices[ $choiceId ]["max"];
+	}
+
+	private function set_accepting_state_of_choice( $choiceId, $state ) {
+		$this->dividedUsersInChoices[ $choiceId ]["is_accepting"] = $state;
 	}
 
 	/**
@@ -202,7 +308,18 @@ class DivideStudent {
 	 * @return bool
 	 */
 	private function is_lowest_ranking_in_choice( $studentId, $choiceId ) {
-		return true;
+		debug( '++++Check if user is lower rank++++' );
+		$currentRankOfUser  = $this->get_rank_of_user( $studentId );
+		$lowestRankOfChoice = $this->dividedUsersInChoices[ $choiceId ]["lowest_rank"];
+		debug( 'Rank of user: ' . $currentRankOfUser );
+		debug( 'Lowest rank of choice: ' . $lowestRankOfChoice );
+
+		return $currentRankOfUser > $lowestRankOfChoice;
+	}
+
+
+	private function debugType( $type, $data ) {
+		$this->debugBar->addMessage( $data, $type );
 	}
 	/*
 

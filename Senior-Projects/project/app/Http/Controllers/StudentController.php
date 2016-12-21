@@ -70,7 +70,7 @@ class StudentController extends Controller
 
         $choices = Choice::where('elective_id', $elective->id)->get();
 
-        return view("choices", compact('choices'));
+        return view('pages.choice', compact('choices'));
 
     }
 
@@ -110,7 +110,7 @@ class StudentController extends Controller
             array_push($choices, $choiceObject);
         }
 
-        return view("choiceOrder", compact('choices'));
+        return view("pages.choiceOrder", compact('choices'));
     }
 
 
@@ -118,58 +118,47 @@ class StudentController extends Controller
 
     public function store_order(Request $request)
     {
+
         // Hier worden de results opgeslagen.
         // Per result worde de likeness ook opgeslage.
         // Eerst wordt gecheckt of er geen dubbele waardes zijn opgeslagen.
 
-        $useAbleValues = ["1","2","3","4","5","6"];
+        $input = $request->request->all();
 
-        foreach ($request->request as $choice => $likeness) {
-            if($choice != "_token") {
-                if (in_array($likeness, $useAbleValues)) {
-                    $key = array_search($likeness, $useAbleValues);
-                    unset($useAbleValues[$key]);
-                } else {
-                    debug($likeness);
-                    debug($useAbleValues);
-                    return "foute waarden";
+        $choices = $input["choice"];
 
-                }
-            }
+        $amount = count($choices);
+
+        if($amount != 6)
+        {
+            return redirect("/category");
         }
 
-        if($useAbleValues)
-        {
-            return "foute waarden";
-        }
-        $counter = 5;
+        $likeness = 0;
 
-        foreach ($request->request as $choice => $likeness)
+        foreach ($choices as $choice)
         {
-            if($choice != "_token")
+
+            $newResult = Result::where([['choice_id', $choice], ['user_id', Auth::user()->id]])->first();
+            if($newResult)
             {
-                if($likeness != "6")
-                {
-                    if($counter)
-                    {
-                            $result = new Result;
-                            $result->choice_id = $choice;
-                            $result->likeness = $likeness;
-                            Auth::user()->results()->save($result);
-                            $counter--;
-                    }
-                    else{
-                        return redirect("/category");
-                    }
-                }
+                return redirect("/category");
+            }
 
+        }
+
+        foreach ($choices as $choice) {
+
+            if($likeness < 5)
+            {
+                $likeness++;
+                $result = new Result;
+                $result->choice_id = $choice;
+                $result->likeness = $likeness;
+                Auth::user()->results()->save($result);
             }
         }
+
         return redirect("/category");
     }
-
-
-
-
-
 }
