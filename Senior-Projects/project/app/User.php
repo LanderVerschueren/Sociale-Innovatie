@@ -38,6 +38,8 @@ class User extends Authenticatable {
 		return $this->hasMany('\App\Result');
 	}
 
+	//Controleren of de user al een result heeft met meegegeven elective.
+
 	public function hasNoResult(Elective $elective)
     {
         $results = $this->results()->get();
