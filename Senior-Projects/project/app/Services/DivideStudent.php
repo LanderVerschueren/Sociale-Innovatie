@@ -51,7 +51,7 @@ class DivideStudent {
 	 */
 	public function debug_random_pick( $random ) {
 		DB::table( 'results' )->truncate();
-		$students = User::where( 'is_admin', '0' )->get()->shuffle();
+		$students = User::where( 'is_admin', '0' )->get()->take(rand(150, 200))->shuffle();
 
 		$choices = $this->elective->choices;
 
