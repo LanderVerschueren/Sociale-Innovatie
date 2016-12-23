@@ -41,10 +41,12 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-
         $email = $request->email;
         $user = User::where("email", $email)->first();
-
+        if(!$user)
+        {
+            return $this->sendFailedLoginResponse($request);
+        }
         if($user->is_admin)
         {
             $this->validateLogin($request);
@@ -89,6 +91,7 @@ class LoginController extends Controller
 
     protected function attemptLoginStudent (Request $request)
     {
+
         $user = User::where("email", $request->email)->first();
         $checkStudent_id= $user->student_id;
 

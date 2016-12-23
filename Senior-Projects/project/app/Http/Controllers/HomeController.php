@@ -30,7 +30,14 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('index');
+        if(Auth::check())
+        {
+            return redirect("/category");
+        }
+        else{
+            return view('index');
+        }
+
     }
 
 
