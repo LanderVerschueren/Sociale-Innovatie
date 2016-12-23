@@ -5,7 +5,8 @@ select:focus {
 
 button:focus {
   outline: none;
-  background-color: $button-background-focus;
+  background-color: color("shades", "white");
+  color: color("shades", "black");
 }
 
 label {
