@@ -337,6 +337,10 @@ $shades: (
   "transparent":  transparent
 );
 
+$main-color: (
+  "main-color": #1d1d1b
+);
+
 $colors: (
   "materialize-red": $materialize-red,
   "red": $red,
@@ -358,7 +362,8 @@ $colors: (
   "brown": $brown,
   "blue-grey": $blue-grey,
   "grey": $grey,
-  "shades": $shades
+  "shades": $shades,
+  "main-color": $main-color
 );
 
 
