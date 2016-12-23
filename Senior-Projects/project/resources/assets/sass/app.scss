@@ -98,6 +98,8 @@ button {
 }
 
 %card_choice {
+	position: relative;
+
 	background-color: $main-color;
 	border-radius: 5px;
 	box-shadow: $shadow-elements;
@@ -111,7 +113,7 @@ button {
 	justify-content: center;
 	align-items: center;
 
-	a {
+	.card_choice_link, .card_choice_order_link {
 		width: 90%;
 		height: 90%;
 		padding: 5%;
@@ -135,16 +137,38 @@ button {
 	@extend %card_choice;
 
 	&:hover {
-		border: 2px $main-color solid;
-		border-radius: 5px;
 		background-color: white;
 
-		width: 263px;
-		height: 268px;
-
-		a {
+		.card_choice_link {
 			color: $main-color;
 		}
+
+		.card_choice_info {
+			color: $main-color;
+
+			i {
+				cursor: pointer;
+			}
+		}
+	}
+
+	.card_choice_info {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		position: absolute;
+		top: 10px;
+		right: 10px;
+
+		width: 20px;
+		height: 20px;
+
+		z-index: 10;
+
+		color: white;
+
+		pointer: cursor;
 	}
 }
 
@@ -166,13 +190,14 @@ button {
 }
 
 .card_choice_selected {
-	border: 2px $main-color solid;
+	border: none;
 	background-color: white;
 
-	width: 263px;
-	height: 268px;
+	.card_choice_link {
+		color: $main-color;
+	}
 
-	a {
+	.card_choice_info {
 		color: $main-color;
 	}
 }
@@ -216,8 +241,8 @@ nav {
 		border-radius: 5px;
 		background-color: rgb(29, 29, 27);
 	  	box-shadow: $shadow-elements;
-	  	width: 600px;
-	  	height: 600px;
+	  	width: 60%;
+	  	height: 70%;
 
 	  	display: flex;
 	  	justify-content: center;
@@ -254,12 +279,14 @@ content {
 	display: flex;
 	flex-direction: column;
 
-	margin-top: 5%;
 	margin-left: 20px;
 	margin-right: 20px;
 
+	box-sizing: border-box;
+	padding-top: 50px;
+
 	width: 80%;
-	height: 80%;
+	height: 85%;
 
 	.info {
 		width: 100%;

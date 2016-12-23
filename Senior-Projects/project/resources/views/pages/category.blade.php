@@ -3,6 +3,15 @@
 @section('content')
 
 <content>
+
+	<form id="logout-form" action="/logout" method="POST">
+		{{ csrf_field() }}
+		<input type="submit" value="logout" class="button">
+	</form>
+
+	@if($message)
+		<p>{{$message}}</p>
+		@endif
 	<h2>Categorie</h2>
 	<div class="info">
 		<ul>
