@@ -28,7 +28,8 @@ Route::post( '/import', 'AdminController@postImportStudents' );
 Route::get( '/keuzevak/{name}', 'AdminController@showChoicesFromElective' );
 Route::get( '/keuze/{id}', 'AdminController@showResultsFromChoice' );
 Route::get( '/klasgroep/{classgroup}', 'AdminController@showStudentsFromClassGroup' );
-
+Route::post( '/addElective', 'AdminController@addElective');
+Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective');
 
 Route::get( '/debug/pick/{random?}', function ( $random = false ) {
 	$elective       = \App\Elective::first();

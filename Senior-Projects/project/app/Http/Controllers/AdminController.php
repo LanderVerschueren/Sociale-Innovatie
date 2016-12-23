@@ -50,7 +50,7 @@ class AdminController extends Controller {
 	public function showResultsFromChoice( $id ) {
 		$results = Result::where( 'choice_id', $id )->get();
 		$choice  = Choice::find( $id );
-		$name    = $choice->choice;
+		$name    = 'Resultaten';
 
 		return view( 'admin.dashboard' )->with( [
 			'name'      => $name,
@@ -59,6 +59,97 @@ class AdminController extends Controller {
 			'users'     => '',
 			'groups'    => '',
 			'electives' => ''
+		] );
+	}
+
+	public function addElective( Request $request){
+
+		$this->validate($request,[
+            'name'=> 'required',
+            'start_date' => 'required',
+            'end_date' => 'required'
+        ]);
+
+		$elective = new Elective;
+
+		$elective->name = $request->name;
+		$elective->start_date = $request->start_date;
+ 		$elective->end_date = $request->end_date;
+
+ 		$elective->save();
+
+ 		$electives = Elective::all();
+ 		$name = 'Keuzevakken';
+ 		return view( 'admin.dashboard' )->with( [
+			'name'      => $name,
+			'electives' => $electives,
+			'groups'    => '',
+			'users'     => '',
+			'choices'   => '',
+			'results'   => ''
+		] );
+	}
+
+	public function editElective($name)
+    {
+        $elective = Elective::where( 'name', $name )->first();
+
+        if(!$elective){
+          abort(404);
+        }
+        return view('admin.elective.edit')->with('elective',$elective);
+    }
+
+    public function updateElective(Request $request, $id)
+    {
+      $this->validate($request,[
+            'name'=> 'required',
+            'start_date' => 'required',
+            'end_date' => 'required'
+        ]);
+      
+		$elective->name = $request->name;
+		$elective->start_date = $request->start_date;
+ 		$elective->end_date = $request->end_date;
+
+ 		$elective->save();
+	      return view( 'admin.dashboard' )->with( [
+				'name'      => $name,
+				'electives' => $electives,
+				'groups'    => '',
+				'users'     => '',
+				'choices'   => '',
+				'results'   => ''
+			] );
+    }
+
+	public function addChoiceToElective( Request $request, $name){
+
+		$this->validate($request,[
+            'choice'=> 'required',
+            'description' => 'required',
+            'minimum' => 'required|integer',
+            'maximum' => 'required|integer',
+        ]);
+
+		$elective = Elective::where( 'name', $name )->first();
+		$choices = Choice::where( 'elective_id', $elective->id )->get();
+		$choice = new Choice;
+
+		$choice->choice = $request->choice;
+		$choice->description = $request->description;
+		$choice->minimum = $request->minimum;
+		$choice->maximum = $request->maximum;
+		$choice->elective_id = $elective->id;
+
+		$choice->save();
+		return view( 'admin.dashboard' )->with( [
+			'name'      => $name,
+			'electives' => '',
+			'groups'    => '',
+			'users'     => '',
+			'choices'   => $choices,
+			'results'   => ''
 		] );
 	}
 
