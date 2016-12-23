@@ -50,10 +50,23 @@ textarea.materialize-textarea {
   box-sizing: content-box;
   transition: $input-transition;
 
+  // Disabled input style
+  &:disabled,
+  &[readonly="readonly"] {
+    color: $input-disabled-color;
+    border-bottom: $input-disabled-border;
+  }
+
+  // Disabled label style
+  &:disabled+label,
+  &[readonly="readonly"]+label {
+    color: $input-disabled-color;
+  }
 
   // Focused input style
   &:focus:not([readonly]) {
-    border-bottom: 2px solid $input-focus-color;
+    border-bottom: 1px solid $input-focus-color;
+    box-shadow: 0 1px 0 0 $input-focus-color;
   }
 
   // Focused label style
@@ -64,7 +77,7 @@ textarea.materialize-textarea {
   // Valid Input Style
   &.valid,
   &:focus.valid {
-    border-bottom: 2px solid $input-success-color;
+    border-bottom: 1px solid $input-success-color;
     box-shadow: 0 1px 0 0 $input-success-color;
   }
 
@@ -142,7 +155,7 @@ textarea.materialize-textarea {
     position: absolute;
     top: 0.8rem;
     left: 0;
-    font-size: 24px;
+    font-size: 1rem;
     cursor: text;
     transition: .2s ease-out;
   }
@@ -262,7 +275,7 @@ textarea {
   position: static;
 
   li {
-    .highlight { color: white; }
+    .highlight { color: #444; }
 
     img {
       height: $dropdown-item-height - 10;

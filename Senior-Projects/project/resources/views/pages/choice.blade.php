@@ -27,6 +27,9 @@
                 @foreach($choices as $choice)                
                     <div class="card_choice" id="{{ $choice->choice }}">
                         <a class="card_choice_link" href="{{ $choice->choice }}">{{$choice->choice}}</a>
+                        <a class="card_choice_info">
+                            <i class="fa fa-info-circle" id="{{ $choice->id }}" aria-hidden="true"></i>
+                        </a>
                         <input type="checkbox" name="{{$choice->choice}}" value="{{$choice->id}}">
                     </div>
                 @endforeach
