@@ -42,4 +42,10 @@ $('.card_choice_order_link').click(function(event) {
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+ $('#modal1').modal({
+    in_duration: 250,
+    out_duration: 150,
+    ending_top: '15%'
+ });
+
 require('./bootstrap');
