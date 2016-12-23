@@ -12,6 +12,13 @@
                     @endif
                 </div>
                 @if($electives != null)
+                <form method="POST" action="{{ url('/addElective') }}">
+                    {{ csrf_field() }}
+                    <label for="name">Naam keuzevak: </label><input type="text" name="name">
+                    <label for="start_date">Begindatum: </label><input type="date" name="start_date">
+                    <label for="end_date">Einddatum: </label><input type="date" name="end_date">
+                    <button type="submit" class="btn btn-primary">Voeg keuzevak toe</button>
+                </form>
                 <ul>
                     @foreach($electives as $elective)
                         <li><a href="{{ url('/keuzevak/'.$elective->name) }}">{{ $elective->name }}</a></li>
@@ -19,6 +26,15 @@
                 </ul>
                 @endif
                 @if($choices != null)
+                <form method="POST" action="{{ url('/addChoice/'.$name) }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="{{ $name }}">
+                    <label for="choice">Naam keuze:</label><input type="text" name="choice">
+                    <label for="description">Beschrijving:</label><input type="textarea" name="description">
+                    <label for="minimum">Min. aantal mensen:</label><input type="number" name="minimum">
+                    <label for="maximum">Max. aantal mensen:</label><input type="number" name="maximum">
+                    <button type="submit" class="btn btn-primary">Voeg keuze toe</button>
+                </form>
                 <ul>
                     @foreach($choices as $choice)
                         <li><a href="{{ url('/keuze/'.$choice->id) }}">{{ $choice->choice }}</a></li>
