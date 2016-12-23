@@ -1377,16 +1377,16 @@
         },
         {
             "name": "orangehill/iseed",
-            "version": "v2.2",
+            "version": "v2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/orangehill/iseed.git",
-                "reference": "e94c5a05742ff5e29ddf34a27fcfddbec7712fd4"
+                "reference": "383608d85bdabac53f293b3a63059ca82bad4eec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/orangehill/iseed/zipball/e94c5a05742ff5e29ddf34a27fcfddbec7712fd4",
-                "reference": "e94c5a05742ff5e29ddf34a27fcfddbec7712fd4",
+                "url": "https://api.github.com/repos/orangehill/iseed/zipball/383608d85bdabac53f293b3a63059ca82bad4eec",
+                "reference": "383608d85bdabac53f293b3a63059ca82bad4eec",
                 "shasum": ""
             },
             "require": {
@@ -1394,6 +1394,7 @@
             },
             "require-dev": {
                 "illuminate/filesystem": "5.x",
+                "laravel/framework": "~5.3.8",
                 "mockery/mockery": "dev-master"
             },
             "type": "library",
@@ -1422,7 +1423,7 @@
                 "laravel",
                 "seed"
             ],
-            "time": "2016-09-14 07:59:34"
+            "time": "2016-12-22 10:12:20"
         },
         {
             "name": "paragonie/random_compat",
@@ -3181,16 +3182,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.3",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929"
+                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/903fd6318d0a90b4770a009ff73e4a4e9c437929",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/c14196e64a78570034afd0b7a9f3757ba71c2a0a",
+                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a",
                 "shasum": ""
             },
             "require": {
@@ -3240,7 +3241,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-11-28 16:00:31"
+            "time": "2016-12-20 15:22:42"
         },
         {
             "name": "phpunit/php-file-iterator",

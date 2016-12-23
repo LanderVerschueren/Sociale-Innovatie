@@ -17,7 +17,7 @@ class StudentController extends Controller
         $this->middleware('auth');
     }
 
-    public function index() {
+    public function index(Request $request) {
 
         //De electives van de student ophalen.
         //Het ophalen gaat via een paar tables. Eerst de classgroup, via de classgroup naar de choice_class_group.
@@ -27,10 +27,10 @@ class StudentController extends Controller
         //En wanneer de user nog geen result heeft opgeslagen van deze elective.
 
         $class_group_id = Auth::user()->class_group_id;
-        $choice_class_group = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
+        $choice_class_groups = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
         $electiveIds = [];
 
-        foreach($choice_class_group as $choice_class_group)
+        foreach($choice_class_groups as $choice_class_group)
         {
             $choice = Choice::where('id', $choice_class_group->choice_id)->first();
             array_push($electiveIds, $choice->elective_id);
@@ -43,12 +43,10 @@ class StudentController extends Controller
         foreach ($uniqueElectivesId as $id)
         {
             $elective = Elective::where('id', $id)->first();
+            debug($elective->name);
             $thisDate = date("Y-m-d G:i:s");
-            //$thisDate = '2016-12-08 12:12:12';
-            debug($thisDate);
             $beginDate = $elective->start_date;
             $endDate = $elective->end_date;
-            debug($thisDate . "  " . $endDate);
             if(($thisDate<=$endDate) && ($thisDate>=$beginDate))
             {
                 if(Auth::user()->hasNoResult($elective))
@@ -58,22 +56,26 @@ class StudentController extends Controller
             }
         }
 
-        return view('pages.category', compact('electives'));
+        $message = $request->session()->get('status');
+
+        return view('pages.category', compact('electives', 'message'));
     }
 
-
-
-
-    public function choices(Elective $elective)
+    public function choices(Elective $elective, Request $request)
     {
         //Al de keuzes van de geslecteerde Elective tonen.
-
-        $choices = Choice::where('elective_id', $elective->id)->get();
-
-        return view('pages.choice', compact('choices'));
+        if(Auth::user()->hasNoResult($elective))
+        {
+            $choices = Choice::where('elective_id', $elective->id)->get();
+            $message = $request->session()->get('status');
+            return view('pages.choice', compact('choices', 'message'));
+        }
+        else{
+            $request->session()->flash('status', 'Je hebt je resultaten hiervoor al doorgestuurd.');
+            return redirect("/category");
+        }
 
     }
-
 
     public function store_choice(Request $request)
     {
@@ -94,6 +96,7 @@ class StudentController extends Controller
                 }
                 else
                 {
+                    $request->session()->flash('status', 'Je moet 6 vakken aanduiden!');
                     return back()->withInput();
                 }
             }
@@ -113,9 +116,6 @@ class StudentController extends Controller
         return view("pages.choiceOrder", compact('choices'));
     }
 
-
-
-
     public function store_order(Request $request)
     {
 
@@ -131,6 +131,7 @@ class StudentController extends Controller
 
         if($amount != 6)
         {
+            $request->session()->flash('status', 'Er is iets fout gegaan.');
             return redirect("/category");
         }
 
@@ -142,6 +143,7 @@ class StudentController extends Controller
             $newResult = Result::where([['choice_id', $choice], ['user_id', Auth::user()->id]])->first();
             if($newResult)
             {
+                $request->session()->flash('status', 'Er is iets fout gegaan.');
                 return redirect("/category");
             }
 

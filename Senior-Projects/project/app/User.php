@@ -40,6 +40,7 @@ class User extends Authenticatable {
 
 	//Controleren of de user al een result heeft met meegegeven elective.
 
+
 	public function hasNoResult(Elective $elective)
     {
         $results = $this->results()->get();
