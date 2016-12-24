@@ -39,6 +39,7 @@ class StudentController extends Controller
         $uniqueElectivesId = array_unique ( $electiveIds );
 
         $electives = [];
+        $passiveElectives = [];
 
         foreach ($uniqueElectivesId as $id)
         {
@@ -53,12 +54,16 @@ class StudentController extends Controller
                 {
                     array_push($electives, $elective);
                 }
+                else
+                {
+                    array_push($passiveElectives, $elective);
+                }
             }
         }
 
         $message = $request->session()->get('status');
 
-        return view('pages.category', compact('electives', 'message'));
+        return view('pages.category', compact('electives', 'passiveElectives' , 'message'));
     }
 
     public function choices(Elective $elective, Request $request)
@@ -66,7 +71,15 @@ class StudentController extends Controller
         //Al de keuzes van de geslecteerde Elective tonen.
         if(Auth::user()->hasNoResult($elective))
         {
-            $choices = Choice::where('elective_id', $elective->id)->get();
+            $class_group_id = Auth::user()->class_group_id;
+            $choice_class_groups = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
+            $choices = [];
+            foreach ($choice_class_groups as $choice_class_group)
+            {
+                $newChoice = Choice::where('id', $choice_class_group->choice_id)->first();
+                array_push($choices, $newChoice);
+            }
+
             $message = $request->session()->get('status');
             return view('pages.choice', compact('choices', 'message'));
         }
@@ -161,6 +174,7 @@ class StudentController extends Controller
             }
         }
 
+        $request->session()->flash('status', "Je keuze is geregistreerd.");
         return redirect("/category");
     }
 }
