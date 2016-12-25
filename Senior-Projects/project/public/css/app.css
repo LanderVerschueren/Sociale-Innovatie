@@ -1,4 +1,212 @@
+/*!
+ * Bootstrap v3.3.7 (http://getbootstrap.com)
+ * Copyright 2011-2016 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/*
+// Reset and dependencies
+@import "bootstrap/normalize";
+@import "bootstrap/print";
+@import "bootstrap/glyphicons";
+
+// Core CSS
+@import "bootstrap/scaffolding";
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
+
+// Components
+@import "bootstrap/component-animations";
+@import "bootstrap/dropdowns";
+@import "bootstrap/button-groups";
+@import "bootstrap/input-groups";
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+@import "bootstrap/breadcrumbs";
+@import "bootstrap/pagination";
+@import "bootstrap/pager";
+@import "bootstrap/labels";
+@import "bootstrap/badges";
+@import "bootstrap/jumbotron";
+@import "bootstrap/thumbnails";
+@import "bootstrap/alerts";
+@import "bootstrap/progress-bars";
+@import "bootstrap/media";
+@import "bootstrap/list-group";
+@import "bootstrap/panels";
+@import "bootstrap/responsive-embed";
+@import "bootstrap/wells";
+@import "bootstrap/close";
+*/
 @import url("https://fonts.googleapis.com/css?family=Roboto");
+.modal-open {
+  overflow: hidden;
+}
+
+.modal {
+  display: none;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+  -webkit-overflow-scrolling: touch;
+  outline: 0;
+}
+
+.modal.fade .modal-dialog {
+  -webkit-transform: translate(0, -25%);
+  transform: translate(0, -25%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  transition: -webkit-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+  transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+}
+
+.modal.in .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  transform: translate(0, 0);
+}
+
+.modal-open .modal {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.modal-dialog {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
+
+.modal-content {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #999;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  background-clip: padding-box;
+  outline: 0;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background-color: #000;
+}
+
+.modal-backdrop.fade {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.modal-backdrop.in {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+
+.modal-header {
+  padding: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header:before, .modal-header:after {
+  content: " ";
+  display: table;
+}
+
+.modal-header:after {
+  clear: both;
+}
+
+.modal-header .close {
+  margin-top: -2px;
+}
+
+.modal-title {
+  margin: 0;
+  line-height: 1.428571429;
+}
+
+.modal-body {
+  position: relative;
+  padding: 15px;
+}
+
+.modal-footer {
+  padding: 15px;
+  text-align: right;
+  border-top: 1px solid #e5e5e5;
+}
+
+.modal-footer:before, .modal-footer:after {
+  content: " ";
+  display: table;
+}
+
+.modal-footer:after {
+  clear: both;
+}
+
+.modal-footer .btn + .btn {
+  margin-left: 5px;
+  margin-bottom: 0;
+}
+
+.modal-footer .btn-group .btn + .btn {
+  margin-left: -1px;
+}
+
+.modal-footer .btn-block + .btn-block {
+  margin-left: 0;
+}
+
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+  .modal-content {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
+  .modal-sm {
+    width: 300px;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-lg {
+    width: 900px;
+  }
+}
+
+/*
+@import "bootstrap/tooltip";
+@import "bootstrap/popovers";
+@import "bootstrap/carousel";
+
+// Utility classes
+@import "bootstrap/utilities";
+@import "bootstrap/responsive-utilities";
+*/
 .materialize-red {
   background-color: #e51c23 !important;
 }
@@ -2175,6 +2383,18 @@ $button-floating-color: #fff !default;
 $button-floating-size: 40px !default;
 $button-floating-large-size: 56px !default;
 $button-floating-radius: 50% !default;*/
+/* Webfont: KdG-Regular */
+@font-face {
+  font-family: 'KdG';
+  src: url("../fonts/KdG-Regular.eot");
+  /* IE9 Compat Modes */
+  src: url("../fonts/KdG-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/KdG-Regular.woff") format("woff"), url("../fonts/KdG-Regular.ttf") format("truetype"), url("../fonts/KdG-Regular.svg#KdG-Regular") format("svg");
+  /* Legacy iOS */
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -2189,7 +2409,7 @@ ul:not(.browser-default) li {
 }
 
 a {
-  color: #039be5;
+  color: #337ab7;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -2513,7 +2733,7 @@ table {
 
 table.bordered > thead > tr,
 table.bordered > tbody > tr {
-  border-bottom: 1px solid #d0d0d0;
+  border-bottom: 1px solid #ddd;
 }
 
 table.striped > tbody > tr:nth-child(odd) {
@@ -2538,7 +2758,7 @@ table.centered thead tr th, table.centered tbody tr td {
 }
 
 thead {
-  border-bottom: 1px solid #d0d0d0;
+  border-bottom: 1px solid #ddd;
 }
 
 td, th {
@@ -2605,7 +2825,7 @@ td, th {
   }
   table.responsive-table thead {
     border: 0;
-    border-right: 1px solid #d0d0d0;
+    border-right: 1px solid #ddd;
   }
   table.responsive-table.bordered th {
     border-bottom: 0;
@@ -2620,7 +2840,7 @@ td, th {
     border: 0;
   }
   table.responsive-table.bordered tbody tr {
-    border-right: 1px solid #d0d0d0;
+    border-right: 1px solid #ddd;
   }
 }
 
@@ -2805,7 +3025,7 @@ nav ul a span.badge {
   height: 4px;
   display: block;
   width: 100%;
-  background-color: #acece6;
+  background-color: white;
   border-radius: 2px;
   margin: 0.5rem 0 1rem 0;
   overflow: hidden;
@@ -2816,13 +3036,13 @@ nav ul a span.badge {
   top: 0;
   left: 0;
   bottom: 0;
-  background-color: #26a69a;
+  background-color: #fff;
   -webkit-transition: width .3s linear;
   transition: width .3s linear;
 }
 
 .progress .indeterminate {
-  background-color: #26a69a;
+  background-color: #fff;
 }
 
 .progress .indeterminate:before {
@@ -2994,26 +3214,38 @@ input[type=range] + .thumb {
   margin-top: 0;
 }
 
-.modal .modal-content {
+.modal .modal-header {
   padding: 24px;
+  font-family: 'KdG';
 }
 
 .modal .modal-close {
   cursor: pointer;
 }
 
-.modal .modal-footer {
+.modal .modal-content {
   box-sizing: border-box;
   border-radius: 0 0 2px 2px;
-  background-color: #1d1d1b;
+  background-color: #FFFFFF;
   padding: 8px 12px;
-  height: 56px;
   width: 100%;
+  color: #1d1d1b;
+  font-family: "Roboto", serif;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
 }
 
-.modal .modal-footer .btn, .modal .modal-footer .btn-flat {
-  float: right;
-  margin: 6px 0;
+.modal .modal-content a {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  align-self: center;
 }
 
 .modal-overlay {
@@ -3111,7 +3343,7 @@ input[type=search],
 textarea.materialize-textarea {
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: #ccc;
   border-radius: 0;
   outline: none;
   height: 3rem;
@@ -3985,7 +4217,7 @@ select {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid #FFFFFF;
+  border-bottom: #ccc;
   outline: none;
   height: 3rem;
   line-height: 3rem;
@@ -5105,18 +5337,6 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   }
 }
 
-/* Webfont: KdG-Regular */
-@font-face {
-  font-family: 'KdG';
-  src: url("../fonts/KdG-Regular.eot");
-  /* IE9 Compat Modes */
-  src: url("../fonts/KdG-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/KdG-Regular.woff") format("woff"), url("../fonts/KdG-Regular.ttf") format("truetype"), url("../fonts/KdG-Regular.svg#KdG-Regular") format("svg");
-  /* Legacy iOS */
-  font-style: normal;
-  font-weight: normal;
-  text-rendering: optimizeLegibility;
-}
-
 html, body {
   width: 100%;
   height: 100%;
@@ -5150,7 +5370,7 @@ h2 {
   padding: 0;
 }
 
-button {
+button, .button {
   font-family: "KdG";
   font-size: 30px;
   color: white;
@@ -5164,7 +5384,7 @@ button {
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-button:hover {
+button:hover, .button:hover {
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   cursor: pointer;
 }

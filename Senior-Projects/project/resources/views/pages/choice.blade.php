@@ -30,8 +30,8 @@
                 @foreach($choices as $choice)                
                     <div class="card_choice" id="{{ $choice->choice }}">
                         <a class="card_choice_link" href="{{ $choice->choice }}">{{$choice->choice}}</a>
-                        <a class="card_choice_info modal-trigger" href="#modal1">
-                            <i class="fa fa-info-circle" id="{{ $choice->id }}" aria-hidden="true"></i>
+                        <a class="card_choice_info modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#favoritesModal">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </a>
                         <input type="checkbox" name="{{$choice->choice}}" value="{{$choice->id}}">
                     </div>
@@ -44,15 +44,37 @@
     </div>
 </content>
 
-<div id="modal1" class="modal">
+<div class="modal fade" id="favoritesModal" 
+     tabindex="-1" role="dialog" 
+     aria-labelledby="favoritesModalLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+      <div class="modal-header">
+        <button type="button" class="close" 
+          data-dismiss="modal" 
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" 
+        id="favoritesModalLabel">The Sun Also Rises</h4>
+      </div>
+      <div class="modal-body">
+        <p>
+        Please confirm you would like to add 
+        <b><span id="fav-title">The Sun Also Rises</span></b> 
+        to your favorites list.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" 
+           class="btn btn-default" 
+           data-dismiss="modal">Close</button>
+        <span class="pull-right">
+          <button type="button" class="btn btn-primary">
+            Add to Favorites
+          </button>
+        </span>
+      </div>
     </div>
   </div>
-
-
+</div>
 @endsection

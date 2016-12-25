@@ -41,11 +41,13 @@ $('.card_choice_order_link').click(function(event) {
  * include Vue and Vue Resource. This gives a great starting point for
  * building robust, powerful web applications using Vue and Laravel.
  */
-
- $('#modal1').modal({
-    in_duration: 250,
-    out_duration: 150,
-    ending_top: '15%'
- });
+ 
 
 require('./bootstrap');
+
+$(function() {
+    $('#favoritesModal').on("show.bs.modal", function (e) {
+         $("#favoritesModalLabel").html($(e.relatedTarget).data('title'));
+         $("#fav-title").html($(e.relatedTarget).data('title'));
+    });
+});

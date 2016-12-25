@@ -272,6 +272,20 @@ $toast-text-color: #fff !default;
 // 20. Typography
 // ==========================================================================
 
+/* Webfont: KdG-Regular */@font-face {
+    font-family: 'KdG';
+    src: url('../fonts/KdG-Regular.eot'); /* IE9 Compat Modes */
+    src: url('../fonts/KdG-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/KdG-Regular.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/KdG-Regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/KdG-Regular.svg#KdG-Regular') format('svg'); /* Legacy iOS */
+    font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+$roboto: 'Roboto', serif;
+
 $off-black: rgba(0, 0, 0, 0.87) !default;
 // Header Styles
 $h1-fontsize: 4.2rem !default;
