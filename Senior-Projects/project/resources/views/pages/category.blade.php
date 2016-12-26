@@ -11,8 +11,8 @@
 
 	@if($message)
 		<p>{{$message}}</p>
-		@endif
-	<h2>Categorie</h2>
+	@endif
+	<h2>Keuzevakken</h2>
 	<div class="info">
 		<ul>
 			<li>
