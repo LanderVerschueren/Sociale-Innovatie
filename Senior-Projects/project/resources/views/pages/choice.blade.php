@@ -30,7 +30,7 @@
                 @foreach($choices as $choice)                
                     <div class="card_choice" id="{{ $choice->choice }}">
                         <a class="card_choice_link" href="{{ $choice->choice }}">{{$choice->choice}}</a>
-                        <a class="card_choice_info modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#favoritesModal">
+                        <a class="card_choice_info modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#descriptionModal" data-title="{{ $choice->choice }}" data-description="{{ $choice->description }}">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </a>
                         <input type="checkbox" name="{{$choice->choice}}" value="{{$choice->id}}">
@@ -38,41 +38,23 @@
                 @endforeach
             </div>
             <div class="container_button">
-                <button type="submit">Bevestig</button>
+                <button type="submit" class="button">Bevestig</button>
             </div>
         </form>
     </div>
 </content>
 
-<div class="modal fade" id="favoritesModal" 
-     tabindex="-1" role="dialog" 
-     aria-labelledby="favoritesModalLabel">
+<div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" 
-          data-dismiss="modal" 
-          aria-label="Close">
-          <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" 
-        id="favoritesModalLabel">The Sun Also Rises</h4>
+        <h1 class="modal-title" id="descriptionModalLabel"></h1>
       </div>
       <div class="modal-body">
-        <p>
-        Please confirm you would like to add 
-        <b><span id="fav-title">The Sun Also Rises</span></b> 
-        to your favorites list.
-        </p>
+        <p id="descriptionModalParagraph"></p>
       </div>
       <div class="modal-footer">
-        <button type="button" 
-           class="btn btn-default" 
-           data-dismiss="modal">Close</button>
-        <span class="pull-right">
-          <button type="button" class="btn btn-primary">
-            Add to Favorites
-          </button>
-        </span>
+        <button type="button" class="button" data-dismiss="modal">Sluiten</button>
       </div>
     </div>
   </div>

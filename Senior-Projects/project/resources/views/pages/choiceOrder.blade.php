@@ -32,15 +32,10 @@
 				@endforeach
 			</div>
 			<div class="container_button">
-                <button type="submit">Bevestig</button>
+                <button type="submit" class="button">Bevestig</button>
             </div>
         </form>
     </div>
 </content>
 
-				<!--
-				<p>{{$choice->choice}}</p>
-				<input type="number" name="{{$choice->id}}">
-				<input type="number" name="{{$choice->id}}" id="{{ $choice->choice }}">
-				-->
 @endsection

@@ -10,15 +10,15 @@
                 <label for="emailadres">E-mailadres</label>
                 @if ($errors->has('email'))
                     <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
                 @endif
             </div>
             <div class="input-field">
                 <input id="studentennummer" type="text" class="" name="student_id" value="0113578-88">
                 <label for="studentennummer">Studentennummer</label>
             </div>
-            <button type="submit" class="button_bevestig">Inloggen</button>
+            <button type="submit" class="button button_bevestig">Inloggen</button>
         </form>
     </div>
 </div>

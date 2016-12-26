@@ -46,8 +46,9 @@ $('.card_choice_order_link').click(function(event) {
 require('./bootstrap');
 
 $(function() {
-    $('#favoritesModal').on("show.bs.modal", function (e) {
-         $("#favoritesModalLabel").html($(e.relatedTarget).data('title'));
-         $("#fav-title").html($(e.relatedTarget).data('title'));
+    $('#descriptionModal').on("show.bs.modal", function (e) {
+      console.log($(e.relatedTarget).data( 'title' ));
+         $("#descriptionModalLabel").html($(e.relatedTarget).data('title'));
+         $("#descriptionModalParagraph").html($(e.relatedTarget).data('title'));
     });
 });
