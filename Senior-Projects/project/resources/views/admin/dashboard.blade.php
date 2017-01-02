@@ -11,6 +11,7 @@
                         {{ $name }}
                     @endif
                 </div>
+                <!-- oplijsting van keuzevakken met knop om een keuzevak toe te voegen -->
                 @if($electives != null)
                 <form method="POST" action="{{ url('/addElective') }}">
                     {{ csrf_field() }}
@@ -25,6 +26,7 @@
                     @endforeach
                 </ul>
                 @endif
+                <!-- lijst van keuzes met van de keuzevakken-->
                 @if($choices != null)
                 <form method="POST" action="{{ url('/addChoice/'.$name) }}">
                     {{ csrf_field() }}
@@ -41,6 +43,7 @@
                     @endforeach
                 </ul>
                 @endif
+                <!-- oplijsting van de resultaten van een bepaalde keuze -->
                 @if($results != null)
                 <ul>
                     @foreach($results as $result)
