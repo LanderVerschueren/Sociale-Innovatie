@@ -282,13 +282,20 @@ content {
 		width: 100%;
 		margin-bottom: 5%;
 
+		display: flex;
+		justify-content: space-between;
+
 		ul {
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
 
+			width: 40%;
+
 			li {
 				font-family: $roboto;
+				display: flex;
+				justify-content: space-between;
 
 				.label {
 					display: inline-block;
@@ -297,7 +304,7 @@ content {
 					width: 20%;
 				}
 
-				.info {
+				.data {
 					font-size: 24px;
 				}
 			}

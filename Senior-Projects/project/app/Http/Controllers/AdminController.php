@@ -22,7 +22,7 @@ class AdminController extends Controller {
 		$electives = Elective::all();
 		$name      = 'Keuzevakken';
 
-		return view( 'admin.category' )->with( [
+		return view( 'admin.admin_category' )->with( [
 			'name'      => $name,
 			'electives' => $electives,
 			'groups'    => '',
@@ -37,7 +37,7 @@ class AdminController extends Controller {
 		$choices  = Choice::where( 'elective_id', $elective->id )->get();
 		$name     = $name;
 
-		return view( 'admin.choice' )->with( [
+		return view( 'admin.admin_choice' )->with( [
 			'name'      => $name,
 			'choices'   => $choices,
 			'users'     => '',
@@ -52,7 +52,7 @@ class AdminController extends Controller {
 		$choice  = Choice::find( $id );
 		$name    = 'Resultaten';
 
-		return view( 'admin.dashboard' )->with( [
+		return view( 'admin.admin_results' )->with( [
 			'name'      => $name,
 			'results'   => $results,
 			'choices'   => '',

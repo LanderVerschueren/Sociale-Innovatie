@@ -12,11 +12,12 @@
 			@endif
 			</li>
 		</ul>
+		<button class="button"></button>
 	</div>
 	<div class="category">
-		@foreach($choices as $choice)
+		@foreach($electives as $elective)
 			<div class="card_category">
-				<a href="{{ url('/keuze/'.$choice->id) }}">{{ $choice->choice }}</a>
+				<a href="/keuzevak/{{ $elective->name }}">{{$elective->name}}</a>
 			</div>
 	    @endforeach
     </div>
