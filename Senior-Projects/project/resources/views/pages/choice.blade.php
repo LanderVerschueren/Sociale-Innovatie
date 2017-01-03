@@ -6,27 +6,33 @@
     @if($message)
         <p>{{$message}}</p>
     @endif
-    <h2>Keuze</h2>
+    <header>
+        <h2>Keuze</h2>        
+        <form id="logout-form" action="/logout" method="POST">
+            {{ csrf_field() }}
+            <button type="submit" class="button">Uitloggen</button>
+        </form>
+    </header>
     <div class="info">
         <ul>
             <li>
                 <span class="label">Naam:</span>
-                <span class="info">{{Auth::user()->first_name}} {{Auth::user()->surname}}</span>
+                <span class="data">{{Auth::user()->first_name}} {{Auth::user()->surname}}</span>
             </li>
             <li>
                 <span class="label">E-mailadres:</span>
-                <span class="info">{{Auth::user()->email}}</span>
+                <span class="data">{{Auth::user()->email}}</span>
             </li>
             <li>
                 <span class="label">Studentennummer:</span>
-                <span class="info">{{Auth::user()->student_id}}</span>
+                <span class="data">{{Auth::user()->student_id}}</span>
             </li>
         </ul>
     </div>
     <div class="choice">
         <form action="/rightOrder" method="post">
             {{ csrf_field() }}
-            <div>
+            <div class="card_container">
                 @foreach($choices as $choice)                
                     <div class="card_choice" id="{{ $choice->choice }}">
                         <a class="card_choice_link" href="{{ $choice->choice }}">{{$choice->choice}}</a>

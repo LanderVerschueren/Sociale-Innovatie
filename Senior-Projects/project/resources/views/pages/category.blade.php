@@ -6,7 +6,13 @@
 	@if($message)
 		<p>{{ $message }}</p>
 	@endif
-	<h2>Keuzevakken</h2>
+	<header>
+		<h2>Keuzevakken</h2>		
+		<form id="logout-form" action="/logout" method="POST">
+			{{ csrf_field() }}
+		 	<button type="submit" class="button">Uitloggen</button>
+		</form>
+	</header>
 	<div class="info">
 		<ul>
 			<li>
@@ -22,11 +28,6 @@
 				<span class="data">{{ Auth::user()->student_id }}</span>
 			</li>
 		</ul>
-
-		<form id="logout-form" action="/logout" method="POST">
-			{{ csrf_field() }}
-		 	<button type="submit" class="button">Uitloggen</button>
-		</form>
 	</div>
 	<div class="category">
 		@foreach($electives as $elective)

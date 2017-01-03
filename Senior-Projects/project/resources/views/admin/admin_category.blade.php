@@ -8,7 +8,7 @@
 		<ul>
 			<li>
 			@if($name != null)
-				<span class="info">{{ $name }}</span>
+				<span class="data">{{ $name }}</span>
 			@endif
 			</li>
 		</ul>

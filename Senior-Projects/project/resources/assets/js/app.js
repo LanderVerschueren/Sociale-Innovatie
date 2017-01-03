@@ -14,7 +14,8 @@ $('.card_choice_link').click(function(event) {
 
 $( "#sortable" ).sortable({
     placeholder: "card_choice_order_drag",
-    tolerance: "pointer"
+    tolerance: "pointer",
+    containment: "parent"
     /*,
     update: function( event, ui ) {
     	var order = []; 

@@ -3,20 +3,26 @@
 @section('content')
 
 <content>
-    <h2>Keuze</h2>
+    <header>
+        <h2>Keuze</h2>        
+        <form id="logout-form" action="/logout" method="POST">
+            {{ csrf_field() }}
+            <button type="submit" class="button">Uitloggen</button>
+        </form>
+    </header>
     <div class="info">
         <ul>
             <li>
                 <span class="label">Naam:</span>
-                <span class="info">Naam student</span>
+                <span class="data">Naam student</span>
             </li>
             <li>
                 <span class="label">E-mailadres:</span>
-                <span class="info">E-mailadres student</span>
+                <span class="data">E-mailadres student</span>
             </li>
             <li>
                 <span class="label">Studentennummer:</span>
-                <span class="info">Studentennummer student</span>
+                <span class="data">Studentennummer student</span>
             </li>
         </ul>
     </div>
@@ -27,7 +33,7 @@
 	            @foreach($choices as $choice)
 					<div class="card_choice_order" id="{{ $choice->choice }}">
 	                    <a class="card_choice_order_link" href="">{{$choice->choice}}</a>
-	                   <input type="hidden" name="choice[]" value="{{ $choice->id }}">
+	                    <input type="hidden" name="choice[]" value="{{ $choice->id }}">
 	                </div>
 				@endforeach
 			</div>

@@ -1,10 +1,13 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "materialize.scss";
+//@import "materialize.scss";
 
 $main-color: #1d1d1b;
 $btn-color: #ac5a96;
 $shadow-nav: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
 $shadow-elements: 0px 27px 24px 0px rgba(0, 0, 0, 0.2),0px 40px 70px 0px rgba(0, 0, 0, 0.22);
+$break-xl: 1450px;
+$break-large: 1200px;
+$break-small: 600px;
 
 html, body {
 	width: 100%;
@@ -171,6 +174,8 @@ h2 {
 	border-radius: 5px;
 	background-color: white;
 
+	margin-bottom: 5%;
+
 	width: 263px;
 	height: 268px;
 
@@ -278,8 +283,18 @@ content {
 	width: 80%;
 	height: 85%;
 
+	header {
+		width: 100%;
+		min-height: 50px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-flow: row wrap;
+	}
+
 	.info {
 		width: 100%;
+		min-height: 35px;
 		margin-bottom: 5%;
 
 		display: flex;
@@ -291,15 +306,32 @@ content {
 			padding: 0;
 
 			width: 40%;
+			transition: width 1s;
+
+			@media screen and ( max-width: $break-xl ) {
+				width: 50%;
+				transition: width 1s;
+			}
+
+			@media screen and (max-width: $break-large) {
+				width: 100%;
+				transition: width 1s;
+			}
 
 			li {
 				font-family: $roboto;
 				display: flex;
 				justify-content: space-between;
+				align-items: flex-end;
+
+				@media screen and ( max-width: $break-small ) {
+					flex-direction: column;
+					align-items: flex-start;
+				}
 
 				.label {
 					display: inline-block;
-					font-size: 18px;
+					font-size: 16px;
 					color: $main-color;
 					width: 20%;
 				}
@@ -324,22 +356,24 @@ content {
 		width: 100%;
 		margin-top: 5%;
 
-		form {
-			div {
-				display: flex;
-				justify-content: space-between;
-				flex-flow: row wrap;
-			}
+		display: flex;
+		justify-content: center;
+		flex-flow: row wrap;
 
-			.container_button {
-					width: 267px;
-					height: 272px;
+		.card_container {
+			display: flex;
+			justify-content: space-between;
+			flex-flow: row wrap;
+		}
 
-					margin-bottom: 5%;
+		.container_button {
+			width: 267px;
+			height: 272px;
 
-					display: flex;
-					align-items: center;
-				}
+			margin-bottom: 5%;
+
+			display: flex;
+			align-items: center;
 		}
 	}
 }
