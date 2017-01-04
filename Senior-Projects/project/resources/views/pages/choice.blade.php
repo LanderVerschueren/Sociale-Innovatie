@@ -26,6 +26,9 @@
             </li>
         </ul>
     </div>
+
+        <p>Kies alstubliefd {{$choicesAmount}} vakken.</p>
+
     <div class="choice">
         <p class="guide">Selecteer vakken die je graag zou volgen</p>
         @if($message)

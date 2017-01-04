@@ -19,6 +19,7 @@ class CreateElectiveTable extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->softDeletes();
+            $table->integer('choicesAmount')->default(6);
             $table->timestamps();
         });
     }
