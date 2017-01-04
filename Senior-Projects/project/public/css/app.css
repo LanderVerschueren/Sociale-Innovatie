@@ -5649,4 +5649,16 @@ content .choice .container_button {
   align-items: center;
 }
 
+content .message {
+  font-family: "Roboto", serif;
+  font-size: 24px;
+  color: #cc0000;
+}
+
+content .guide {
+  font-family: 'KdG';
+  font-size: 48px;
+  color: #1d1d1b;
+}
+
 /*# sourceMappingURL=app.css.map */
