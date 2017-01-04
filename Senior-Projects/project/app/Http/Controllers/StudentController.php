@@ -109,7 +109,7 @@ class StudentController extends Controller
                 }
                 else
                 {
-                    $request->session()->flash('status', 'Je moet 6 vakken aanduiden!');
+                    $request->session()->flash('status', 'Je mag maar 6 vakken aanduiden!');
                     return back()->withInput();
                 }
             }
@@ -117,6 +117,7 @@ class StudentController extends Controller
 
         if($choice_counter)
         {
+            $request->session()->flash('status', 'Je moet 6 vakken aanduiden!');
             return back()->withInput();
         }
 
@@ -156,7 +157,7 @@ class StudentController extends Controller
             $newResult = Result::where([['choice_id', $choice], ['user_id', Auth::user()->id]])->first();
             if($newResult)
             {
-                $request->session()->flash('status', 'Er is iets fout gegaan.');
+                $request->session()->flash('status', 'Je hebt je keuze al doorgestuurd.');
                 return redirect("/category");
             }
 
