@@ -42,7 +42,7 @@ h2 {
 
 .button {
 	font-family: "KdG";
-	font-size: 30px;
+	font-size: 24px;
 	color: white;
 	height: 50px;
 	width: 268px;
@@ -59,10 +59,42 @@ h2 {
   	}
 }
 
+.modal {
+	.input-field {
+		input {
+			border-bottom: 1px solid $main-color;
+
+			&:focus {
+				border-bottom: 1px solid $main-color;
+			}
+		}
+
+		label {
+			color: $main-color!important;
+		}
+	}
+}
+
+.input-field {
+	input {
+		border-bottom: 1px solid white;
+
+		&:focus {
+			border-bottom: 1px solid white;
+		}
+	}
+
+	label {
+		color: white;
+	}
+}
+
 .card_category {
 	background-color: $main-color;
 	border-radius: 5px;
 	box-shadow: $shadow-elements;
+
+	margin-bottom: 5%;
 
 	width: 472px;
 	height: 315px;
@@ -106,12 +138,12 @@ h2 {
 	justify-content: center;
 	align-items: center;
 
-	.card_choice_link, .card_choice_order_link {
+	.card_choice_link, .card_choice_order_link, .card_choice_link_admin {
 		width: 90%;
 		height: 90%;
 		padding: 5%;
 		font-family: "KdG";
-		font-size: 30px;
+		font-size: 24px;
 		color: white;
 		text-decoration: none;
 		text-align: center;
@@ -132,7 +164,7 @@ h2 {
 	&:hover {
 		background-color: white;
 
-		.card_choice_link {
+		.card_choice_link, .card_choice_link_admin {
 			color: $main-color;
 		}
 
@@ -219,7 +251,6 @@ nav {
 
 		img {
 			width: 306px;
-			height: 70px;
 		}
 	}
 }
@@ -348,7 +379,7 @@ content {
 		margin-top: 5%;
 
 		display: flex;
-		justify-content: center;
+		justify-content: space-around;
 		flex-flow: row wrap;
 	}
 
@@ -377,3 +408,4 @@ content {
 		}
 	}
 }
+

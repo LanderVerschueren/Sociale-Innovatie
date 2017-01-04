@@ -84,7 +84,7 @@ class AdminController extends Controller {
 
  		$electives = Elective::all();
  		$name = 'Keuzevakken';
- 		return view( 'admin.dashboard' )->with( [
+ 		return view( 'admin.admin_category' )->with( [
 			'name'      => $name,
 			'electives' => $electives,
 			'groups'    => '',

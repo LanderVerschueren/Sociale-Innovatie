@@ -25,7 +25,7 @@
     <div class="container">
         <nav>
             <div class="inner_nav">
-                <img src="/images/KdG_logo.png" alt="KdG-logo wit" class="logo">
+                <a href="/"><img src="/images/KdG_H_Closed_White.png" alt="KdG-logo wit" class="logo"></a>
                 <h1 class="nav_text">Office Management - Keuzetool</h1>
             </div>
         </nav>

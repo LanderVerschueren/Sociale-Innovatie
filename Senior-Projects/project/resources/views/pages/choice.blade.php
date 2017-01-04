@@ -52,18 +52,18 @@
 </content>
 
 <div class="modal fade" id="descriptionModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title" id="descriptionModalLabel"></h1>
-      </div>
-      <div class="modal-body">
-        <p id="descriptionModalParagraph"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="button" data-dismiss="modal">Sluiten</button>
-      </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="descriptionModalLabel"></h1>
+            </div>
+            <div class="modal-body">
+                <p id="descriptionModalParagraph"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button" data-dismiss="modal">Sluiten</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 @endsection

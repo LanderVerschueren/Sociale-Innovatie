@@ -1,3 +1,9 @@
+$('#datepicker').datepicker();
+
+$('.card_choice_link_admin').click(function(event) {
+  event.preventDefault();
+});
+
 $('.card_choice_link').click(function(event) {
 	event.preventDefault();
 	console.log(this);
@@ -5,8 +11,6 @@ $('.card_choice_link').click(function(event) {
 	var choice_name = $(this).attr('href');
 	var id = "[id='" + choice_name + "']";
 	var checkBoxes = $("input[name='" + choice_name + "']");
-
-	console.log(checkBoxes);
 
 	$(id).toggleClass('card_choice_selected');
 	checkBoxes.prop("checked", !checkBoxes.prop("checked"));
@@ -53,3 +57,5 @@ $(function() {
          $("#descriptionModalParagraph").html($(e.relatedTarget).data('title'));
     });
 });
+
+
