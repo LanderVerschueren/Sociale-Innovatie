@@ -33,6 +33,22 @@
         @yield('content')
     </div>
 
+    <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title">Admin - Login</h1>
+                </div>
+                <div class="modal-body">
+                    Test
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="button" data-dismiss="modal">Sluiten</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script
         src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -45,6 +61,14 @@
         crossorigin="anonymous">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
+    @if(!empty(Session::get('error_code')) && Session::get('error_code') === 5)
+        <script>
+        console.log('test');
+            $(function() {
+                $('#adminModal').modal('show');
+            });
+        </script>
+    @endif
     <script src="/js/app.js"></script>
 </body>
 </html>

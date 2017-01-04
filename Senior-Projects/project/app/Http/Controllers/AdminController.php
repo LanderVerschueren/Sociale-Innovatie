@@ -11,11 +11,15 @@ use App\Elective;
 use App\Result;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
+use Session;
 
 class AdminController extends Controller {
 
-	public function login() {
-		return view( 'admin.login' );
+	public function login($request) {
+		session()->flash('test', 'test');
+		return redirect('/');
 	}
 
 	public function dashboard() {

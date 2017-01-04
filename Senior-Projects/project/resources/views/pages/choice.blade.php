@@ -6,6 +6,7 @@
     @if($message)
         <p>{{$message}}</p>
     @endif
+
     <header>
         <h2>Keuze</h2>        
         <form id="logout-form" action="/logout" method="POST">

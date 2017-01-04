@@ -14,15 +14,15 @@
         <ul>
             <li>
                 <span class="label">Naam:</span>
-                <span class="data">Naam student</span>
+                <span class="data">{{Auth::user()->first_name}} {{Auth::user()->surname}}</span>
             </li>
             <li>
                 <span class="label">E-mailadres:</span>
-                <span class="data">E-mailadres student</span>
+                <span class="data">{{Auth::user()->email}}</span>
             </li>
             <li>
                 <span class="label">Studentennummer:</span>
-                <span class="data">Studentennummer student</span>
+                <span class="data">{{Auth::user()->student_id}}</span>
             </li>
         </ul>
     </div>
