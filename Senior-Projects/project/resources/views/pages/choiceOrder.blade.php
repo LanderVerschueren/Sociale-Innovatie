@@ -27,6 +27,7 @@
         </ul>
     </div>
     <div class="choice">
+        <p class="guide">Sleep je keuzes in volgorde, het eerste vak zou je het liefste doen</p>
         <form action="/storeOrder" method="post">
             {{ csrf_field() }}
             <div id="sortable">

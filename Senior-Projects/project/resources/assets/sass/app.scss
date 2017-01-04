@@ -3,6 +3,7 @@
 
 $main-color: #1d1d1b;
 $btn-color: #ac5a96;
+$error-color: #cc0000;
 $shadow-nav: 0px 3px 7px 0px rgba(0, 0, 0, 0.35);
 $shadow-elements: 0px 27px 24px 0px rgba(0, 0, 0, 0.2),0px 40px 70px 0px rgba(0, 0, 0, 0.22);
 $break-xl: 1450px;
@@ -406,6 +407,18 @@ content {
 			display: flex;
 			align-items: center;
 		}
+	}
+
+	.message {
+		font-family: $roboto;
+		font-size: 24px;
+		color: $error-color;
+	}
+
+	.guide {
+		font-family: 'KdG';
+		font-size: 48px;
+		color: $main-color;
 	}
 }
 

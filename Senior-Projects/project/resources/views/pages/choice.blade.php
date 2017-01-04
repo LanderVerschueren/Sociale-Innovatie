@@ -3,10 +3,6 @@
 @section('content')
 
 <content>
-    @if($message)
-        <p>{{$message}}</p>
-    @endif
-
     <header>
         <h2>Keuze</h2>        
         <form id="logout-form" action="/logout" method="POST">
@@ -31,6 +27,10 @@
         </ul>
     </div>
     <div class="choice">
+        <p class="guide">Selecteer vakken die je graag zou volgen</p>
+        @if($message)
+            <p class="message">{{$message}}</p>
+        @endif
         <form action="/rightOrder" method="post">
             {{ csrf_field() }}
             <div class="card_container">

@@ -3,9 +3,6 @@
 @section('content')
 
 <content>
-	@if($message)
-		<p>{{ $message }}</p>
-	@endif
 	<header>
 		<h2>Keuzevakken</h2>		
 		<form id="logout-form" action="/logout" method="POST">
@@ -30,6 +27,9 @@
 		</ul>
 	</div>
 	<div class="category">
+		@if($message)
+			<p class="message">{{ $message }}</p>
+		@endif
 		@foreach($electives as $elective)
 			<div class="card_category">
 				<a href="/{{ $elective->id }}/choices">{{$elective->name}}</a>
