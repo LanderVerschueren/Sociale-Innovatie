@@ -51,14 +51,14 @@ class DivideStudent {
 	 */
 	public function debug_random_pick( $random ) {
 		DB::table( 'results' )->truncate();
-		$students = User::where( 'is_admin', '0' )->get()->take( rand( 150, 200 ) )->shuffle();
+		$students = User::where( 'is_admin', '0' )->get()->take( rand( 100, 150 ) )->shuffle();
 
 		$choices = $this->elective->choices;
 
 		foreach ( $students as $student ) {
 			$choicesRand = $choices;
 			if ( $random ) {
-				dump( "Going full random" );
+				//dump( "Going full random" );
 				$choicesRand = $choices->shuffle();
 			}
 			$picks    = $choicesRand->random( 6 );
@@ -72,7 +72,9 @@ class DivideStudent {
 			}
 		}
 
-		dump( 'ok' );
+		dump("Full random: ".($random?"Yes":"No"));
+		dump( 'Picked' );
+
 	}
 
 	/**

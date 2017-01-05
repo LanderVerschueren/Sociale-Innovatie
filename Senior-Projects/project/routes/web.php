@@ -36,6 +36,8 @@ Route::get( '/debug/pick/{random?}', function ( $random = false ) {
 	$divideProvider = new DivideStudent( $elective );
 
 	$divideProvider->debug_random_pick( $random );
+
+	return redirect()->route('debug-result', ["elective" => 1]);
 } );
 
 Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elective, $json = false ) {
@@ -64,7 +66,7 @@ Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elect
 	}
 
 	return view( 'debug.results', [ "results" => $choicesByUsers, "pickCounter" => $picksCounter ] );
-} );
+} )->name('debug-result');
 
 Route::get( '/debug/choices/{elective}/{json?}', function ( \App\Elective $elective, $json = false ) {
 	$choices = $elective->choices;
