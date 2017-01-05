@@ -37,7 +37,7 @@ Route::get( '/debug/pick/{random?}', function ( $random = false ) {
 
 	$divideProvider->debug_random_pick( $random );
 
-	return redirect()->route('debug-result', ["elective" => 1]);
+	return redirect()->route( 'debug-result', [ "elective" => 1 ] );
 } );
 
 Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elective, $json = false ) {
@@ -53,9 +53,11 @@ Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elect
 			];
 			foreach ( $picks as $pick ) {
 				$newUser["picks"] [ $pick->likeness ] = [
-					"rank" => $pick->likeness,
-					"name" => $pick->choices->choice,
-					"id_of_choice"   => $pick->choices->id
+					"rank"         => $pick->likeness,
+					"name"         => $pick->choices->choice,
+					"id_of_choice" => $pick->choices->id,
+					"minimum"      => $pick->choices->minimum,
+					"maximum"      => $pick->choices->maximum,
 				];
 			}
 
@@ -66,7 +68,7 @@ Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elect
 	}
 
 	return view( 'debug.results', [ "results" => $choicesByUsers, "pickCounter" => $picksCounter ] );
-} )->name('debug-result');
+} )->name( 'debug-result' );
 
 Route::get( '/debug/choices/{elective}/{json?}', function ( \App\Elective $elective, $json = false ) {
 	$choices = $elective->choices;
@@ -74,7 +76,7 @@ Route::get( '/debug/choices/{elective}/{json?}', function ( \App\Elective $elect
 	if ( $json == "json" ) {
 		$json = [];
 		foreach ( $choices as $choice ) {
-			$json[$choice->id] = [
+			$json[ $choice->id ] = [
 				"id"      => $choice->id,
 				"name"    => $choice->choice,
 				"minimum" => $choice->minimum,
@@ -101,9 +103,11 @@ Route::get( '/debug/all/{elective}/{json?}', function ( \App\Elective $elective,
 			];
 			foreach ( $picks as $pick ) {
 				$newUser["picks"] [ $pick->likeness ] = [
-					"rank" => $pick->likeness,
-					"name" => $pick->choices->choice,
-					"id_of_choice"   => $pick->choices->id
+					"rank"         => $pick->likeness,
+					"name"         => $pick->choices->choice,
+					"id_of_choice" => $pick->choices->id,
+					"minimum"      => $pick->choices->minimum,
+					"maximum"      => $pick->choices->maximum,
 				];
 			}
 
@@ -112,7 +116,7 @@ Route::get( '/debug/all/{elective}/{json?}', function ( \App\Elective $elective,
 
 		$json = [];
 		foreach ( $choices as $choice ) {
-			$json[$choice->id] = [
+			$json[ $choice->id ] = [
 				"id"      => $choice->id,
 				"name"    => $choice->choice,
 				"minimum" => $choice->minimum,
