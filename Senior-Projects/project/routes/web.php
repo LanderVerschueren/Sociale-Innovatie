@@ -28,8 +28,8 @@ Route::post( '/import', 'AdminController@postImportStudents' );
 Route::get( '/keuzevak/{name}', 'AdminController@showChoicesFromElective' );
 Route::get( '/keuze/{id}', 'AdminController@showResultsFromChoice' );
 Route::get( '/klasgroep/{classgroup}', 'AdminController@showStudentsFromClassGroup' );
-Route::post( '/addElective', 'AdminController@addElective');
-Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective');
+Route::post( '/addElective', 'AdminController@addElective' );
+Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective' );
 
 Route::get( '/debug/pick/{random?}', function ( $random = false ) {
 	$elective       = \App\Elective::first();
@@ -38,15 +38,90 @@ Route::get( '/debug/pick/{random?}', function ( $random = false ) {
 	$divideProvider->debug_random_pick( $random );
 } );
 
-Route::get( '/debug/results/{elective}', function ( \App\Elective $elective ) {
-	$results           = $elective->results->sortBy( 'id' );
+Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elective, $json = false ) {
+	$results           = $elective->results->load( 'choices' )->sortBy( 'id' );
 	$choicesByLikeness = $results->groupBy( 'likeness' );
 	$picksCounter      = count( $choicesByLikeness );
 	$choicesByUsers    = $results->groupBy( 'user_id' );
 
-	//dd($choicesByUsers);
+	if ( $json == "json" ) {
+		$response = $choicesByUsers->map( function ( $picks, $key ) {
+			$newUser = [
+				"user_id" => $key
+			];
+			foreach ( $picks as $pick ) {
+				$newUser["picks"] [ $pick->likeness ] = [
+					"rank" => $pick->likeness,
+					"name" => $pick->choices->choice,
+					"id_of_choice"   => $pick->choices->id
+				];
+			}
+
+			return $newUser;
+		} );
+
+		return response()->json( $response->values() );
+	}
 
 	return view( 'debug.results', [ "results" => $choicesByUsers, "pickCounter" => $picksCounter ] );
+} );
+
+Route::get( '/debug/choices/{elective}/{json?}', function ( \App\Elective $elective, $json = false ) {
+	$choices = $elective->choices;
+	//dump($choices);
+	if ( $json == "json" ) {
+		$json = [];
+		foreach ( $choices as $choice ) {
+			$json[$choice->id] = [
+				"id"      => $choice->id,
+				"name"    => $choice->choice,
+				"minimum" => $choice->minimum,
+				"maximum" => $choice->maximum
+			];
+		}
+
+		return response()->json( $json );
+	}
+
+	return view( 'debug.choices', [ 'choices' => $choices ] );
+} );
+Route::get( '/debug/all/{elective}/{json?}', function ( \App\Elective $elective, $json = false ) {
+	$results           = $elective->results->load( 'choices' )->sortBy( 'id' );
+	$choices           = $elective->choices;
+	$choicesByLikeness = $results->groupBy( 'likeness' );
+	$picksCounter      = count( $choicesByLikeness );
+	$choicesByUsers    = $results->groupBy( 'user_id' );
+
+	if ( $json == "json" ) {
+		$response = $choicesByUsers->map( function ( $picks, $key ) {
+			$newUser = [
+				"user_id" => $key
+			];
+			foreach ( $picks as $pick ) {
+				$newUser["picks"] [ $pick->likeness ] = [
+					"rank" => $pick->likeness,
+					"name" => $pick->choices->choice,
+					"id_of_choice"   => $pick->choices->id
+				];
+			}
+
+			return $newUser;
+		} );
+
+		$json = [];
+		foreach ( $choices as $choice ) {
+			$json[$choice->id] = [
+				"id"      => $choice->id,
+				"name"    => $choice->choice,
+				"minimum" => $choice->minimum,
+				"maximum" => $choice->maximum
+			];
+		}
+
+		return response()->json( [ "choices" => $json, "picks" => $response->values() ] );
+	}
+
+	return view( 'debug.all', [ "results" => $choicesByUsers, "pickCounter" => $picksCounter, 'choices' => $choices ] );
 } );
 
 Route::get( '/debug/divide', function () {

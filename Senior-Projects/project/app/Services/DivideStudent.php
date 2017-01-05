@@ -51,7 +51,7 @@ class DivideStudent {
 	 */
 	public function debug_random_pick( $random ) {
 		DB::table( 'results' )->truncate();
-		$students = User::where( 'is_admin', '0' )->get()->take(rand(150, 200))->shuffle();
+		$students = User::where( 'is_admin', '0' )->get()->take( rand( 150, 200 ) )->shuffle();
 
 		$choices = $this->elective->choices;
 
@@ -111,6 +111,7 @@ class DivideStudent {
 		</style>";
 
 		dump( $this->dividedUsersInChoices );
+		debug( "" );
 
 		return $style . "ok";
 		//return $this->freeStudents;
@@ -192,7 +193,48 @@ class DivideStudent {
 	}
 
 	private function accept_proposal_by_rejecting_lowest( $studentId, $choiceId ) {
+		//$this->find_student_with_easy_kick_out( $choiceId );
+	}
 
+	private function find_student_with_easy_kick_out( $choiceId ) {
+		debug( "Start to find a user with choice that accepts next likeness" );
+		dump( "Start to find a user with choice that accepts next likeness" );
+		$users = $this->dividedUsersInChoices[ $choiceId ]["users"];
+		ksort( $users );
+		$usersInChoice = collect( $users );
+		$usersInChoice = $usersInChoice->sortBy( 'likeness' );
+
+		$choicesByLikeness = $usersInChoice->groupBy( 'likeness' );
+		dump( $choicesByLikeness );
+		foreach ( $choicesByLikeness as $likeness => $users ) {
+			$users = $users->sortByDesc( 'rank' );
+			//dd( $users );
+
+			foreach ( $users as $user ) {
+				dump( "User: " . $user["id"] );
+				$userPicks = $this->choicesByUsers[ $user["id"] ]->sortBy( 'likeness' );
+				dump( $user );
+				dump( $userPicks );
+				dump( $likeness );
+
+				while ( $userPicks->first()->likeness <= $likeness ) {
+					$userPicks->shift();
+				}
+
+				dump( $userPicks );
+				$firstPick = $userPicks->first();
+				if ( ! $this->is_choice_accepting( $firstPick->choice_id ) ) {
+					$this->debugBar->warning( "The next choice is not accepting" );
+					break;
+				}
+				$this->debugType( "success", 'Next choice is accepting' );
+				$this->remove_user_from_choice( $firstPick->user_id, $choiceId );
+				$this->accept_proposal( $firstPick->user_id, $firstPick->choice_id, $firstPick->likeness );
+			}
+
+			$choicesByLikeness[ $likeness ] = $users;
+		}
+		dump( $choicesByLikeness );
 	}
 
 	/**
@@ -244,6 +286,7 @@ class DivideStudent {
 		debug( "Accepting proposal" );
 		$currentChoice                                       = $this->dividedUsersInChoices[ $choiceId ];
 		$this->dividedUsersInChoices[ $choiceId ]["users"][] = [
+			"rank"     => $this->get_rank_of_user( $studentId ),
 			"id"       => $studentId,
 			"likeness" => $likeness,
 		];
@@ -258,6 +301,29 @@ class DivideStudent {
 		$this->set_accepting_state_of_choice( $choiceId, ! $this->is_choice_full( $choiceId ) );
 	}
 
+	private function remove_user_from_choice( $userId, $choiceId ) {
+		$users       = $this->dividedUsersInChoices[ $choiceId ]["users"];
+		$keyToRemove = 0;
+		foreach ( $users as $key => $user ) {
+			if ( $user["id"] == $userId ) {
+				$keyToRemove = $key;
+				break;
+			}
+		}
+		dump( $this->dividedUsersInChoices[ $choiceId ]["users"] );
+		array_splice( $this->dividedUsersInChoices[ $choiceId ]["users"], $keyToRemove, 1 );
+		//dd( $this->dividedUsersInChoices[ $choiceId ]["users"] );
+
+		$this->set_accepting_state_of_choice( $choiceId, ! $this->is_choice_full( $choiceId ) );
+	}
+
+	/**
+	 * Set a new lowest rank (id, key, rank) to the choice array
+	 *
+	 * @param $studentId
+	 * @param $choiceId
+	 * @param $currentRankOfUser
+	 */
 	private function set_lowest_rank_of_choice( $studentId, $choiceId, $currentRankOfUser ) {
 		$studentKey = multidimensionalArraySearch( $studentId, $this->dividedUsersInChoices[ $choiceId ]["users"], 'id' );
 		debug( "New lowest user for choice: " . $studentId );
@@ -295,6 +361,12 @@ class DivideStudent {
 		return count( $this->dividedUsersInChoices[ $choiceId ]["users"] ) == $this->dividedUsersInChoices[ $choiceId ]["max"];
 	}
 
+	/**
+	 * Set the choice is_accepting to the given state
+	 *
+	 * @param $choiceId
+	 * @param $state
+	 */
 	private function set_accepting_state_of_choice( $choiceId, $state ) {
 		$this->dividedUsersInChoices[ $choiceId ]["is_accepting"] = $state;
 	}
@@ -318,6 +390,12 @@ class DivideStudent {
 	}
 
 
+	/**
+	 * Add message to debugbar with specific type
+	 *
+	 * @param $type
+	 * @param $data
+	 */
 	private function debugType( $type, $data ) {
 		$this->debugBar->addMessage( $data, $type );
 	}
