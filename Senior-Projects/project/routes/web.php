@@ -52,7 +52,7 @@ Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elect
 				"user_id" => $key
 			];
 			foreach ( $picks as $pick ) {
-				$newUser["picks"] [ $pick->likeness ] = [
+				$newUser["picks"] [  ] = [
 					"rank"         => $pick->likeness,
 					"name"         => $pick->choices->choice,
 					"id_of_choice" => $pick->choices->id,
@@ -76,7 +76,7 @@ Route::get( '/debug/choices/{elective}/{json?}', function ( \App\Elective $elect
 	if ( $json == "json" ) {
 		$json = [];
 		foreach ( $choices as $choice ) {
-			$json[ $choice->id ] = [
+			$json[  ] = [
 				"id"      => $choice->id,
 				"name"    => $choice->choice,
 				"minimum" => $choice->minimum,
@@ -102,7 +102,7 @@ Route::get( '/debug/all/{elective}/{json?}', function ( \App\Elective $elective,
 				"user_id" => $key
 			];
 			foreach ( $picks as $pick ) {
-				$newUser["picks"] [ $pick->likeness ] = [
+				$newUser["picks"] [  ] = [
 					"rank"         => $pick->likeness,
 					"name"         => $pick->choices->choice,
 					"id_of_choice" => $pick->choices->id,
@@ -116,7 +116,7 @@ Route::get( '/debug/all/{elective}/{json?}', function ( \App\Elective $elective,
 
 		$json = [];
 		foreach ( $choices as $choice ) {
-			$json[ $choice->id ] = [
+			$json[  ] = [
 				"id"      => $choice->id,
 				"name"    => $choice->choice,
 				"minimum" => $choice->minimum,
