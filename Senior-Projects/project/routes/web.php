@@ -46,13 +46,13 @@ Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elect
 	$picksCounter      = count( $choicesByLikeness );
 	$choicesByUsers    = $results->groupBy( 'user_id' );
 
-	if ( $json == "json" ) {
+	if ( $json == "json" || $json == "json-free" ) {
 		$response = $choicesByUsers->map( function ( $picks, $key ) {
 			$newUser = [
 				"user_id" => $key
 			];
 			foreach ( $picks as $pick ) {
-				$newUser["picks"] [ $pick->likeness ] = [
+				$newUser["picks"] [  ] = [
 					"rank"         => $pick->likeness,
 					"name"         => $pick->choices->choice,
 					"id_of_choice" => $pick->choices->id,
@@ -64,7 +64,16 @@ Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elect
 			return $newUser;
 		} );
 
-		return response()->json( $response->values() );
+		if($json == "json-free") {
+			$response_indexFree = [];
+			foreach ( $response as $user ) {
+				//dd($user["picks"]);
+				$response_indexFree[] = $user["picks"];
+			}
+			return response()->json( $response_indexFree );
+		}
+
+		return response()->json( $response->values );
 	}
 
 	return view( 'debug.results', [ "results" => $choicesByUsers, "pickCounter" => $picksCounter ] );
@@ -73,10 +82,10 @@ Route::get( '/debug/results/{elective}/{json?}', function ( \App\Elective $elect
 Route::get( '/debug/choices/{elective}/{json?}', function ( \App\Elective $elective, $json = false ) {
 	$choices = $elective->choices;
 	//dump($choices);
-	if ( $json == "json" ) {
+	if ( $json == "json" || $json == "json-free") {
 		$json = [];
 		foreach ( $choices as $choice ) {
-			$json[ $choice->id ] = [
+			$json[  ] = [
 				"id"      => $choice->id,
 				"name"    => $choice->choice,
 				"minimum" => $choice->minimum,
@@ -96,13 +105,13 @@ Route::get( '/debug/all/{elective}/{json?}', function ( \App\Elective $elective,
 	$picksCounter      = count( $choicesByLikeness );
 	$choicesByUsers    = $results->groupBy( 'user_id' );
 
-	if ( $json == "json" ) {
+	if ( $json == "json" || $json == "json-free") {
 		$response = $choicesByUsers->map( function ( $picks, $key ) {
 			$newUser = [
 				"user_id" => $key
 			];
 			foreach ( $picks as $pick ) {
-				$newUser["picks"] [ $pick->likeness ] = [
+				$newUser["picks"] [  ] = [
 					"rank"         => $pick->likeness,
 					"name"         => $pick->choices->choice,
 					"id_of_choice" => $pick->choices->id,
@@ -116,12 +125,21 @@ Route::get( '/debug/all/{elective}/{json?}', function ( \App\Elective $elective,
 
 		$json = [];
 		foreach ( $choices as $choice ) {
-			$json[ $choice->id ] = [
+			$json[  ] = [
 				"id"      => $choice->id,
 				"name"    => $choice->choice,
 				"minimum" => $choice->minimum,
 				"maximum" => $choice->maximum
 			];
+		}
+
+		if($json == "json-free") {
+			$response_indexFree = [];
+			foreach ( $response as $user ) {
+				//dd($user["picks"]);
+				$response_indexFree[] = $user["picks"];
+			}
+			return response()->json( $response_indexFree );
 		}
 
 		return response()->json( [ "choices" => $json, "picks" => $response->values() ] );
