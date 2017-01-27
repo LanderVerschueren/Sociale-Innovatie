@@ -17,9 +17,8 @@ use Session;
 
 class AdminController extends Controller {
 
-	public function login($request) {
-		//session()->flash('test', 'test');
-		return redirect('/');
+	public function login() {
+		return view('admin.login');
 	}
 
 	public function dashboard() {
@@ -69,7 +68,8 @@ class AdminController extends Controller {
 	public function addElective( Request $request){
 
 		$this->validate($request,[
-            'name'=> 'required',
+            'name' => 'required',
+            'test_date' => 'required',
             'start_date' => 'required',
             'end_date' => 'required'
         ]);
@@ -77,7 +77,8 @@ class AdminController extends Controller {
 		$elective = new Elective;
 
 		$elective->name = $request->name;
-		$elective->start_date = $request->start_date;
+		$elective->test_date = $request->test_date;
+ 		$elective->start_date = $request->start_date;
  		$elective->end_date = $request->end_date;
 
  		$elective->save();
@@ -106,17 +107,20 @@ class AdminController extends Controller {
 
     public function updateElective(Request $request, $id)
     {
-      $this->validate($request,[
-            'name'=> 'required',
+        $this->validate($request,[
+            'name' => 'required',
+            'test_date' => 'required',
             'start_date' => 'required',
             'end_date' => 'required'
         ]);
-      
+
 		$elective->name = $request->name;
-		$elective->start_date = $request->start_date;
+		$elective->test_date = $request->test_date;
+ 		$elective->start_date = $request->start_date;
  		$elective->end_date = $request->end_date;
 
  		$elective->save();
+ 		$name = 'Keuzevakken';
 	      return view( 'admin.dashboard' )->with( [
 				'name'      => $name,
 				'electives' => $electives,
