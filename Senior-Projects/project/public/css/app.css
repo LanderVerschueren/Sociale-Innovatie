@@ -5301,6 +5301,21 @@ h2 {
   color: #1d1d1b !important;
 }
 
+.modal .modal-footer {
+  display: -webkit-box;
+  display: flex;
+  justify-content: space-around;
+}
+
+.modal .modal-footer a {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
 .input-field input {
   border-bottom: 1px solid white;
 }
@@ -5390,15 +5405,15 @@ h2 {
   color: #1d1d1b;
 }
 
-.card_choice:hover .card_choice_info {
+.card_choice:hover .card_choice_info, .card_choice:hover .card_choice_edit, .card_choice:hover .card_choice_delete {
   color: #1d1d1b;
 }
 
-.card_choice:hover .card_choice_info i {
+.card_choice:hover .card_choice_info i, .card_choice:hover .card_choice_edit i, .card_choice:hover .card_choice_delete i {
   cursor: pointer;
 }
 
-.card_choice .card_choice_info {
+.card_choice .card_choice_info, .card_choice .card_choice_edit, .card_choice .card_choice_delete {
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -5413,6 +5428,10 @@ h2 {
   z-index: 10;
   color: white;
   pointer: cursor;
+}
+
+.card_choice .card_choice_edit {
+  right: 30px;
 }
 
 .card_choice_order_drag {

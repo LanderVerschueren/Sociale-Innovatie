@@ -29,9 +29,15 @@
 			-->
 			<div class="card_choice" id="{{ $choice->choice }}">
 				<a class="card_choice_link_admin" href="/keuze/{{ $choice->id }}">{{ $choice->choice }}</a>
-				<a class="card_choice_info modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#adminChoiceModal">
-					<i class="fa fa-info-circle" aria-hidden="true"></i>
+
+				@if($choice->elective->start_date < date("Y-m-d G:i:s"))
+				<a class="card_choice_edit modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#editModal" data-title="{{ $choice->choice }}">
+					<i class="fa fa-cog" aria-hidden="true"></i>
 				</a>
+				<a class="card_choice_delete modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#deleteModal" data-title="{{ $choice->choice }}">
+					<i class="fa fa-trash" aria-hidden="true"></i>
+				</a>
+				@endif
 			</div>
 	    @endforeach
 		</div>
@@ -64,6 +70,39 @@
             </div>
             <div class="modal-footer">
                 
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="editModalLabel"></h1>
+            </div>
+            <div class="modal-body">
+                <p id="editModalParagraph"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button" data-dismiss="modal">Sluiten</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="deleteModalLabel"></h1>
+            </div>
+            <div class="modal-body">
+                Wilt u dit vak verwijderen?
+            </div>
+            <div class="modal-footer">
+            	<a href="#" class="button">Ja!</a>
+                <button type="button" class="button" data-dismiss="modal">Nee</button>
             </div>
         </div>
     </div>
