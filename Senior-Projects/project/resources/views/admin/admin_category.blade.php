@@ -38,6 +38,10 @@
 		                <input type="text" name="name">
 		                <label for="name">Naam</label>
 		            </div>
+					<div class="input-field">
+						<label for="test_date" class="active">Proefdatum</label>
+						<input class="form-control" type="date" name="test_date">
+					</div>
 		            <div class="input-field">
 		                <label for="start_date" class="active">Begindatum</label>
 		                <input class="form-control" type="date" name="start_date">
