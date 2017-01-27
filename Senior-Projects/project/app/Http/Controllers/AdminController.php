@@ -17,7 +17,7 @@ use Session;
 
 class AdminController extends Controller {
 
-	public function login($request) {
+	public function login() {
 		//session()->flash('test', 'test');
 		return redirect('/');
 	}
