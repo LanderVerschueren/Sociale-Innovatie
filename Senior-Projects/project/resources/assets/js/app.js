@@ -54,7 +54,7 @@ $(function() {
     $('#descriptionModal').on("show.bs.modal", function (e) {
       console.log($(e.relatedTarget).data( 'title' ));
          $("#descriptionModalLabel").html($(e.relatedTarget).data('title'));
-         $("#descriptionModalParagraph").html($(e.relatedTarget).data('title'));
+         $("#descriptionModalParagraph").html($(e.relatedTarget).data('description'));
     });
 });
 
