@@ -27,10 +27,10 @@
         </ul>
     </div>
 
-        <p>Kies alstubliefd {{$choicesAmount}} vakken.</p>
+        <p>Kies alstublieft {{$choicesAmount}} vakken.</p>
 
     <div class="choice">
-        <p class="guide">Selecteer vakken die je graag zou volgen</p>
+        <p class="guide">Selecteer {{$choicesAmount}} vakken die je graag zou volgen</p>
         @if($message)
             <p class="message">{{$message}}</p>
         @endif
