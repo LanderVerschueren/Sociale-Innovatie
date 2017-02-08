@@ -9,12 +9,13 @@
 			{{ csrf_field() }}
 		 	<button type="submit" class="button"><i class="fa fa-plus" aria-hidden="true"></i> Keuzes importeren</button>
 		</form>
+		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#chooseGroups"><i class="fa fa-plus" aria-hidden="true"></i> Groepen kiezen</button>
 	</header>
 	<div class="info">
 		<ul>
 			<li>
-			@if($name != null)
-				<span class="data">{{ $name }}</span>
+			@if($elective->name != null)
+				<span class="data">{{ $elective->name }}</span>
 			@endif
 			</li>
 		</ul>
@@ -91,5 +92,29 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="chooseGroups" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title">Maximum aantal mensen per richting</h1>
+			</div>
+			<div class="modal-body">
+				@if($classes != null)
+					<form method="POST" action="{{ url('/giveAmountToElective/'.$elective->id) }}">
+							{{ csrf_field() }}
+							@foreach($classes as $class)
+							{{var_dump($amounts[$loop])}}
+								<div class="input-field">
+									<label for="name">{{$class->class}}</label>
+									<input type="number" min="0" step="1" name="number[{{$class->id}}]" value="0"/>
+								</div>
+							@endforeach
+						<button type="submit" class="button">Opslaan</button>
+					</form>
+				@endif
+			</div>
+		</div>
+	</div>
 </div>
 @endsection

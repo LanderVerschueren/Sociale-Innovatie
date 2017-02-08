@@ -10,6 +10,7 @@ use App\User;
 use App\Elective;
 use App\Result;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -27,26 +28,22 @@ class AdminController extends Controller {
 
 		return view( 'admin.admin_category' )->with( [
 			'name'      => $name,
-			'electives' => $electives,
-			'groups'    => '',
-			'users'     => '',
-			'choices'   => '',
-			'results'   => ''
+			'electives' => $electives
 		] );
 	}
 
 	public function showChoicesFromElective( $name ) {
 		$elective = Elective::where( 'name', $name )->first();
 		$choices  = Choice::where( 'elective_id', $elective->id )->get();
-		$name     = $name;
+		$electiveName = $name;
+		$classes  = Klas::all();
+		$amounts = DB::table('elective_class_amount')->where('elective_id', $elective->id)->get();
 
 		return view( 'admin.admin_choice' )->with( [
-			'name'      => $name,
 			'choices'   => $choices,
-			'users'     => '',
-			'groups'    => '',
-			'electives' => '',
-			'results'   => ''
+            'elective'  => $elective,
+            'classes'   => $classes,
+            'amounts'   => $amounts
 		] );
 	}
 
@@ -57,11 +54,7 @@ class AdminController extends Controller {
 
 		return view( 'admin.admin_results' )->with( [
 			'name'      => $name,
-			'results'   => $results,
-			'choices'   => '',
-			'users'     => '',
-			'groups'    => '',
-			'electives' => ''
+			'results'   => $results
 		] );
 	}
 
@@ -87,11 +80,7 @@ class AdminController extends Controller {
  		$name = 'Keuzevakken';
  		return view( 'admin.admin_category' )->with( [
 			'name'      => $name,
-			'electives' => $electives,
-			'groups'    => '',
-			'users'     => '',
-			'choices'   => '',
-			'results'   => ''
+			'electives' => $electives
 		] );
 	}
 
@@ -113,6 +102,7 @@ class AdminController extends Controller {
             'start_date' => 'required',
             'end_date' => 'required'
         ]);
+        $elective = Elective::where('id', $id)->first();
 
 		$elective->name = $request->name;
 		$elective->test_date = $request->test_date;
@@ -120,14 +110,12 @@ class AdminController extends Controller {
  		$elective->end_date = $request->end_date;
 
  		$elective->save();
+ 		$electives = Elective::all();
+
  		$name = 'Keuzevakken';
 	      return view( 'admin.dashboard' )->with( [
 				'name'      => $name,
 				'electives' => $electives,
-				'groups'    => '',
-				'users'     => '',
-				'choices'   => '',
-				'results'   => ''
 			] );
     }
 
@@ -151,15 +139,43 @@ class AdminController extends Controller {
 		$choice->elective_id = $elective->id;
 
 		$choice->save();
+
 		return view( 'admin.dashboard' )->with( [
 			'name'      => $name,
-			'electives' => '',
-			'groups'    => '',
-			'users'     => '',
-			'choices'   => $choices,
-			'results'   => ''
+			'choices'   => $choices
 		] );
 	}
+
+	public function giveAmountToClasses(Request $request, $id){
+        $elective = Elective::where('id', $id)->first();
+        $classes = Klas::all();
+        $counter = 0;
+
+
+        foreach ($request->get('number') as $number){
+            if(DB::table('elective_class_amount')->where([
+                ['elective_id', $id],
+                ['class_id', $classes[$counter]->id]
+                ])->get()){
+                DB::table('elective_class_amount')
+                    ->where([
+                        ['elective_id', $id],
+                        ['class_id', $classes[$counter]->id]
+                    ])->update(['amount' => $number]);
+            }
+            else{
+                DB::table('elective_class_amount')->insert([
+                    'elective_id' => $id,
+                    'class_id'   => $classes[$counter]->id,
+                    'amount'     => $number
+                ]);
+            }
+
+
+            $counter += 1;
+        }
+    }
+
 
 	public function getImportStudents() {
 		return view( 'admin.import' );

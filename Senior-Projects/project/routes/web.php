@@ -30,6 +30,7 @@ Route::get( '/keuze/{id}', 'AdminController@showResultsFromChoice' );
 Route::get( '/klasgroep/{classgroup}', 'AdminController@showStudentsFromClassGroup' );
 Route::post( '/addElective', 'AdminController@addElective' );
 Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective' );
+Route::post('/giveAmountToElective/{id}', 'AdminController@giveAmountToClasses');
 
 Route::get( '/debug/pick/{random?}', "DebugController@random" );
 Route::get( '/debug/results/{elective}/{json?}', "DebugController@results" )->name( 'debug-result' );

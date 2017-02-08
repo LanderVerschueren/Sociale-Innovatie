@@ -6,7 +6,9 @@
 	<header>
 		<h2>Admin</h2>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
+
 	</header>
+
 	<div class="info">
 		<ul>
 			<li>

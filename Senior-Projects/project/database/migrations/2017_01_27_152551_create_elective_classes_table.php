@@ -13,7 +13,20 @@ class CreateElectiveClassesTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create( 'elective_class_amount', function ( Blueprint $table ) {
+            $table->increments( 'id' );
+            $table->integer( 'elective_id' )->unsigned();
+            $table->integer( 'class_id' )->unsigned();
+
+            $table->foreign( 'elective_id' )
+                ->references( 'id' )
+                ->on( 'electives' );
+            $table->foreign( 'class_id' )
+                ->references( 'id' )
+                ->on( 'classes' );
+            $table->integer( 'amount' );
+            $table->timestamps();
+        } );
     }
 
     /**
@@ -23,6 +36,6 @@ class CreateElectiveClassesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('elective_class_amount');
     }
 }
