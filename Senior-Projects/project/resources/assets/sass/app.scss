@@ -1,4 +1,4 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+//@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "materialize.scss";
 
 $main-color: #1d1d1b;
@@ -72,6 +72,17 @@ h2 {
 
 		label {
 			color: $main-color!important;
+		}
+	}
+
+	.modal-footer {
+		display: flex;
+		justify-content: space-around;
+		
+		a {
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 	}
 }
@@ -169,7 +180,7 @@ h2 {
 			color: $main-color;
 		}
 
-		.card_choice_info {
+		.card_choice_info, .card_choice_edit, .card_choice_delete {
 			color: $main-color;
 
 			i {
@@ -178,7 +189,7 @@ h2 {
 		}
 	}
 
-	.card_choice_info {
+	.card_choice_info, .card_choice_edit, .card_choice_delete {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -195,6 +206,10 @@ h2 {
 		color: white;
 
 		pointer: cursor;
+	}
+
+	.card_choice_edit {
+		right: 30px;
 	}
 }
 

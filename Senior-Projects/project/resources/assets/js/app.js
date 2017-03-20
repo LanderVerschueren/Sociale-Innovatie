@@ -56,6 +56,18 @@ $(function() {
          $("#descriptionModalLabel").html($(e.relatedTarget).data('title'));
          $("#descriptionModalParagraph").html($(e.relatedTarget).data('description'));
     });
+
+    $('#editModal').on("show.bs.modal", function (e) {
+      console.log($(e.relatedTarget).data( 'title' ));
+         $("#editModalLabel").html($(e.relatedTarget).data('title'));
+         $("#editModalParagraph").html($(e.relatedTarget).data('description'));
+    });
+
+    $('#deleteModal').on("show.bs.modal", function (e) {
+      console.log($(e.relatedTarget).data( 'title' ));
+         $("#deleteModalLabel").html($(e.relatedTarget).data('title'));
+         $("#deleteModalParagraph").html($(e.relatedTarget).data('description'));
+    });
 });
 
 

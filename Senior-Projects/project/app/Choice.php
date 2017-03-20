@@ -17,8 +17,8 @@ class Choice extends Model
 		return $this->belongsToMany('\App\ClassGroup');
     }
 
-	public function electives() {
-		return $this->hasMany('\App\Elective');
+	public function elective() {
+		return $this->belongsTo('\App\Elective');
     }
 
 	public function results() {

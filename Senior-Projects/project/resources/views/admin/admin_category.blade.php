@@ -6,7 +6,9 @@
 	<header>
 		<h2>Admin</h2>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
+
 	</header>
+
 	<div class="info">
 		<ul>
 			<li>
@@ -38,6 +40,10 @@
 		                <input type="text" name="name">
 		                <label for="name">Naam</label>
 		            </div>
+					<div class="input-field">
+						<label for="test_date" class="active">Proefdatum</label>
+						<input class="form-control" type="date" name="test_date">
+					</div>
 		            <div class="input-field">
 		                <label for="start_date" class="active">Begindatum</label>
 		                <input class="form-control" type="date" name="start_date">
