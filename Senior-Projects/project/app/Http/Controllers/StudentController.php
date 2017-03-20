@@ -99,6 +99,25 @@ class StudentController extends Controller
 
     }
 
+    public function consultCoices(Elective $elective, Request $request)
+    {
+        $user = Auth::user()->id;
+        $optionalChoices = Choice::where("elective_id", $elective->id)->get();
+        $results = Result::where("user_id", $user)->get();
+        $resultsForElective = [];
+        foreach ($optionalChoices as $choice){
+            foreach ($results as $result){
+                if($result->choice_id == $choice->id){
+                    $newResult["name"] = $choice->choice;
+                    $newResult["likeness"] = $result->likeness;
+                    array_push($resultsForElective, $newResult);
+                }
+            }
+        }
+        return $resultsForElective;
+
+    }
+
     public function store_choice(Request $request)
     {
         //De 6 keuzes die gemaakt zijn doorgegeven met een post. Er wordt gecheckt of er 6 zijn aangeduid

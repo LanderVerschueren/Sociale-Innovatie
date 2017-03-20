@@ -36,14 +36,14 @@
 			</div>
 	    @endforeach
 
-		{{--@if($passiveElectives)--}}
-		{{--<h2>Passive Electives</h2>--}}
-		{{--@foreach($passiveElectives as $elective)--}}
-				{{--<div class="card_category">--}}
-					{{--<a href="/{{ $elective->id }}/choices">{{$elective->name}}</a>--}}
-				{{--</div>--}}
-			{{--@endforeach--}}
-		{{--@endif--}}
+		@if($passiveElectives)
+		<h2>Passive Electives</h2>
+		@foreach($passiveElectives as $elective)
+				<div class="card_category">
+					<a href="/{{ $elective->id }}/consultCoices">{{$elective->name}}</a>
+				</div>
+			@endforeach
+		@endif
     </div>
 </content>
 @endsection

@@ -17,9 +17,11 @@ Auth::routes();
 
 Route::get( '/', 'HomeController@index' );
 Route::get( '/category', 'StudentController@index' );
-Route::get( '/{elective}/choices', 'StudentController@choices' );
 Route::post( '/rightOrder', 'StudentController@store_choice' );
 Route::post( '/storeOrder', 'StudentController@store_order' );
+Route::get( '/{elective}/choices', 'StudentController@choices' );
+Route::get('/{elective}/consultCoices', 'StudentController@consultCoices');
+
 
 Route::get( '/admin', 'AdminController@login' );
 Route::get( '/dashboard', 'AdminController@dashboard' );

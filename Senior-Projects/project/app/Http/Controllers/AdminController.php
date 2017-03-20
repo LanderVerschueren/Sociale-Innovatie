@@ -17,9 +17,8 @@ use Session;
 
 class AdminController extends Controller {
 
-	public function login($request) {
-		//session()->flash('test', 'test');
-		return redirect('/');
+	public function login() {
+		return view("admin.login");
 	}
 
 	public function dashboard() {
