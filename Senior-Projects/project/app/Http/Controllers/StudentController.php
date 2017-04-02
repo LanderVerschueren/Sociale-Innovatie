@@ -114,7 +114,9 @@ class StudentController extends Controller
                 }
             }
         }
-        return $resultsForElective;
+       //return $resultsForElective;
+       debug($resultsForElective);
+        return view("pages.consultChoice", compact("resultsForElective", "elective"));
 
     }
 
