@@ -15,6 +15,27 @@ class SampleChoiceSeeder extends Seeder {
 			"end_date"   => \Carbon\Carbon::now()->addDays( 8 ),
 		] );
 
+		\App\ClassAmount::create([
+			'elective_id' => 1,
+			'class_id' => 1,
+			'amount' => 2,
+		]);
+		\App\ClassAmount::create([
+			'elective_id' => 1,
+			'class_id' => 2,
+			'amount' => 1,
+		]);
+		\App\ClassAmount::create([
+			'elective_id' => 1,
+			'class_id' => 3,
+			'amount' => 2,
+		]);
+		\App\ClassAmount::create([
+			'elective_id' => 1,
+			'class_id' => 4,
+			'amount' => 2,
+		]);
+
 		\App\Choice::create( [
 			"choice"      => "Networking - groep 2",
 			"minimum"     => 5,

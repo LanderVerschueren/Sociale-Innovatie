@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\ClassAmount;
 use App\Elective;
 use App\Services\DivideStudent;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DebugController extends Controller {
 	public function divide() {
@@ -25,15 +28,25 @@ class DebugController extends Controller {
 	}
 
 	public function users( Elective $elective ) {
+		/**
+		 * @var Collection $results
+		 */
 		$results        = $elective->results->load( 'choices' )->sortBy( 'id' );
 		$choicesByUsers = $results->groupBy( 'user_id' );
 
-		$response           = $choicesByUsers->map( function ( $picks, $key ) {
-			$user    = User::find( $key );
-			$newUser = [
-				"user_id"   => $key,
-				"school_id" => $user->student_id,
-				"numberOfChoices" => 1
+		$electiveId = $elective->id;
+
+		$response           = $choicesByUsers->map( function ( $picks, $key ) use ( $electiveId ) {
+			$user            = User::find( $key )->load( 'class_group' );
+
+			$numberOfChoices = ClassAmount::where( 'elective_id', '=', $electiveId )
+			                              ->where( 'class_id', '=', $user->class_group->class_id )
+			                              ->get(['amount'])->first()->amount;
+
+			$newUser         = [
+				"user_id"         => $key,
+				"school_id"       => $user->student_id,
+				"numberOfChoices" => $numberOfChoices
 			];
 
 			return $newUser;

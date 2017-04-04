@@ -183,6 +183,8 @@ return [
 	    Barryvdh\Debugbar\ServiceProvider::class,
 	    Orangehill\Iseed\IseedServiceProvider::class,
 	    Maatwebsite\Excel\ExcelServiceProvider::class,
+
+	    Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*

@@ -9,6 +9,40 @@ use App\Elective;
 use App\Choice;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * App\User
+ *
+ * @property int $id
+ * @property string $surname
+ * @property string $first_name
+ * @property string $email
+ * @property string $student_id
+ * @property string $password
+ * @property bool $is_admin
+ * @property int $class_group_id
+ * @property \Carbon\Carbon $deleted_at
+ * @property string $remember_token
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Choice[] $choices
+ * @property-read \App\ClassGroup $class_groups
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Result[] $results
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereClassGroupId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereFirstName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereStudentId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereSurname($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUpdatedAt($value)
+ * @mixin \Eloquent
+ * @property-read \App\ClassGroup $class_group
+ */
 class User extends Authenticatable {
 	use Notifiable;
 	use SoftDeletes;
@@ -27,7 +61,7 @@ class User extends Authenticatable {
 		'remember_token',
 	];
 
-	public function class_groups() {
+	public function class_group() {
 		return $this->belongsTo('\App\ClassGroup');
 	}
 

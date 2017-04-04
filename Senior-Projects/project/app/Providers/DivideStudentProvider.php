@@ -22,7 +22,7 @@ class DivideStudentProvider extends ServiceProvider {
 	 */
 	public function register() {
 		$this->app->singleton( DivideStudent::class, function ( $app ) {
-			return new DivideStudent();
+			//return new DivideStudent();
 		} );
 	}
 
