@@ -37,13 +37,13 @@ class DebugController extends Controller {
 		$electiveId = $elective->id;
 
 		$response           = $choicesByUsers->map( function ( $picks, $key ) use ( $electiveId ) {
-			$user            = User::find( $key )->load( 'class_group' );
+			$user = User::find( $key )->load( 'class_group' );
 
 			$numberOfChoices = ClassAmount::where( 'elective_id', '=', $electiveId )
 			                              ->where( 'class_id', '=', $user->class_group->class_id )
-			                              ->get(['amount'])->first()->amount;
+			                              ->get( [ 'amount' ] )->first()->amount;
 
-			$newUser         = [
+			$newUser = [
 				"user_id"         => $key,
 				"school_id"       => $user->student_id,
 				"numberOfChoices" => $numberOfChoices
@@ -153,6 +153,7 @@ class DebugController extends Controller {
 						"id_of_choice" => $pick->choices->id,
 						"minimum"      => $pick->choices->minimum,
 						"maximum"      => $pick->choices->maximum,
+						'user_id'      => $key
 					];
 				}
 
