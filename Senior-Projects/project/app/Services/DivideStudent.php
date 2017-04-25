@@ -10,19 +10,44 @@ namespace App\Services;
 
 use App\Elective;
 use App\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class DivideStudent {
 
+	/**
+	 * @var Elective
+	 */
 	private $elective;
+
+	/**
+	 * @var \App\Choice[]|\Illuminate\Database\Eloquent\Collection
+	 */
 	private $choices;
 
+	/**
+	 * @var Collection
+	 */
 	private $freeStudents;
-	private $studentEnterRank;
-	private $choicesByUsers;
-	private $dividedUsersInChoices;
-	private $likenessCounter;
 
+	/**
+	 * @var  Collection
+	 */
+	private $studentEnterRank;
+
+	/**
+	 * @var Collection
+	 */
+	private $choicesByUsers;
+
+	/**
+	 * @var array
+	 */
+	private $dividedUsersInChoices;
+
+	/**
+	 * @var \Barryvdh\Debugbar\LaravelDebugbar|\Illuminate\Foundation\Application|mixed
+	 */
 	private $debugBar;
 
 	function __construct( Elective $elective ) {
@@ -72,7 +97,7 @@ class DivideStudent {
 			}
 		}
 
-		dump("Full random: ".($random?"Yes":"No"));
+		dump( "Full random: " . ( $random ? "Yes" : "No" ) );
 		dump( 'Picked' );
 
 	}
@@ -125,7 +150,8 @@ class DivideStudent {
 	 * @param $studentId
 	 */
 	private function propose_starter( $studentId ) {
-		$results            = $this->choicesByUsers[ $studentId ];
+		$results = $this->choicesByUsers[ $studentId ];
+		/** @var Collection $resultsWithoutLast */
 		$resultsWithoutLast = $results;
 		$resultsWithoutLast->pop();
 		debug( '##########Results of ' . $studentId . '##########' );
