@@ -93,6 +93,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="chooseGroups" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -103,11 +104,10 @@
 				@if($classes != null)
 					<form method="POST" action="{{ url('/giveAmountToElective/'.$elective->id) }}">
 							{{ csrf_field() }}
-							@foreach($classes as $class)
-							{{var_dump($amounts[$loop])}}
+							@foreach($classes as $indexKey => $class)
 								<div class="input-field">
 									<label for="name">{{$class->class}}</label>
-									<input type="number" min="0" step="1" name="number[{{$class->id}}]" value="0"/>
+									<input type="number" min="0" step="1" name="number[{{$class->id}}]" value="{{$amounts[$indexKey]->amount}}"/>
 								</div>
 							@endforeach
 						<button type="submit" class="button">Opslaan</button>

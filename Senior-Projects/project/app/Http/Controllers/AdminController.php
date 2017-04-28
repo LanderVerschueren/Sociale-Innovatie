@@ -151,12 +151,14 @@ class AdminController extends Controller {
         $classes = Klas::all();
         $counter = 0;
 
-
+        
         foreach ($request->get('number') as $number){
+            
             if(DB::table('elective_class_amount')->where([
                 ['elective_id', $id],
                 ['class_id', $classes[$counter]->id]
                 ])->get()){
+                
                 DB::table('elective_class_amount')
                     ->where([
                         ['elective_id', $id],
@@ -164,6 +166,7 @@ class AdminController extends Controller {
                     ])->update(['amount' => $number]);
             }
             else{
+                var_dump($number);
                 DB::table('elective_class_amount')->insert([
                     'elective_id' => $id,
                     'class_id'   => $classes[$counter]->id,
