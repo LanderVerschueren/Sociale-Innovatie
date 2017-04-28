@@ -100,37 +100,8 @@ class DivideStudent {
 	}
 
 	/**
-	 * Start dividing all users
+	 * Fetch an array of the users data and picks
 	 *
-	 * @return string
-	 */
-	public function divide_elective() {
-		// Get all user data
-		$userData       = $this->getUserData();
-		$userData       = $userData->groupBy( 'number_of_choices' )->sort();
-		$sortedUserData = collect( [] );
-		foreach ( $userData as $key => $collection ) {
-			/** @var Collection $collection */
-			$sortedUserData = $sortedUserData->merge( $collection->sortBy( 'id_of_pick' ) );
-		}
-
-		$this->usersData = $sortedUserData;
-
-		foreach ( $this->usersData as $key => $user ) {
-			$this->divideUser( $user, $key );
-		}
-
-		$style = "<style>
-		.phpdebugbar-widgets-value.phpdebugbar-widgets-success
-		{
-			color: #00C853;
-		}
-		</style>";
-
-		return $style . "ok";
-	}
-
-	/**
 	 * @return Collection
 	 */
 	private function getUserData() {
@@ -147,25 +118,21 @@ class DivideStudent {
 			                              ->get( [ 'amount' ] )->first()->amount;
 
 			$newUser = [
-				"user_id"         => $key,
-				"school_id"       => $user->student_id,
+				"user_id"           => $key,
+				"school_id"         => $user->student_id,
 				"number_of_choices" => $numberOfChoices,
 				"id_of_pick"        => NULL,
-				"divide_status"    => [
-					"user_is_happy"    => false,
-					"user_is_divided"  => false,
-					"divide_likeness" => NULL
-				]
+				"divide_status"     => $this->makeDivideStatusArray()
 			];
 
 			foreach ( $picks as $pick ) {
 				/** @var Result $pick */
-				$newUser['idOfPick'] = $newUser['idOfPick'] ?? $pick->id;
-				$newUser["picks"] [] = [
-					"can_be_picked"  => true,
-					"rank"         => $pick->likeness,
-					"name"         => $pick->choices->choice,
-					"id_of_choice" => $pick->choices->id,
+				$newUser['id_of_pick'] = $newUser['id_of_pick'] ?? $pick->id;
+				$newUser["picks"] []   = [
+					"can_be_picked" => true,
+					"rank"          => $pick->likeness,
+					"name"          => $pick->choices->choice,
+					"id_of_choice"  => $pick->choices->id,
 				];
 			}
 
@@ -176,32 +143,179 @@ class DivideStudent {
 	}
 
 	/**
-	 * @param array $user
-	 * @param int $userRank
+	 * Start dividing all users
+	 *
+	 * @return string
+	 */
+	public function divide_elective() {
+		// Get all user data
+		debug( 'Start dividing the elective' );
+		debug( 'Fetch the user data' );
+		$userData       = $this->getUserData();
+		$userData       = $userData->groupBy( 'number_of_choices' )->sort();
+		$sortedUserData = collect( [] );
+		foreach ( $userData as $key => $collection ) {
+			/** @var Collection $collection */
+			$sortedUserData = $sortedUserData->merge( $collection->sortBy( 'id_of_pick' ) );
+		}
+
+		$this->usersData = $sortedUserData;
+
+		debug( 'Start dividing users' );
+		foreach ( $this->usersData as $key => $user ) {
+			$keyOfPick = $this->divideUser( $user, $key );
+			if ( $keyOfPick !== false ) {
+				$temp                                         = $this->usersData[ $key ];
+				$temp['picks'][ $keyOfPick ]['can_be_picked'] = false;
+				$this->usersData[ $key ]                      = $temp;
+
+				$this->updateDivideStatusOfUser( $key );
+			}
+		}
+
+		dump( $this->dividedUsersInChoices );
+		dump( $this->usersData );
+
+		$style = "<style>
+		pre.sf-dump{
+		z-index: 5 !important;
+		}
+		.phpdebugbar-widgets-value.phpdebugbar-widgets-success
+		{
+			color: #00C853;
+		}
+		</style>";
+
+		return $style . "ok";
+	}
+
+	/**
+	 * Magic where the user gets a choice
 	 */
 	private function divideUser( array $user, $userRank ) {
-		dump($this->choices);
-		dump($this->dividedUsersInChoices);
-		dd( $user );
-	}
+		debug( sprintf( 'Dividing user(%s): %s', $userRank, $user['user_id'] ) );
+		dump( sprintf( 'Dividing user(%s): %s', $userRank, $user['user_id'] ) );
+		$userId = $user['user_id'];
+		$picks  = $user['picks'];
+		dump( $picks );
+		foreach ( $picks as $key => $pick ) {
+			debug( sprintf( '| | Checking choice %d: %s', $key, $pick['name'] ) );
+			if ( ! $pick['can_be_picked'] ) {
+				continue;
+			}
 
-	private function proposeToChoice($choiceId, $userId, $userRank, $likeness){
-		if(!isset($this->dividedUsersInChoices[$choiceId])){
-			abort(404, "The choice is not available");
+			if ( $this->proposeToChoice( $pick['id_of_choice'], $userId, $userRank, $pick['rank'] ) ) {
+				return $key;
+			}
 		}
 
-		$currentChoice = $this->dividedUsersInChoices[$choiceId];
-
-		if($currentChoice['is_accepting']){
-			$this->addUserToChoice($choiceId, $userId, $userRank, $likeness);
-		}
+		return false;
 	}
 
-	private function addUserToChoice($choiceId, $userId, $userRank, $likeness){
-		$this->dividedUsersInChoices[$choiceId]["users"][] = [
-			"rank" => $userRank,
-			"id" => $userId,
+	/**
+	 * Ask a choice if it is still available
+	 */
+	private function proposeToChoice( $choiceId, $userId, $userRank, $likeness ) {
+		if ( ! isset( $this->dividedUsersInChoices[ $choiceId ] ) ) {
+			abort( 404, "The choice is not available" );
+		}
+
+		$currentChoice = $this->dividedUsersInChoices[ $choiceId ];
+
+		if ( $currentChoice['is_accepting'] ) {
+			$newKey = $this->addUserToChoice( $choiceId, $userId, $userRank, $likeness );
+			$this->updateChoiceProperties( $choiceId, $userId, $userRank, $newKey );
+
+			return true;
+		}
+
+		return false;
+	}
+
+	private function addUserToChoice( $choiceId, $userId, $userRank, $likeness ) {
+		$newKey                                                       = count( $this->dividedUsersInChoices[ $choiceId ]["users"] );
+		$this->dividedUsersInChoices[ $choiceId ]["users"][ $newKey ] = [
+			"rank"     => $userRank,
+			"id"       => $userId,
 			"likeness" => $likeness
-		] ;
+		];
+
+		return $newKey;
+	}
+
+	private function updateChoiceProperties( $choiceId, $userId, $userRank, $newKey ) {
+		$currentChoice = $this->dividedUsersInChoices[ $choiceId ];
+
+		$max           = $currentChoice['max'];
+		$users         = $currentChoice['users'];
+		$numberOfUsers = count( $users );
+
+		if ( $this->isNewLowestRanking( $choiceId, $userRank ) ) {
+			$this->setLowestRankingOfChoice( $choiceId, $userId, $userRank, $newKey );
+		}
+
+		if ( $numberOfUsers == $max ) {
+			$this->stopAcceptingUsers( $choiceId );
+		}
+	}
+
+	private function updateDivideStatusOfUser( $keyInUsersData ) {
+		$currentUser           = $this->usersData[ $keyInUsersData ];
+		$totalNumberOfPicks    = count( $currentUser['picks'] );
+		$requiredNumberOfPicks = $currentUser['number_of_choices'];
+		$pickedChoices         = $this->getPickedChoicesOfUser( $currentUser );
+
+		$hasAllPicks = count( $pickedChoices ) == $requiredNumberOfPicks;
+
+		$lowestLikeness = NULL;
+
+		foreach ( $pickedChoices as $choice ) {
+			if ( $lowestLikeness === NULL || $choice['rank'] < $lowestLikeness ) {
+				$lowestLikeness = $choice['rank'];
+			}
+		}
+
+		$temp                               = $this->usersData[ $keyInUsersData ];
+		$temp['divide_status']              = $this->makeDivideStatusArray( $lowestLikeness <= $totalNumberOfPicks / 2, $hasAllPicks, $lowestLikeness );
+		$this->usersData[ $keyInUsersData ] = $temp;
+	}
+
+	private function makeDivideStatusArray( $userIsHappy = false, $userIsDivided = false, $divideLikeness = NULL ) {
+		return [
+			"user_is_happy"   => $userIsHappy,
+			"user_is_divided" => $userIsDivided,
+			"divide_likeness" => $divideLikeness
+		];
+	}
+
+	private function stopAcceptingUsers( $choiceId ) {
+		$this->dividedUsersInChoices[ $choiceId ]['is_accepting'] = false;
+	}
+
+	private function isNewLowestRanking( $choiceId, $userRank ) {
+		$lowestRankOfChoice = $this->getLowestRankingOfChoice( $choiceId );
+
+		return $userRank > $lowestRankOfChoice;
+	}
+
+	private function setLowestRankingOfChoice( $choiceId, $userId, $userRank, $userKey ) {
+		$this->dividedUsersInChoices[ $choiceId ]['lowest_rank_user_id']  = $userId;
+		$this->dividedUsersInChoices[ $choiceId ]['lowest_rank_user_key'] = $userKey;
+		$this->dividedUsersInChoices[ $choiceId ]['lowest_rank']          = $userRank;
+	}
+
+	private function getLowestRankingOfChoice( $choiceId ) {
+		return $this->dividedUsersInChoices[ $choiceId ]['lowest_rank'];
+	}
+
+	private function getPickedChoicesOfUser( array $userData ) {
+		$picked = [];
+		foreach ( $userData['picks'] as $pick ) {
+			if ( $pick['can_be_picked'] == false ) {
+				$picked[] = $pick;
+			}
+		}
+
+		return $picked;
 	}
 }
