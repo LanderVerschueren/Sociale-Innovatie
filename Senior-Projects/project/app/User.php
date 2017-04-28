@@ -72,6 +72,15 @@ class User extends Authenticatable {
 	public function results() {
 		return $this->hasMany('\App\Result');
 	}
+	
+	public function is_admin() {
+	    if($this->is_admin == true) {
+	        return true;
+        }
+        else {
+	        return false;
+        }
+    }
 
 	//Controleren of de user al een result heeft met meegegeven elective.
 
