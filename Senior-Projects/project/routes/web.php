@@ -24,15 +24,17 @@ Route::get('/{elective}/consultCoices', 'StudentController@consultCoices');
 
 
 Route::get( '/admin', 'AdminController@login' );
-Route::get( '/dashboard', 'AdminController@dashboard' );
-Route::get( '/import', 'AdminController@getImportStudents' )->name( 'importStudent' );
-Route::post( '/import', 'AdminController@postImportStudents' );
-Route::get( '/keuzevak/{name}', 'AdminController@showChoicesFromElective' );
-Route::get( '/keuze/{id}', 'AdminController@showResultsFromChoice' );
-Route::get( '/klasgroep/{classgroup}', 'AdminController@showStudentsFromClassGroup' );
-Route::post( '/addElective', 'AdminController@addElective' );
-Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective' );
-Route::post('/giveAmountToElective/{id}', 'AdminController@giveAmountToClasses');
+Route::group(['middleware' => 'admin'], function () {
+    Route::get( '/dashboard', 'AdminController@dashboard' );
+    Route::get( '/import', 'AdminController@getImportStudents' )->name( 'importStudent' );
+    Route::post( '/import', 'AdminController@postImportStudents' );
+    Route::get( '/keuzevak/{name}', 'AdminController@showChoicesFromElective' );
+    Route::get( '/keuze/{id}', 'AdminController@showResultsFromChoice' );
+    Route::get( '/klasgroep/{classgroup}', 'AdminController@showStudentsFromClassGroup' );
+    Route::post( '/addElective', 'AdminController@addElective' );
+    Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective' );
+    Route::post('/giveAmountToElective/{id}', 'AdminController@giveAmountToClasses');
+});
 
 Route::get( '/debug/pick/{random?}', "DebugController@random" );
 Route::get( '/debug/results/{elective}/{json?}', "DebugController@results" )->name( 'debug-result' );

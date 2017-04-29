@@ -26,7 +26,11 @@
     <div class="container">
         <nav>
             <div class="inner_nav">
-                <a href="/"><img src="/images/KdG_H_Closed_White.png" alt="KdG-logo wit" class="logo"></a>
+                @if(Auth::check() && Auth::user()->is_admin() == 1)
+                    <a href="/dashboard"><img src="/images/KdG_H_Closed_White.png" alt="KdG-logo wit" class="logo"></a>
+                @else
+                    <a href="/"><img src="/images/KdG_H_Closed_White.png" alt="KdG-logo wit" class="logo"></a>
+                @endif
                 <h1 class="nav_text">Office Management - Keuzetool</h1>
             </div>
         </nav>
