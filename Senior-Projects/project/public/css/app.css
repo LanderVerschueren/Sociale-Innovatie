@@ -5028,6 +5028,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 html, body {
   width: 100%;
+  min-width: 1280px;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -5088,6 +5089,7 @@ h2 {
 
 .modal .input-field label {
   color: #1d1d1b !important;
+  font-size: 16px !important;
 }
 
 .modal .modal-footer {
@@ -5156,7 +5158,7 @@ h2 {
   box-shadow: 0px 27px 24px 0px rgba(0, 0, 0, 0.2), 0px 40px 70px 0px rgba(0, 0, 0, 0.22);
   width: 267px;
   height: 272px;
-  margin-bottom: 5%;
+  margin: 0 5px 40px 5px;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: center;
@@ -5318,10 +5320,18 @@ nav .inner_nav img {
   font-weight: 100;
 }
 
+.wrapper_login .login form .input-field label {
+  font-size: 16px !important;
+}
+
 .wrapper_login .login form .input-field input {
   width: 300px;
   color: white;
   font-family: "Roboto", serif;
+}
+
+.wrapper_login .login form span {
+  color: #DA0813 !important;
 }
 
 .wrapper_login .login form .button_bevestig {
@@ -5359,7 +5369,6 @@ content header {
 content .info {
   width: 100%;
   min-height: 35px;
-  margin-bottom: 5%;
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: justify;
@@ -5433,6 +5442,21 @@ content .category {
   flex-flow: row wrap;
 }
 
+content .category h2 {
+  width: 100%;
+}
+
+content .category h3 {
+  font-family: 'KdG';
+  font-size: 30px;
+  width: 100%;
+  margin: 0;
+}
+
+content .category .card_container {
+  margin-top: 60px;
+}
+
 content .choice {
   width: 100%;
   margin-top: 5%;
@@ -5453,6 +5477,7 @@ content .choice .card_container {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   flex-flow: row wrap;
+  margin-top: 60px;
 }
 
 content .choice .container_button {
@@ -5469,12 +5494,16 @@ content .message {
   font-family: "Roboto", serif;
   font-size: 24px;
   color: #cc0000;
+  margin: 0;
+  width: 100%;
 }
 
 content .guide {
   font-family: 'KdG';
-  font-size: 48px;
+  font-size: 42px;
   color: #1d1d1b;
+  margin: 0;
+  width: 100%;
 }
 
 /*# sourceMappingURL=app.css.map */

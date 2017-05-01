@@ -23,10 +23,13 @@ class AddPivotTableToChoicesAndClasses extends Migration {
 
 			$table->foreign( 'choice_id' )
 			      ->references( 'id' )
-			      ->on( 'choices' );
+			      ->on( 'choices' )
+                  ->onDelete('cascade');
+			
 			$table->foreign( 'class_group_id' )
 			      ->references( 'id' )
-			      ->on( 'class_groups' );
+			      ->on( 'class_groups' )
+                  ->onDelete('cascade');
 
 			$table->timestamps();
 		} );
@@ -43,7 +46,8 @@ class AddPivotTableToChoicesAndClasses extends Migration {
 			$table->integer( 'class_group_id' )->default(1)->unsigned()->after( "settings" );
 			$table->foreign( 'class_group_id' )
 			      ->references( 'id' )
-			      ->on( 'class_groups' );
+			      ->on( 'class_groups' )
+                  ->onDelete('cascade');
 		} );
 	}
 }

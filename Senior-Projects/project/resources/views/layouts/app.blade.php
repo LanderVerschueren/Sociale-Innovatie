@@ -12,7 +12,7 @@
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
     <link href="/css/app.css" rel="stylesheet">
 
     <!-- Scripts -->
@@ -26,28 +26,16 @@
     <div class="container">
         <nav>
             <div class="inner_nav">
-                <a href="/"><img src="/images/KdG_H_Closed_White.png" alt="KdG-logo wit" class="logo"></a>
+                @if(Auth::check() && Auth::user()->is_admin() == 1)
+                    <a href="/dashboard"><img src="/images/KdG_H_Closed_White.png" alt="KdG-logo wit" class="logo"></a>
+                @else
+                    <a href="/"><img src="/images/KdG_H_Closed_White.png" alt="KdG-logo wit" class="logo"></a>
+                @endif
                 <h1 class="nav_text">Office Management - Keuzetool</h1>
             </div>
         </nav>
 
         @yield('content')
-    </div>
-
-    <div class="modal fade" id="adminModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title">Admin - Login</h1>
-                </div>
-                <div class="modal-body">
-                    Test
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="button" data-dismiss="modal">Sluiten</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Scripts -->
@@ -61,16 +49,7 @@
         integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
         crossorigin="anonymous">
     </script>
-    <script type="text/javascript" src="../js/bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-    @if(!empty(Session::get('error_code')) && Session::get('error_code') === 5)
-        <script>
-        console.log('test');
-            $(function() {
-                $('#adminModal').modal('show');
-            });
-        </script>
-    @endif
     <script src="/js/app.js"></script>
 </body>
 </html>

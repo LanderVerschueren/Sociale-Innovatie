@@ -27,18 +27,20 @@
 		</ul>
 	</div>
 	<div class="category">
-		@if($message)
-			<p class="message">{{ $message }}</p>
-		@endif
-		@foreach($electives as $elective)
-			<div class="card_category">
-				<a href="/{{ $elective->id }}/choices">{{$elective->name}}</a>
-			</div>
-	    @endforeach
+		<div class="card_container">
+			@foreach($electives as $elective)
+				<div class="card_category">
+					<a href="/{{ $elective->id }}/choices">{{$elective->name}}</a>
+				</div>
+		    @endforeach
+	    </div>
 
 		@if($passiveElectives)
-		<h2>Passive Electives</h2>
-		@foreach($passiveElectives as $elective)
+			<h3>Kijk jouw keuzes na: </h3>
+			@if($message)
+				<p class="message">{{ $message }}</p>
+			@endif
+			@foreach($passiveElectives as $elective)
 				<div class="card_category">
 					<a href="/{{ $elective->id }}/consultCoices">{{$elective->name}}</a>
 				</div>

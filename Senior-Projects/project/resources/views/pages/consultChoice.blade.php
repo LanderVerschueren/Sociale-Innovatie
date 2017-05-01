@@ -27,12 +27,14 @@
         </ul>
     </div>
     <div class="choice">
-        <p class="guide">Hier zie je al je gemaakte keuzes voor {{$elective->name}}</p>               
-	            @foreach($resultsForElective as $choice)
-                    	<div class="card_choice_order">
-                            <p class="card_choice_order_link">{{$choice["name"]}}</p>
-	                    </div>
-				@endforeach  
+        <p class="guide">Hier zie je al je gemaakte keuzes voor {{$elective->name}}</p>     
+        <div class="card_container">          
+            @foreach($resultsForElective as $choice)
+            	<div class="card_choice_order">
+                    <p class="card_choice_order_link">{{$choice["name"]}}</p>
+                </div>
+    		@endforeach  
+        </div>
     </div>
 </content>
 

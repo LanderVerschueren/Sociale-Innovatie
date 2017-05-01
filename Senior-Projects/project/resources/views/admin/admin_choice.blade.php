@@ -9,6 +9,7 @@
 			{{ csrf_field() }}
 		 	<button type="submit" class="button"><i class="fa fa-plus" aria-hidden="true"></i> Keuzes importeren</button>
 		</form>
+		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addChoice"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#chooseGroups"><i class="fa fa-plus" aria-hidden="true"></i> Groepen kiezen</button>
 	</header>
 	<div class="info">
@@ -22,25 +23,28 @@
 	</div>
 	<div class="choice">
 		<div class="card_container">
-		@foreach($choices as $choice)
-			<!--
-			<div class="card_category">
-				<a href="{{ url('/keuze/'.$choice->id) }}">{{ $choice->choice }}</a>
-			</div>
-			-->
-			<div class="card_choice" id="{{ $choice->choice }}">
-				<a class="card_choice_link_admin" href="/keuze/{{ $choice->id }}">{{ $choice->choice }}</a>
 
-				@if($choice->elective->start_date < date("Y-m-d G:i:s"))
-				<a class="card_choice_edit modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#editModal" data-title="{{ $choice->choice }}" data-test="{{ $choice->test_date }}" data-start="{{ $choice->start }}" data-end="{{ $choice->end }}">
-					<i class="fa fa-cog" aria-hidden="true"></i>
-				</a>
-				<a class="card_choice_delete modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#deleteModal" data-title="{{ $choice->choice }}">
-					<i class="fa fa-trash" aria-hidden="true"></i>
-				</a>
-				@endif
-			</div>
-	    @endforeach
+		@if($choices != null)
+			@foreach($choices as $choice)
+				<!--
+				<div class="card_category">
+					<a href="{{ url('/keuze/'.$choice->id) }}">{{ $choice->choice }}</a>
+				</div>
+				-->
+				<div class="card_choice" id="{{ $choice->choice }}">
+					<a class="card_choice_link_admin" href="/keuze/{{ $choice->id }}">{{ $choice->choice }}</a>
+
+					@if($choice->elective->start_date < date("Y-m-d G:i:s"))
+					<a class="card_choice_edit modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#editChoice" data-title="{{ $choice->choice }}" data-description="{{ $choice->description }}" data-min="{{ $choice->minimum }}" data-max="{{ $choice->maximum }}">
+						<i class="fa fa-cog" aria-hidden="true"></i>
+					</a>
+					<a class="card_choice_delete modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#deleteModal" data-title="{{ $choice->choice }}">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</a>
+					@endif
+				</div>
+			@endforeach
+		@endif
 		</div>
     </div>
 </content>
@@ -56,11 +60,7 @@
 					{{ csrf_field() }}
 					<div class="input-field">
 						<input type="text" name="name">
-						<label for="name">Naam</label>
-					</div>
-					<div class="input-field">
-						<label for="test_date" class="active">Proefdatum</label>
-						<input class="form-control" type="date" name="test_date" value="">
+						<label for="name" >Naam</label>
 					</div>
 					<div class="input-field">
 						<label for="start_date" class="active">Begindatum</label>
@@ -87,11 +87,95 @@
                 Wilt u dit vak verwijderen?
             </div>
             <div class="modal-footer">
-            	<a href="#" class="button">Ja!</a>
+            	<a href="" id="deleteChoice" class="button">Ja!</a>
                 <button type="button" class="button" data-dismiss="modal">Nee</button>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="addChoice" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title" >Voeg een keuze toe</h1>
+			</div>
+			<div class="modal-body">
+				<form method="POST" action="{{ url('/addChoice/'.$elective->name) }}">
+					{{ csrf_field() }}
+
+					<div class="input-field">
+						<label for="name">Naam keuze: </label>
+						<input type="text"  name="choice"/>
+					</div>
+					<div class="input-field">
+						<label for="name">Beschrijving: </label>
+						<input type="text" name="description"/>
+					</div>
+					<div class="input-field">
+						<label for="name">Minimum aantal studenten: </label>
+						<input type="number" min="0" step="1" name="minimum" />
+					</div>
+					<div class="input-field">
+						<label for="name">Maximaal aantal studenten:</label>
+						<input type="number" min="0" step="1" name="maximum"/>
+					</div>
+					@foreach($classgroups as $indexKey => $group)
+						<div class="input-field" style="display: block; height: 50px;">
+							<label for="name">{{$group->class_group}}</label>
+							<input type="checkbox" name="group[{{$group->id}}]" value="{{$group->id}}" style="display: block;opacity: 1; position:relative; left:0"/>
+						</div>
+					@endforeach
+					<button type="submit" class="button">Opslaan</button>
+				</form>
+			</div>
+			<div class="modal-footer">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="editChoice" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title" >Voeg een keuze toe</h1>
+			</div>
+			<div class="modal-body">
+				<form method="POST" action="{{ url('/updateChoice/'.$elective->name) }}">
+					{{ csrf_field() }}
+
+					<div class="input-field">
+						<label for="choiceName">Naam keuze: </label>
+						<input type="text" id="choiceName" name="choice" placeholder="Naam"/>
+					</div>
+					<div class="input-field">
+						<label for="choiceDescription">Beschrijving: </label>
+						<input id="choiceDescription" name="description" placeholder="Beschrijving"/>
+					</div>
+					<div class="input-field">
+						<label for="choiceMin">Minimum aantal studenten: </label>
+						<input type="number" id="choiceMin" min="0" step="1" name="minimum" placeholder="minimum" />
+					</div>
+					<div class="input-field">
+						<label for="choiceMax">Maximaal aantal studenten:</label>
+						<input type="number" id="choiceMax" min="0" step="1" name="maximum" placeholder="maximum"/>
+					</div>
+					@foreach($classgroups as $indexKey => $group)
+						<div class="input-field" style="display: block; height: 50px;">
+							<label for="name">{{$group->class_group}}</label>
+							<input type="checkbox" name="group[{{$group->id}}]" value="{{$group->id}}" style="display: block;opacity: 1; position:relative; left:0" />
+						</div>
+					@endforeach
+					<button type="submit" class="button">Opslaan</button>
+				</form>
+			</div>
+			<div class="modal-footer">
+
+			</div>
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" id="chooseGroups" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel">
