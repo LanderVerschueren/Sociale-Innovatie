@@ -38,12 +38,16 @@ class AdminController extends Controller {
 		$electiveName = $name;
 		$classes  = Klas::all();
 		$amounts = DB::table('elective_class_amount')->where('elective_id', $elective->id)->get();
-
+		$choice_class_groups = DB::table('choice_class_group')->get();
+		$class_groups = ClassGroup::all() ;
+		
 		return view( 'admin.admin_choice' )->with( [
 			'choices'   => $choices,
             'elective'  => $elective,
             'classes'   => $classes,
-            'amounts'   => $amounts
+            'amounts'   => $amounts,
+            'classgroups' => $class_groups,
+            'choice_class_groups' => $choice_class_groups
 		] );
 	}
 
@@ -75,6 +79,14 @@ class AdminController extends Controller {
  		$elective->end_date = $request->end_date;
 
  		$elective->save();
+        
+ 		foreach (Klas::all() as $class){
+            DB::table('elective_class_amount')->insert([
+                'elective_id' => $elective->id,
+                'class_id'   => $class->id,
+                'amount'     => 0
+            ]);
+        }
 
  		$electives = Elective::all();
  		$name = 'Keuzevakken';
@@ -129,7 +141,7 @@ class AdminController extends Controller {
         ]);
 
 		$elective = Elective::where( 'name', $name )->first();
-		$choices = Choice::where( 'elective_id', $elective->id )->get();
+		
 		$choice = new Choice;
 
 		$choice->choice = $request->choice;
@@ -137,17 +149,70 @@ class AdminController extends Controller {
 		$choice->minimum = $request->minimum;
 		$choice->maximum = $request->maximum;
 		$choice->elective_id = $elective->id;
-
+        
 		$choice->save();
-
-		return view( 'admin.dashboard' )->with( [
-			'name'      => $name,
-			'choices'   => $choices
-		] );
+        
+        foreach ($request->get('group') as $group) {
+            DB::table('choice_class_group')->insert([
+                'choice_id' => $choice->id,
+                'class_group_id'   => $group
+            ]);
+        }
+        
+        $choices = Choice::where( 'elective_id', $elective->id )->get();
+        
+        return redirect( '/keuzevak/'.$elective->name )->with( [
+            'name'      => $elective->name,
+            'choices' => $choices,
+        ] );
 	}
+    
+    public function updateChoice( Request $request, $name){
+        
+        $this->validate($request,[
+            'choice'=> 'required',
+            'description' => 'required',
+            'minimum' => 'required|integer',
+            'maximum' => 'required|integer',
+        ]);
+        
+        $elective = Elective::where( 'name', $name )->first();
+        
+        $choice = new Choice;
+        
+        $choice->choice = $request->choice;
+        $choice->description = $request->description;
+        $choice->minimum = $request->minimum;
+        $choice->maximum = $request->maximum;
+        $choice->elective_id = $elective->id;
+        
+        $choice->save();
+        
+        foreach ($request->get('group') as $group) {
+            DB::table('choice_class_group')->insert([
+                'choice_id' => $choice->id,
+                'class_group_id'   => $group
+            ]);
+        }
+        
+        $choices = Choice::where( 'elective_id', $elective->id )->get();
+        
+        return redirect( '/keuzevak/'.$elective->name )->with( [
+            'name'      => $elective->name,
+            'choices' => $choices,
+        ] );
+    }
+    
+    public function deleteChoice( Request $request, $id) {
+	    $choice = Choice::whereId($id);
+	    $choice->delete();
+        
+        return back();
+    }
 
 	public function giveAmountToClasses(Request $request, $id){
         $elective = Elective::where('id', $id)->first();
+        $choices = Choice::where( 'elective_id', $elective->id )->get();
         $classes = Klas::all();
         $counter = 0;
 
@@ -166,7 +231,6 @@ class AdminController extends Controller {
                     ])->update(['amount' => $number]);
             }
             else{
-                var_dump($number);
                 DB::table('elective_class_amount')->insert([
                     'elective_id' => $id,
                     'class_id'   => $classes[$counter]->id,
@@ -177,6 +241,11 @@ class AdminController extends Controller {
 
             $counter += 1;
         }
+        
+        return redirect( '/keuzevak/'.$elective->name )->with( [
+            'name'      => $elective->name,
+            'choices'   => $choices
+        ] );
     }
 
 

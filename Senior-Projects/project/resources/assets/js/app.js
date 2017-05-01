@@ -70,6 +70,15 @@ $(function() {
       console.log($(e.relatedTarget).data( 'title' ));
          $("#deleteModalLabel").html($(e.relatedTarget).data('title'));
          $("#deleteModalParagraph").html($(e.relatedTarget).data('description'));
+         $("#deleteChoice").attr('href', '/deleteChoice/' + $( e.relatedTarget).data('id'));
+    });
+
+    $('#editChoice').on("show.bs.modal", function (e) {
+        console.log($(e.relatedTarget).data( 'title' ));
+        $("#choiceName").val($(e.relatedTarget).data('title'));
+        $("#choiceDescription").val($(e.relatedTarget).data('description'));
+        $("#choiceMin").val($(e.relatedTarget).data('min'));
+        $("#choiceMax").val($(e.relatedTarget).data('max'));
     });
 });
 

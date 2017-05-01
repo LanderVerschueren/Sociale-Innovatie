@@ -16,12 +16,13 @@ use App\Services\DivideStudent;
 Auth::routes();
 
 Route::get( '/', 'HomeController@index' );
-Route::get( '/category', 'StudentController@index' );
-Route::post( '/rightOrder', 'StudentController@store_choice' );
-Route::post( '/storeOrder', 'StudentController@store_order' );
-Route::get( '/{elective}/choices', 'StudentController@choices' );
-Route::get('/{elective}/consultCoices', 'StudentController@consultCoices');
-
+Route::group(['middleware' => 'auth'], function () {
+    Route::get( '/category', 'StudentController@index' );
+    Route::post( '/rightOrder', 'StudentController@store_choice' );
+    Route::post( '/storeOrder', 'StudentController@store_order' );
+    Route::get( '/{elective}/choices', 'StudentController@choices' );
+    Route::get('/{elective}/consultCoices', 'StudentController@consultCoices');
+});
 
 Route::get( '/admin', 'AdminController@login' );
 Route::group(['middleware' => 'admin'], function () {
@@ -29,10 +30,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get( '/import', 'AdminController@getImportStudents' )->name( 'importStudent' );
     Route::post( '/import', 'AdminController@postImportStudents' );
     Route::get( '/keuzevak/{name}', 'AdminController@showChoicesFromElective' );
-    Route::get( '/keuze/{id}', 'AdminController@showResultsFromChoice' );
+    Route::get( '/keuze/{name}', 'AdminController@showResultsFromChoice' );
+    Route::get('/deleteChoice/{id}', 'AdminController@deleteChoice');
     Route::get( '/klasgroep/{classgroup}', 'AdminController@showStudentsFromClassGroup' );
     Route::post( '/addElective', 'AdminController@addElective' );
     Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective' );
+    Route::post( '/updateChoice/{name}', 'AdminController@addChoiceToElective' );
     Route::post('/giveAmountToElective/{id}', 'AdminController@giveAmountToClasses');
 });
 
