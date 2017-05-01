@@ -114,8 +114,24 @@ class StudentController extends Controller
                 }
             }
         }
-       //return $resultsForElective;
-       debug($resultsForElective);
+        //return $resultsForElective;
+        $sortedResultsForElective = [];
+
+        $startNumber = 1;
+
+        for($count = 1; $count<=count($resultsForElective);  $count++)
+        {
+            foreach ($resultsForElective as $sortResult){
+
+                if($sortResult["likeness"] == $startNumber){
+                    array_push($sortedResultsForElective, $sortResult);
+                }
+            }
+            $startNumber++;
+        }
+
+        $resultsForElective = $sortedResultsForElective;
+
         return view("pages.consultChoice", compact("resultsForElective", "elective"));
 
     }
