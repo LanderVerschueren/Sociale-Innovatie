@@ -32,12 +32,12 @@
 				<a class="card_choice_link_admin" href="/keuze/{{ $choice->id }}">{{ $choice->choice }}</a>
 
 				@if($choice->elective->start_date < date("Y-m-d G:i:s"))
-				<a class="card_choice_edit modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#editModal" data-title="{{ $choice->choice }}" data-test="{{ $choice->test_date }}" data-start="{{ $choice->start }}" data-end="{{ $choice->end }}">
-					<i class="fa fa-cog" aria-hidden="true"></i>
-				</a>
-				<a class="card_choice_delete modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#deleteModal" data-title="{{ $choice->choice }}">
-					<i class="fa fa-trash" aria-hidden="true"></i>
-				</a>
+					<a class="card_choice_edit modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#editModal" data-title="{{ $choice->choice }}" data-start="{{ $choice->start }}" data-end="{{ $choice->end }}">
+						<i class="fa fa-cog" aria-hidden="true"></i>
+					</a>
+					<a class="card_choice_delete modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#deleteModal" data-title="{{ $choice->choice }}">
+						<i class="fa fa-trash" aria-hidden="true"></i>
+					</a>
 				@endif
 			</div>
 	    @endforeach
@@ -55,20 +55,16 @@
 				<form method="POST" action="{{ url('/addElective') }}">
 					{{ csrf_field() }}
 					<div class="input-field">
-						<input type="text" name="name">
-						<label for="name">Naam</label>
-					</div>
-					<div class="input-field">
-						<label for="test_date" class="active">Proefdatum</label>
-						<input class="form-control" type="date" name="test_date" value="">
+						<input id="editModalNameInput" type="text" name="name" value="">
+						<label id="editModalNameLabel" for="name">Naam</label>
 					</div>
 					<div class="input-field">
 						<label for="start_date" class="active">Begindatum</label>
-						<input class="form-control" type="date" name="start_date">
+						<input id="editModalStartdateInput" class="form-control" type="date" name="start_date">
 					</div>
 					<div class="input-field">
 						<label for="end_date" class="active">Einddatum</label>
-						<input type="date" class="" name="end_date">
+						<input id="editModalEnddateInput" type="date" class="" name="end_date">
 					</div>
 					<button type="submit" class="button">Opslaan</button>
 				</form>

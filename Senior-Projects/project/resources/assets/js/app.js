@@ -18,8 +18,7 @@ $('.card_choice_link').click(function(event) {
 
 $( "#sortable" ).sortable({
     placeholder: "card_choice_order_drag",
-    tolerance: "pointer",
-    containment: "parent"
+    tolerance: "pointer"
     /*,
     update: function( event, ui ) {
     	var order = []; 
@@ -58,9 +57,13 @@ $(function() {
     });
 
     $('#editModal').on("show.bs.modal", function (e) {
-      console.log($(e.relatedTarget).data( 'title' ));
+      console.log($(e.relatedTarget).data() );
          $("#editModalLabel").html($(e.relatedTarget).data('title'));
          $("#editModalParagraph").html($(e.relatedTarget).data('description'));
+         $('#editModalNameInput').val( $(e.relatedTarget).data('title') );
+         $('#editModalNameLabel').addClass('active');
+         $('#editModalStartdateInput').val( $(e.relatedTarget).data('start') );
+         $('#editModalEnddateInput').val( $(e.relatedTarget).data('end') );
     });
 
     $('#deleteModal').on("show.bs.modal", function (e) {

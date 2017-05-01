@@ -12,6 +12,7 @@ $break-small: 600px;
 
 html, body {
 	width: 100%;
+	min-width: 1280px;
 	height: 100%;
 	margin: 0;
 	padding: 0;
@@ -72,6 +73,7 @@ h2 {
 
 		label {
 			color: $main-color!important;
+			font-size: 16px!important;
 		}
 	}
 
@@ -144,7 +146,7 @@ h2 {
 	width: 267px;
 	height: 272px;
 
-	margin-bottom: 5%;
+	margin: 0 5px 40px 5px;
 
 	display: flex;
 	justify-content: center;
@@ -301,12 +303,20 @@ nav {
 	  				font-weight: 100;
 	  			}
 
+	  			label {
+	  				font-size: 16px!important;
+	  			}
+
 	  			input {
 	  				width: 300px;
 	  				color: white;
 	  				font-family: $roboto;
 	  			}
 	  		}
+
+  			span {
+  				color: #DA0813!important;
+  			}
 
 			.button_bevestig {
 				margin-top: 20px;
@@ -342,7 +352,6 @@ content {
 	.info {
 		width: 100%;
 		min-height: 35px;
-		margin-bottom: 5%;
 
 		display: flex;
 		justify-content: space-between;
@@ -397,6 +406,21 @@ content {
 		display: flex;
 		justify-content: space-around;
 		flex-flow: row wrap;
+
+		h2 {
+			width: 100%;
+		}
+
+		h3 {
+			font-family: 'KdG';
+			font-size: 30px;
+			width: 100%;
+			margin: 0;
+		}
+
+		.card_container {
+			margin-top: 60px;
+		}
 	}
 
 	.choice {
@@ -411,6 +435,8 @@ content {
 			display: flex;
 			justify-content: space-between;
 			flex-flow: row wrap;
+
+			margin-top: 60px;
 		}
 
 		.container_button {
@@ -428,12 +454,16 @@ content {
 		font-family: $roboto;
 		font-size: 24px;
 		color: $error-color;
+		margin: 0;
+		width: 100%;
 	}
 
 	.guide {
 		font-family: 'KdG';
-		font-size: 48px;
+		font-size: 42px;
 		color: $main-color;
+		margin: 0;
+		width: 100%;
 	}
 }
 

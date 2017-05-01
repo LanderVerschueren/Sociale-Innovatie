@@ -1,6 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="wrapper_login">
+    <div class="login">
+        <form method="POST" action="{{ url('/login') }}">
+            {{ csrf_field() }}
+            <div class="input-field">
+                <input id="emailadres" type="text" class="" name="email">
+                <label for="emailadres">E-mailadres</label>
+            </div>
+            <div class="input-field">
+                <input id="password" type="password" class="" name="password">
+                <label for="password">Paswoord</label>
+            </div>
+            @if ($errors)
+                <span class="help-block">
+                    <strong>{{ $errors->first() }}</strong>
+                </span>
+            @endif
+            <button type="submit" class="button button_bevestig">Inloggen</button>
+        </form>
+    </div>
+</div>
+
+<!--
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -65,4 +88,5 @@
         </div>
     </div>
 </div>
+-->
 @endsection

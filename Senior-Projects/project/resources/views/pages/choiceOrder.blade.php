@@ -28,20 +28,22 @@
     </div>
     <div class="choice">
         <p class="guide">Sleep je keuzes in volgorde, het eerste vak zou je het liefste doen</p>
-        <form action="/storeOrder" method="post">
-            {{ csrf_field() }}
-            <div id="sortable">
-	            @foreach($choices as $choice)
-					<div class="card_choice_order" id="{{ $choice->choice }}">
-	                    <a class="card_choice_order_link" href="">{{$choice->choice}}</a>
-	                    <input type="hidden" name="choice[]" value="{{ $choice->id }}">
-	                </div>
-				@endforeach
-			</div>
-			<div class="container_button">
-                <button type="submit" class="button">Bevestig</button>
-            </div>
-        </form>
+        <div class="card_container">
+            <form action="/storeOrder" method="post">
+                {{ csrf_field() }}
+                <div id="sortable">
+    	            @foreach($choices as $choice)
+    					<div class="card_choice_order" id="{{ $choice->choice }}">
+    	                    <a class="card_choice_order_link" href="">{{$choice->choice}}</a>
+    	                    <input type="hidden" name="choice[]" value="{{ $choice->id }}">
+    	                </div>
+    				@endforeach
+    			</div>
+    			<div class="container_button">
+                    <button type="submit" class="button">Bevestig</button>
+                </div>
+            </form>
+        </div>
     </div>
 </content>
 
