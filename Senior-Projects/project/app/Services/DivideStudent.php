@@ -128,8 +128,6 @@ class DivideStudent {
 				$loopData = $this->generateNewUserData();
 			}
 
-			dump(count($loopData));
-
 			foreach ( $loopData as $key => $user ) {
 				$keyOfUser = $this->getKeyOfUser($user['user_id']);
 				$keyOfPick = $this->divideUser( $user, $keyOfUser );
@@ -146,8 +144,7 @@ class DivideStudent {
 			$this->retryCounter++;
 		}
 
-		dump( $this->dividedUsersInChoices );
-		dump( $this->usersData );
+		return $this->usersData;
 
 		$style = "<style>
 		pre.sf-dump{
@@ -296,10 +293,7 @@ class DivideStudent {
 
 	private function checkIfAllUsersDivided(){
 		if($this->retryCounter == 100){
-			dump('error');
-			dump($this->dividedUsersInChoices);
-			dump($this->generateNewUserData($this->usersData));
-			dd($this->usersData);
+			return false;
 		}
 		foreach ($this->usersData as $user){
 			if($user['divide_status']['user_is_divided'] === false){

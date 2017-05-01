@@ -6,6 +6,7 @@
 	<header>
 		<h2>Admin</h2>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
+		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#divideStudents"><i class="fa fa-cogs" aria-hidden="true"></i> Verdeel studenten</button>
 
 	</header>
 
@@ -53,5 +54,23 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="divideStudents" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel2">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title">Verdeel studenten</h1>
+			</div>
+			<div class="modal-body">
+				<p class="text-muted">
+					Selecteer waarvan je graag de excel wil genereren (dit kan even duren...)
+				</p>
+				@foreach($electives as $elective)
+					<p><a href="{{route('divideElective', $elective->id)}}">{{$elective->name}}</a></p>
+				@endforeach
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
