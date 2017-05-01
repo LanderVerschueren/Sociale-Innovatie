@@ -29,7 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Query\Builder|\App\Elective whereTestDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Elective whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read \App\ClassAmount $classAmounts
+ * @property-read \App\ClassAmount $classAmount
  */
 class Elective extends Model
 {
@@ -47,7 +47,7 @@ class Elective extends Model
 		return $this->hasManyThrough('\App\Result', '\App\Choice');
     }
 
-	public function classAmounts() {
-		return $this->belongsTo('\App\ClassAmount');
+	public function classAmount() {
+		return $this->hasMany('\App\ClassAmount');
     }
 }

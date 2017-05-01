@@ -37,6 +37,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective' );
     Route::post( '/updateChoice/{name}', 'AdminController@addChoiceToElective' );
     Route::post('/giveAmountToElective/{id}', 'AdminController@giveAmountToClasses');
+
+    Route::get('/divide/{electiveId}', 'AdminController@divideElective')->name('divideElective');
 });
 
 Route::get( '/debug/pick/{random?}', "DebugController@random" );
