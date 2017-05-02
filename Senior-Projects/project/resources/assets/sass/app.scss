@@ -75,6 +75,25 @@ h2 {
 			color: $main-color!important;
 			font-size: 16px!important;
 		}
+
+		textarea {
+			height: 120px;
+		}
+	}
+
+	.input-field.classes {
+		display: flex;
+		flex-direction: row-reverse;
+		justify-content: flex-end;
+		align-items: baseline;
+
+		label {
+			position: initial;
+		}
+
+		input {
+			margin-right: 10px;
+		}
 	}
 
 	.modal-footer {
@@ -433,7 +452,7 @@ content {
 
 		.card_container {
 			display: flex;
-			justify-content: space-between;
+			justify-content: space-around;
 			flex-flow: row wrap;
 
 			margin-top: 60px;

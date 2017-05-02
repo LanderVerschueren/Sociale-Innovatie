@@ -3595,13 +3595,6 @@ form p:last-child {
 }
 
 /* Remove default checkbox */
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
-  position: absolute;
-  left: -9999px;
-  opacity: 0;
-}
-
 [type="checkbox"] {
   /* checkbox aspect */
 }
@@ -5092,6 +5085,30 @@ h2 {
   font-size: 16px !important;
 }
 
+.modal .input-field textarea {
+  height: 120px;
+}
+
+.modal .input-field.classes {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+  flex-direction: row-reverse;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: baseline;
+  align-items: baseline;
+}
+
+.modal .input-field.classes label {
+  position: initial;
+}
+
+.modal .input-field.classes input {
+  margin-right: 10px;
+}
+
 .modal .modal-footer {
   display: -webkit-box;
   display: flex;
@@ -5472,8 +5489,7 @@ content .choice {
 content .choice .card_container {
   display: -webkit-box;
   display: flex;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
+  justify-content: space-around;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   flex-flow: row wrap;

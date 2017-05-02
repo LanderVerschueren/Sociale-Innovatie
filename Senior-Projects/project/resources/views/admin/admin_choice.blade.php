@@ -4,13 +4,14 @@
 
 <content>
 	<header>
-		<h2>Admin</h2>		
-		<form id="logout-form" action="" method="POST">
-			{{ csrf_field() }}
-		 	<button type="submit" class="button"><i class="fa fa-plus" aria-hidden="true"></i> Keuzes importeren</button>
-		</form>
+		<h2>Admin</h2>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addChoice"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#chooseGroups"><i class="fa fa-plus" aria-hidden="true"></i> Groepen kiezen</button>
+				
+		<form id="logout-form" action="/logout" method="POST">
+			{{ csrf_field() }}
+		 	<button type="submit" class="button">Uitloggen</button>
+		</form>
 	</header>
 	<div class="info">
 		<ul>
@@ -94,7 +95,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="addChoice" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+<div class="modal fade" id="addChoice" tabindex="-1" role="dialog" aria-labelledby="addChoiceLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -110,7 +111,7 @@
 					</div>
 					<div class="input-field">
 						<label for="name">Beschrijving: </label>
-						<input type="text" name="description"/>
+						<textarea name="description" placeholder="Typ hier de beschrijving van het vak."></textarea>
 					</div>
 					<div class="input-field">
 						<label for="name">Minimum aantal studenten: </label>
@@ -121,9 +122,9 @@
 						<input type="number" min="0" step="1" name="maximum"/>
 					</div>
 					@foreach($classgroups as $indexKey => $group)
-						<div class="input-field" style="display: block; height: 50px;">
+						<div class="input-field classes">
 							<label for="name">{{$group->class_group}}</label>
-							<input type="checkbox" name="group[{{$group->id}}]" value="{{$group->id}}" style="display: block;opacity: 1; position:relative; left:0"/>
+							<input type="checkbox" name="group[{{$group->id}}]" value="{{$group->id}}"/>
 						</div>
 					@endforeach
 					<button type="submit" class="button">Opslaan</button>
@@ -136,7 +137,7 @@
 	</div>
 </div>
 
-<div class="modal fade" id="editChoice" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
+<div class="modal fade" id="editChoice" tabindex="-1" role="dialog" aria-labelledby="editChoiceLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -151,8 +152,8 @@
 						<input type="text" id="choiceName" name="choice" placeholder="Naam"/>
 					</div>
 					<div class="input-field">
-						<label for="choiceDescription">Beschrijving: </label>
-						<input id="choiceDescription" name="description" placeholder="Beschrijving"/>
+						<label for="choiceDescription" class="active">Beschrijving: </label>
+						<textarea id="choiceDescription" name="description" style="margin-bottom: 15px;" placeholder="Typ hier de beschrijving van het vak."></textarea>
 					</div>
 					<div class="input-field">
 						<label for="choiceMin">Minimum aantal studenten: </label>
@@ -163,9 +164,9 @@
 						<input type="number" id="choiceMax" min="0" step="1" name="maximum" placeholder="maximum"/>
 					</div>
 					@foreach($classgroups as $indexKey => $group)
-						<div class="input-field" style="display: block; height: 50px;">
+						<div class="input-field classes">
 							<label for="name">{{$group->class_group}}</label>
-							<input type="checkbox" name="group[{{$group->id}}]" value="{{$group->id}}" style="display: block;opacity: 1; position:relative; left:0" />
+							<input type="checkbox" name="group[{{$group->id}}]" value="{{$group->id}}"/>
 						</div>
 					@endforeach
 					<button type="submit" class="button">Opslaan</button>
