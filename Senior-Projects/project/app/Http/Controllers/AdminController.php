@@ -373,6 +373,7 @@ class AdminController extends Controller {
 	}
 
 	public function postImportStudents( Request $request ) {
+		ini_set('memory_limit', '2048M'); 
 		dump( $request );
 
 		$studentCollection = collect();

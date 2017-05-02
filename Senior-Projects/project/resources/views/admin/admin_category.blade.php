@@ -5,11 +5,7 @@
 <content>
 	<header>
 		<h2>Admin</h2>
-		<form id="import-form" action="/import" method="POST">
-			{{ csrf_field() }}
-			<input type="file" name="pic" accept="file/*">
-  			<button class="button" type="submit">Studenten importeren</button>
-		</form>
+		<a href="/import">Studenten importeren</a>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#divideStudents"><i class="fa fa-cogs" aria-hidden="true"></i> Verdeel studenten</button>
 
