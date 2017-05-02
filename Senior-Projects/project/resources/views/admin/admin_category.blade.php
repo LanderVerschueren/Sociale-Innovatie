@@ -5,7 +5,7 @@
 <content>
 	<header>
 		<h2>Admin</h2>
-		<a href="/import">Studenten importeren</a>
+		<a href="/import" class="button">Studenten importeren</a>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#divideStudents"><i class="fa fa-cogs" aria-hidden="true"></i> Verdeel studenten</button>
 
@@ -33,7 +33,7 @@
     </div>
 </content>
 
-<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel">
+<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -52,7 +52,11 @@
 		            </div>
 		            <div class="input-field">
 		                <label for="end_date" class="active">Einddatum</label>
-		                <input type="date" class="" name="end_date">
+		                <input type="date" name="end_date">
+		            </div>
+		            <div class="input-field">
+		                <label for="number_of_choices" class="active">Einddatum</label>
+		                <input type="number" name="number_of_choices">
 		            </div>
 		            <button type="submit" class="button">Opslaan</button>
                 </form>
@@ -61,7 +65,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="divideStudents" tabindex="-1" role="dialog" aria-labelledby="descriptionModalLabel2">
+<div class="modal fade" id="divideStudents" tabindex="-1" role="dialog" aria-labelledby="divideStudentsModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">

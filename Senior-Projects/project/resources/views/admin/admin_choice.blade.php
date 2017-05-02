@@ -6,8 +6,8 @@
 	<header>
 		<h2>Admin</h2>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addChoice"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
-		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#chooseGroups"><i class="fa fa-plus" aria-hidden="true"></i> Groepen kiezen</button>
-				
+		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#chooseGroups">Aantal vakken</button>
+
 		<form id="logout-form" action="/logout" method="POST">
 			{{ csrf_field() }}
 		 	<button type="submit" class="button">Uitloggen</button>
@@ -183,7 +183,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h1 class="modal-title">Maximum aantal mensen per richting</h1>
+				<h1 class="modal-title">Aantal vakken te kiezen per richting</h1>
 			</div>
 			<div class="modal-body">
 				@if($classes != null)
