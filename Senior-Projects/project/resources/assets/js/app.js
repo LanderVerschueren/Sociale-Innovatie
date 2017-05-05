@@ -51,35 +51,53 @@ require('./bootstrap');
 
 $(function() {
     $('#descriptionModal').on("show.bs.modal", function (e) {
-      console.log($(e.relatedTarget).data( 'title' ));
-         $("#descriptionModalLabel").html($(e.relatedTarget).data('title'));
-         $("#descriptionModalParagraph").html($(e.relatedTarget).data('description'));
+        console.log($(e.relatedTarget).data('title'));
+        $("#descriptionModalLabel").html($(e.relatedTarget).data('title'));
+        $("#descriptionModalParagraph").html($(e.relatedTarget).data('description'));
     });
 
     $('#editModal').on("show.bs.modal", function (e) {
-      console.log($(e.relatedTarget).data() );
-         $("#editModalLabel").html($(e.relatedTarget).data('title'));
-         $("#editModalParagraph").html($(e.relatedTarget).data('description'));
-         $('#editModalNameInput').val( $(e.relatedTarget).data('title') );
-         $('#editModalNameLabel').addClass('active');
-         $('#editModalStartdateInput').val( $(e.relatedTarget).data('start') );
-         $('#editModalEnddateInput').val( $(e.relatedTarget).data('end') );
+        console.log($(e.relatedTarget).data());
+        $("#editModalLabel").html($(e.relatedTarget).data('title'));
+        $("#editModalParagraph").html($(e.relatedTarget).data('description'));
+        $('#editModalNameInput').val($(e.relatedTarget).data('title'));
+        $('#editModalNameLabel').addClass('active');
+        $('#editModalStartdateInput').val($(e.relatedTarget).data('start'));
+        $('#editModalEnddateInput').val($(e.relatedTarget).data('end'));
     });
 
     $('#deleteModal').on("show.bs.modal", function (e) {
-      console.log($(e.relatedTarget).data( 'title' ));
-         $("#deleteModalLabel").html($(e.relatedTarget).data('title'));
-         $("#deleteModalParagraph").html($(e.relatedTarget).data('description'));
-         $("#deleteChoice").attr('href', '/deleteChoice/' + $( e.relatedTarget).data('id'));
+        console.log($(e.relatedTarget).data('title'));
+        $("#deleteModalLabel").html($(e.relatedTarget).data('title'));
+        $("#deleteModalParagraph").html($(e.relatedTarget).data('description'));
+        $("#deleteChoice").attr('href', '/deleteChoice/' + $(e.relatedTarget).data('id'));
     });
 
     $('#editChoice').on("show.bs.modal", function (e) {
-        console.log($(e.relatedTarget).data( 'title' ));
+        console.log($(e.relatedTarget).data('title'));
+        $("#choiceId").val($(e.relatedTarget).data('id'));
         $("#choiceName").val($(e.relatedTarget).data('title'));
         $("#choiceDescription").val($(e.relatedTarget).data('description'));
         $("#choiceMin").val($(e.relatedTarget).data('min'));
         $("#choiceMax").val($(e.relatedTarget).data('max'));
+        $.ajax({
+            type: 'GET',
+            url: "/choiceCheck",
+            data: {id: $(e.relatedTarget).data('id')},
+            success: function (response) {
+                response.forEach(myFunction);
+            }
+        });
     });
+
+    $('#editChoice').on("hide.bs.modal", function (e) {
+        location.reload();
+    });
+
+    function myFunction(item, index, arr) {
+        $("#group"+item[0]).prop("checked", true);
+        console.log(item[0]);
+    }
 });
 
 

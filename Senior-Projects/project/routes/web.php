@@ -35,9 +35,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get( '/klasgroep/{classgroup}', 'AdminController@showStudentsFromClassGroup' );
     Route::post( '/addElective', 'AdminController@addElective' );
     Route::post( '/addChoice/{name}', 'AdminController@addChoiceToElective' );
-    Route::post( '/updateChoice/{name}', 'AdminController@addChoiceToElective' );
+    Route::post( '/updateChoice/{name}', 'AdminController@updateChoice' );
     Route::post('/giveAmountToElective/{id}', 'AdminController@giveAmountToClasses');
-
+    Route::get('/choiceCheck', 'AdminController@isChecked');
     Route::get('/divide/{electiveId}', 'AdminController@divideElective')->name('divideElective');
 });
 

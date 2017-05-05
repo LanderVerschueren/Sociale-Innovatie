@@ -36,7 +36,7 @@
 					<a class="card_choice_link_admin" href="/keuze/{{ $choice->id }}">{{ $choice->choice }}</a>
 
 					@if($choice->elective->start_date < date("Y-m-d G:i:s"))
-					<a class="card_choice_edit modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#editChoice" data-title="{{ $choice->choice }}" data-description="{{ $choice->description }}" data-min="{{ $choice->minimum }}" data-max="{{ $choice->maximum }}">
+					<a class="card_choice_edit modal-trigger" data-id="{{ $choice->id }}" data-classamount="{{$classgroups->count()}}" data-toggle="modal" data-target="#editChoice" data-title="{{ $choice->choice }}" data-description="{{ $choice->description }}" data-min="{{ $choice->minimum }}" data-max="{{ $choice->maximum }}">
 						<i class="fa fa-cog" aria-hidden="true"></i>
 					</a>
 					<a class="card_choice_delete modal-trigger" data-id="{{ $choice->id }}" data-toggle="modal" data-target="#deleteModal" data-title="{{ $choice->choice }}">
@@ -146,7 +146,7 @@
 			<div class="modal-body">
 				<form method="POST" action="{{ url('/updateChoice/'.$elective->name) }}">
 					{{ csrf_field() }}
-
+					<input type="hidden" name="choiceId" id="choiceId">
 					<div class="input-field">
 						<label for="choiceName">Naam keuze: </label>
 						<input type="text" id="choiceName" name="choice" placeholder="Naam"/>
@@ -166,7 +166,7 @@
 					@foreach($classgroups as $indexKey => $group)
 						<div class="input-field classes">
 							<label for="name">{{$group->class_group}}</label>
-							<input type="checkbox" name="group[{{$group->id}}]" value="{{$group->id}}"/>
+							<input type="checkbox" name="group[{{$group->id}}]" value="{{$group->id}}" id="group{{$group->id}}"/>
 						</div>
 					@endforeach
 					<button type="submit" class="button">Opslaan</button>

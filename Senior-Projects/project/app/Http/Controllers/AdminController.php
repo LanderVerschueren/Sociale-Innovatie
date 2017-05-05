@@ -42,7 +42,7 @@ class AdminController extends Controller {
 		$electiveName        = $name;
 		$classes             = Klas::all();
 		$amounts             = DB::table( 'elective_class_amount' )->where( 'elective_id', $elective->id )->get();
-		$choice_class_groups = DB::table( 'choice_class_group' )->get();
+		
 		$class_groups        = ClassGroup::all();
 
 		return view( 'admin.admin_choice' )->with( [
@@ -50,8 +50,7 @@ class AdminController extends Controller {
 			'elective'            => $elective,
 			'classes'             => $classes,
 			'amounts'             => $amounts,
-			'classgroups'         => $class_groups,
-			'choice_class_groups' => $choice_class_groups
+			'classgroups'         => $class_groups
 		] );
 	}
 
@@ -70,7 +69,6 @@ class AdminController extends Controller {
 
 		$this->validate( $request, [
 			'name'       => 'required',
-			'test_date'  => 'required',
 			'start_date' => 'required',
 			'end_date'   => 'required'
 		] );
@@ -114,7 +112,6 @@ class AdminController extends Controller {
 	public function updateElective( Request $request, $id ) {
 		$this->validate( $request, [
 			'name'       => 'required',
-			'test_date'  => 'required',
 			'start_date' => 'required',
 			'end_date'   => 'required'
 		] );
@@ -140,7 +137,6 @@ class AdminController extends Controller {
 
 		$this->validate( $request, [
 			'choice'      => 'required',
-			'description' => 'required',
 			'minimum'     => 'required|integer',
 			'maximum'     => 'required|integer',
 		] );
@@ -175,16 +171,16 @@ class AdminController extends Controller {
 	public function updateChoice( Request $request, $name ) {
 
 		$this->validate( $request, [
-			'choice'      => 'required',
-			'description' => 'required',
+		    'choiceId'    => 'required',
+            'choice'      => 'required',
 			'minimum'     => 'required|integer',
 			'maximum'     => 'required|integer',
 		] );
 
 		$elective = Elective::where( 'name', $name )->first();
-
-		$choice = new Choice;
-
+        
+		$choice = Choice::where('id', $request->choiceId)->first();
+		
 		$choice->choice      = $request->choice;
 		$choice->description = $request->description;
 		$choice->minimum     = $request->minimum;
@@ -192,14 +188,28 @@ class AdminController extends Controller {
 		$choice->elective_id = $elective->id;
 
 		$choice->save();
-
-		foreach ( $request->get( 'group' ) as $group ) {
-			DB::table( 'choice_class_group' )->insert( [
-				'choice_id'      => $choice->id,
-				'class_group_id' => $group
-			] );
-		}
-
+        
+		if($request->get('group') != null) {
+		    
+            DB::table('choice_class_group')->where([
+                ['choice_id', $choice->id]
+            ])->delete();
+            
+            foreach ( $request->get( 'group' ) as $group ) {
+                DB::table( 'choice_class_group' )->insert( [
+                    'choice_id'      => $choice->id,
+                    'class_group_id' => $group
+                ] );
+            }
+        }
+        else {
+            DB::table('choice_class_group')->where([
+                ['choice_id', $choice->id]
+            ])->delete();
+        }
+        
+        
+        
 		$choices = Choice::where( 'elective_id', $elective->id )->get();
 
 		return redirect( '/keuzevak/' . $elective->name )->with( [
@@ -214,6 +224,21 @@ class AdminController extends Controller {
 
 		return back();
 	}
+	
+	public function isChecked(Request $request) {
+        $choice_class_groups = DB::table( 'choice_class_group' )->where('choice_id', $request->id)->get();
+        $class_groups        = ClassGroup::all();
+        $isCheckedArray= [];
+        foreach ($class_groups as $class_group){
+            foreach ($choice_class_groups as $choice_class_group){
+                if($class_group->id == $choice_class_group->class_group_id){
+                    array_push($isCheckedArray, [$class_group->id, true]);
+                }
+            }
+        }
+            
+        return $isCheckedArray;
+    }
 
 	public function divideElective( $electiveId ) {
 		$elective       = Elective::find( $electiveId );
