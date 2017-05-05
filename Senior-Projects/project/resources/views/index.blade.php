@@ -6,11 +6,11 @@
         <form method="POST" action="{{ url('/login') }}">
             {{ csrf_field() }}
             <div class="input-field">
-                <input id="emailadres" type="text" class=""  name="email" value="najoua.abdallah@student.kdg.be">
+                <input id="emailadres" type="text" class=""  name="email">
                 <label for="emailadres">E-mailadres</label>
             </div>
             <div class="input-field">
-                <input id="studentennummer" type="text" class="" name="student_id" value="0113578-88">
+                <input id="studentennummer" type="text" class="" name="student_id">
                 <label for="studentennummer">Studentennummer</label>
             </div>
 

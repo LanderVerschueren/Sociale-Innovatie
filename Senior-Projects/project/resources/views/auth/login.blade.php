@@ -14,7 +14,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}tatyana.amelin@student.kdg.be" required autofocus>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -28,7 +28,7 @@
                             <label for="password" class="col-md-4 control-label">studenten nummer</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="text" class="form-control" name="student_id" required value="0121114-58">
+                                <input id="password" type="text" class="form-control" name="student_id" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
