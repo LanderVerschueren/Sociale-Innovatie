@@ -37,20 +37,20 @@ class AdminController extends Controller {
 	}
 
 	public function showChoicesFromElective( $name ) {
-		$elective            = Elective::where( 'name', $name )->first();
-		$choices             = Choice::where( 'elective_id', $elective->id )->get();
-		$electiveName        = $name;
-		$classes             = Klas::all();
-		$amounts             = DB::table( 'elective_class_amount' )->where( 'elective_id', $elective->id )->get();
-		
-		$class_groups        = ClassGroup::all();
+		$elective     = Elective::where( 'name', $name )->first();
+		$choices      = Choice::where( 'elective_id', $elective->id )->get();
+		$electiveName = $name;
+		$classes      = Klas::all();
+		$amounts      = DB::table( 'elective_class_amount' )->where( 'elective_id', $elective->id )->get();
+
+		$class_groups = ClassGroup::all();
 
 		return view( 'admin.admin_choice' )->with( [
-			'choices'             => $choices,
-			'elective'            => $elective,
-			'classes'             => $classes,
-			'amounts'             => $amounts,
-			'classgroups'         => $class_groups
+			'choices'     => $choices,
+			'elective'    => $elective,
+			'classes'     => $classes,
+			'amounts'     => $amounts,
+			'classgroups' => $class_groups
 		] );
 	}
 
@@ -136,9 +136,9 @@ class AdminController extends Controller {
 	public function addChoiceToElective( Request $request, $name ) {
 
 		$this->validate( $request, [
-			'choice'      => 'required',
-			'minimum'     => 'required|integer',
-			'maximum'     => 'required|integer',
+			'choice'  => 'required',
+			'minimum' => 'required|integer',
+			'maximum' => 'required|integer',
 		] );
 
 		$elective = Elective::where( 'name', $name )->first();
@@ -171,16 +171,16 @@ class AdminController extends Controller {
 	public function updateChoice( Request $request, $name ) {
 
 		$this->validate( $request, [
-		    'choiceId'    => 'required',
-            'choice'      => 'required',
-			'minimum'     => 'required|integer',
-			'maximum'     => 'required|integer',
+			'choiceId' => 'required',
+			'choice'   => 'required',
+			'minimum'  => 'required|integer',
+			'maximum'  => 'required|integer',
 		] );
 
 		$elective = Elective::where( 'name', $name )->first();
-        
-		$choice = Choice::where('id', $request->choiceId)->first();
-		
+
+		$choice = Choice::where( 'id', $request->choiceId )->first();
+
 		$choice->choice      = $request->choice;
 		$choice->description = $request->description;
 		$choice->minimum     = $request->minimum;
@@ -188,28 +188,26 @@ class AdminController extends Controller {
 		$choice->elective_id = $elective->id;
 
 		$choice->save();
-        
-		if($request->get('group') != null) {
-		    
-            DB::table('choice_class_group')->where([
-                ['choice_id', $choice->id]
-            ])->delete();
-            
-            foreach ( $request->get( 'group' ) as $group ) {
-                DB::table( 'choice_class_group' )->insert( [
-                    'choice_id'      => $choice->id,
-                    'class_group_id' => $group
-                ] );
-            }
-        }
-        else {
-            DB::table('choice_class_group')->where([
-                ['choice_id', $choice->id]
-            ])->delete();
-        }
-        
-        
-        
+
+		if ( $request->get( 'group' ) != NULL ) {
+
+			DB::table( 'choice_class_group' )->where( [
+				[ 'choice_id', $choice->id ]
+			] )->delete();
+
+			foreach ( $request->get( 'group' ) as $group ) {
+				DB::table( 'choice_class_group' )->insert( [
+					'choice_id'      => $choice->id,
+					'class_group_id' => $group
+				] );
+			}
+		} else {
+			DB::table( 'choice_class_group' )->where( [
+				[ 'choice_id', $choice->id ]
+			] )->delete();
+		}
+
+
 		$choices = Choice::where( 'elective_id', $elective->id )->get();
 
 		return redirect( '/keuzevak/' . $elective->name )->with( [
@@ -224,21 +222,21 @@ class AdminController extends Controller {
 
 		return back();
 	}
-	
-	public function isChecked(Request $request) {
-        $choice_class_groups = DB::table( 'choice_class_group' )->where('choice_id', $request->id)->get();
-        $class_groups        = ClassGroup::all();
-        $isCheckedArray= [];
-        foreach ($class_groups as $class_group){
-            foreach ($choice_class_groups as $choice_class_group){
-                if($class_group->id == $choice_class_group->class_group_id){
-                    array_push($isCheckedArray, [$class_group->id, true]);
-                }
-            }
-        }
-            
-        return $isCheckedArray;
-    }
+
+	public function isChecked( Request $request ) {
+		$choice_class_groups = DB::table( 'choice_class_group' )->where( 'choice_id', $request->id )->get();
+		$class_groups        = ClassGroup::all();
+		$isCheckedArray      = [];
+		foreach ( $class_groups as $class_group ) {
+			foreach ( $choice_class_groups as $choice_class_group ) {
+				if ( $class_group->id == $choice_class_group->class_group_id ) {
+					array_push( $isCheckedArray, [ $class_group->id, true ] );
+				}
+			}
+		}
+
+		return $isCheckedArray;
+	}
 
 	public function divideElective( $electiveId ) {
 		$elective       = Elective::find( $electiveId );
@@ -265,7 +263,7 @@ class AdminController extends Controller {
 					$dividedCount = 1;
 					foreach ( $user['picks'] as $pick ) {
 						if ( ! $pick['can_be_picked'] ) {
-							$dataOfUser[ 'Keuze ' . $dividedCount ] = sprintf('%s (%d)', $pick['name'], $pick['rank']);
+							$dataOfUser[ 'Keuze ' . $dividedCount ] = sprintf( '%s (%d)', $pick['name'], $pick['rank'] );
 							$dividedCount ++;
 						}
 					}
@@ -394,20 +392,34 @@ class AdminController extends Controller {
 
 
 	public function getImportStudents() {
-		return view( 'admin.import' );
+		$users = User::where( 'is_admin', '=', 0 )->with( 'class_group' )->get();
+
+		return view( 'admin.import', compact('users') );
 	}
 
 	public function postImportStudents( Request $request ) {
-		ini_set('memory_limit', '2048M'); 
-		dump( $request );
+		ini_set( 'memory_limit', '2048M' );
+		ini_set( 'max_execution_time', '0' );
+		//dump( $request );
+
+		// Empty out all current students
+		$users = User::where( 'is_admin', '=', 0 )->with( 'results' )->get();
+
+		foreach ( $users as $user ) {
+			foreach ( $user->results as $result ) {
+				/** @var Result $result */
+				$result->delete();
+			}
+			$user->email = $user->email . '$del_'.time();
+			$user->save();
+			$user->delete();
+		}
 
 		$studentCollection = collect();
 		Excel::load( $request->file( 'import_excel' ) )->each( function ( Collection $line ) use ( $studentCollection ) {
 			$line = $line->toArray();
 			$studentCollection->push( $line );
 		} );
-
-		dump( $studentCollection );
 
 		$followedLessonsPerSubGroup = $studentCollection->groupBy( 'subgroep' );
 		$followedLessonsPerClasses  = $studentCollection->groupBy( 'klasgroep' );
@@ -441,24 +453,17 @@ class AdminController extends Controller {
 			}
 
 			// Get or create the student
-			$student_name = explode( ' ', $student["student"] );
-
-			$student_first_name = $student_name[ count( $student_name ) - 1 ];
-			array_pop( $student_name );
-			$student_surname = implode( " ", $student_name );
-
 			$student = User::firstOrCreate( [
-				"surname"        => $student_surname,
-				"first_name"     => $student_first_name,
+				"surname"        => $student['student_achternaam'],
+				"first_name"     => $student['student_voornaam'],
 				"email"          => $student["school_email"],
 				"student_id"     => $student["registratienummer"],
 				"class_group_id" => $class_group_id
 			] );
 		}
 
-		dump( $followedLessonsPerSubGroup );
-		dump( $followedLessonsPerClasses );
+		$request->session()->flash('imported', 'De studenten zijn succesvol geïmporteerd');
 
-		dump( 'end' );
+		return redirect()->route('importStudent');
 	}
 }

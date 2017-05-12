@@ -5383,8 +5383,6 @@ content header {
   justify-content: space-between;
   -webkit-box-align: center;
   align-items: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
   flex-flow: row wrap;
 }
 
@@ -5459,8 +5457,6 @@ content .category {
   display: -webkit-box;
   display: flex;
   justify-content: space-around;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
   flex-flow: row wrap;
 }
 
@@ -5486,8 +5482,6 @@ content .choice {
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
   flex-flow: row wrap;
 }
 
@@ -5495,8 +5489,6 @@ content .choice .card_container {
   display: -webkit-box;
   display: flex;
   justify-content: space-around;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
   flex-flow: row wrap;
   margin-top: 60px;
 }
