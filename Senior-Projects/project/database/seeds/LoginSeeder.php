@@ -15,11 +15,11 @@ class LoginSeeder extends Seeder
 	        0 =>
 		        array (
 			        'id' => 1,
-			        'surname' => 'Vanden Eynden',
-			        'first_name' => 'Siebe',
-			        'email' => 'siebe.vandeneynden@student.kdg.be',
-			        'student_id' => '0109830-24',
-			        'password' => '$2y$10$6hrOzpxNpJ8MFXjFtQszHuR6J005AHIoJ5wKCkNnwLYAmpp2KePj2',
+			        'surname' => 'Exelmans',
+			        'first_name' => 'Raf',
+			        'email' => 'raf.exelmans@kdg.be',
+			        'student_id' => '0000000-01',
+			        'password' => '$2y$10$YXjC3cpZeM9inCbgQoQkxukZYir12r2dNUvIzfJ/uKzbZ5GPcuWwu',
 			        'is_admin' => 1,
 			        'class_group_id' => NULL,
 			        'deleted_at' => NULL,
