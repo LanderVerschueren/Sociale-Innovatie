@@ -7,6 +7,7 @@
 	<content>
 		<h1>Importeer studenten</h1>
 		<p><a href="/studenten.xlsx">Een voorbeeld over hoe de excel er moet uitzien, vind je hier.</a></p>
+		<p>Alle huidige studenten worden verwijderd als je een nieuwe lijst importeert</p>
 		@if(Session::has('imported'))
 			<p>{{ Session::get('imported') }}</p>
 		@endif
