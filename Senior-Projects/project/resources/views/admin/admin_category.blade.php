@@ -6,7 +6,7 @@
 	<header>
 		<h2>Admin</h2>
 		<a href="/import" class="button">Studenten importeren</a>
-		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> Keuze toevoegen</button>
+		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#addCategoryModal"><i class="fa fa-plus" aria-hidden="true"></i> thema toevoegen</button>
 		<button type="submit" class="button modal-trigger" data-toggle="modal" data-target="#divideStudents"><i class="fa fa-cogs" aria-hidden="true"></i> Verdeel studenten</button>
 
 		<form id="logout-form" action="/logout" method="POST">
@@ -55,7 +55,7 @@
 		                <input type="date" name="end_date">
 		            </div>
 		            <div class="input-field">
-		                <label for="number_of_choices" class="active">Einddatum</label>
+		                <label for="number_of_choices" class="active">Aantal vakken te kiezen</label>
 		                <input type="number" name="number_of_choices">
 		            </div>
 		            <button type="submit" class="button">Opslaan</button>
