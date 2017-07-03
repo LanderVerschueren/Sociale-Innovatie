@@ -43,102 +43,104 @@ use Illuminate\Support\Facades\DB;
  * @mixin \Eloquent
  * @property-read \App\ClassGroup $class_group
  */
-class User extends Authenticatable {
-	use Notifiable;
-	use SoftDeletes;
+class User extends Authenticatable
+{
+    use Notifiable;
+    use SoftDeletes;
 
-	protected $guarded = [];
+    protected $guarded = [];
 
-	protected $dates = [ "deleted_at" ];
+    protected $dates = ["deleted_at"];
 
-	/**
-	 * The attributes that should be hidden for arrays.
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-		'password',
-		'remember_token',
-	];
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-	public function class_group() {
-		return $this->belongsTo('\App\ClassGroup');
-	}
+    public function class_group()
+    {
+        return $this->belongsTo('\App\ClassGroup');
+    }
 
-	public function choices() {
-		return $this->belongsToMany('\App\Choice', 'results');
-	}
+    public function choices()
+    {
+        return $this->belongsToMany('\App\Choice', 'results');
+    }
 
-	public function results() {
-		return $this->hasMany('\App\Result');
-	}
-	
-	public function is_admin() {
-	    if($this->is_admin == true) {
-	        return true;
-        }
-        else {
-	        return false;
+    public function results()
+    {
+        return $this->hasMany('\App\Result');
+    }
+
+    public function is_admin()
+    {
+        if ($this->is_admin == true) {
+            return true;
+        } else {
+            return false;
         }
     }
 
-	//Controleren of de user al een result heeft met meegegeven elective.
+    //Controleren of de user al een result heeft met meegegeven elective.
 
 
-	public function canAnswer(Elective $elective)
+    public function canAnswer(Elective $elective)
     {
-        $hisElective = false;
-        $class_group_id = $this->class_group_id;
+        $hisElective         = false;
+        $class_group_id      = $this->class_group_id;
         $choice_class_groups = DB::table('choice_class_group')->where('class_group_id', $class_group_id)->get();
-        $electiveIds = [];
+        $electiveIds         = [];
 
-        foreach($choice_class_groups as $choice_class_group)
-        {
+        foreach ($choice_class_groups as $choice_class_group) {
             $choice = Choice::where('id', $choice_class_group->choice_id)->first();
-            array_push($electiveIds, $choice->elective_id);
+            if ($choice) {
+                array_push($electiveIds, $choice->elective_id);
+            }
         }
 
-        $uniqueElectivesId = array_unique ( $electiveIds );
+        $uniqueElectivesId = array_unique($electiveIds);
 
         $electives = [];
 
-        foreach ($uniqueElectivesId as $id)
-        {
+        foreach ($uniqueElectivesId as $id) {
             $newElective = Elective::where('id', $id)->first();
             debug($newElective->name);
-            $thisDate = date("Y-m-d G:i:s");
+            $thisDate  = date("Y-m-d G:i:s");
             $beginDate = $newElective->start_date;
-            $endDate = $newElective->end_date;
-            if(($thisDate<=$endDate) && ($thisDate>=$beginDate))
-            {
+            $endDate   = $newElective->end_date;
+            if (($thisDate <= $endDate) && ($thisDate >= $beginDate)) {
                 array_push($electives, $newElective);
             }
         }
 
         $idRequest = $elective->id;
 
-        foreach ($electives as $element){
-            if($idRequest == $element->id){
+        foreach ($electives as $element) {
+            if ($idRequest == $element->id) {
                 $hisElective = true;
             }
         }
 
-        if(!$hisElective){
+        if ( ! $hisElective) {
             return false;
         }
 
-        if($hisElective){
-            $results = $this->results()->get();
+        if ($hisElective) {
+            $results    = $this->results()->get();
             $electiveId = $elective->id;
 
-            foreach ($results as $result)
-            {
+            foreach ($results as $result) {
                 $choice = Choice::where('id', $result->choice_id)->first();
-                if($choice->elective_id == $elective->id)
-                {
+                if ($choice->elective_id == $elective->id) {
                     return false;
                 }
             }
+
             return true;
         }
 

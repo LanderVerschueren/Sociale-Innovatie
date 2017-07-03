@@ -36,7 +36,9 @@ class StudentController extends Controller
         foreach($choice_class_groups as $choice_class_group)
         {
             $choice = Choice::where('id', $choice_class_group->choice_id)->first();
-            array_push($electiveIds, $choice->elective_id);
+            if($choice) {
+                array_push($electiveIds, $choice->elective_id);
+            }
         }
 
         $uniqueElectivesId = array_unique ( $electiveIds );
@@ -84,7 +86,7 @@ class StudentController extends Controller
             foreach ($choice_class_groups as $choice_class_group)
             {
                 $newChoice = Choice::where('id', $choice_class_group->choice_id)->first();
-                if($newChoice->elective_id == $elective->id)
+                if($newChoice && $newChoice->elective_id == $elective->id)
                 {
                     array_push($choices, $newChoice);
                 }
